@@ -1,0 +1,227 @@
+[gd_scene load_steps=10 format=3 uid="uid://ckx27n28b73bp"]
+
+[ext_resource type="Script" path="res://scripts/hud_score_time_screen.gd" id="1_icu2d"]
+[ext_resource type="Texture2D" uid="uid://d27s3j08jab04" path="res://assets/hud/stopwatch.png" id="2_i0k4c"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nahch"]
+bg_color = Color(0.1938, 0.57, 0.28785, 0)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.192157, 0.568627, 0.294118, 1)
+corner_radius_top_left = 13
+corner_radius_top_right = 13
+corner_radius_bottom_right = 13
+corner_radius_bottom_left = 13
+
+[sub_resource type="Theme" id="Theme_wd55n"]
+Panel/styles/panel = SubResource("StyleBoxFlat_nahch")
+
+[sub_resource type="SystemFont" id="SystemFont_d440y"]
+font_names = PackedStringArray("Google Sans")
+font_weight = 900
+subpixel_positioning = 0
+
+[sub_resource type="SystemFont" id="SystemFont_hlchn"]
+font_names = PackedStringArray("Google Sans")
+font_weight = 500
+font_stretch = 75
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ttsjs"]
+bg_color = Color(0.503709, 0.677025, 0.938365, 0)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.854902, 0.635294, 0.0196078, 1)
+corner_radius_top_left = 13
+corner_radius_top_right = 13
+corner_radius_bottom_right = 13
+corner_radius_bottom_left = 13
+shadow_color = Color(0.854902, 0.635294, 0.0196078, 0.486275)
+
+[sub_resource type="Theme" id="Theme_ci5do"]
+Panel/styles/panel = SubResource("StyleBoxFlat_ttsjs")
+
+[sub_resource type="SystemFont" id="SystemFont_kbyip"]
+font_names = PackedStringArray("Google Sans")
+font_weight = 500
+font_stretch = 75
+subpixel_positioning = 0
+
+[node name="HUD" type="Node"]
+script = ExtResource("1_icu2d")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD"]
+offset_left = 1480.0
+offset_top = 49.0
+offset_right = 1870.0
+offset_bottom = 109.0
+theme_override_constants/separation = 24
+
+[node name="Score" type="Panel" parent="HUD/HBoxContainer"]
+custom_minimum_size = Vector2(119, 40)
+layout_mode = 2
+theme = SubResource("Theme_wd55n")
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/HBoxContainer/Score"]
+layout_mode = 0
+offset_right = 24.0
+offset_bottom = 42.0
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 14
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/HBoxContainer/Score/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="starLabel" type="Label" parent="HUD/HBoxContainer/Score/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.196078, 0.568627, 0.294118, 1)
+theme_override_fonts/font = SubResource("SystemFont_d440y")
+theme_override_font_sizes/font_size = 30
+text = "★"
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/HBoxContainer/Score/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+
+[node name="ScoreLabel" type="RichTextLabel" parent="HUD/HBoxContainer/Score/MarginContainer/HBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 30)
+layout_mode = 2
+theme_override_colors/default_color = Color(0.219608, 0.584314, 0.317647, 1)
+theme_override_fonts/normal_font = SubResource("SystemFont_hlchn")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "000"
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Time" type="Panel" parent="HUD/HBoxContainer"]
+custom_minimum_size = Vector2(247, 60)
+layout_mode = 2
+theme = SubResource("Theme_ci5do")
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/HBoxContainer/Time"]
+layout_mode = 2
+offset_right = 217.0
+offset_bottom = 36.0
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_right = 9
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/HBoxContainer/Time/MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/HBoxContainer/Time/MarginContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="TextureRect" type="TextureRect" parent="HUD/HBoxContainer/Time/MarginContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+texture = ExtResource("2_i0k4c")
+stretch_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/HBoxContainer/Time/MarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = -4
+
+[node name="StopWatchLabel" type="RichTextLabel" parent="HUD/HBoxContainer/Time/MarginContainer/MarginContainer/HBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_colors/default_color = Color(0.854902, 0.635294, 0.0196078, 1)
+theme_override_fonts/normal_font = SubResource("SystemFont_kbyip")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center]00:00.000[/center]"
+fit_content = true
+scroll_active = false
+tab_size = 3
+
+[node name="outerboarder" type="Node2D" parent="."]
+visible = false
+
+[node name="top" type="ColorRect" parent="outerboarder"]
+offset_right = 1920.0
+offset_bottom = 48.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="32px-spacer" type="ColorRect" parent="outerboarder"]
+offset_left = -10.0
+offset_top = 665.0
+offset_right = 1910.0
+offset_bottom = 713.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="32px-spacer2" type="ColorRect" parent="outerboarder"]
+offset_left = 961.0
+offset_top = 966.0
+offset_right = 1446.0
+offset_bottom = 1014.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="bottom" type="ColorRect" parent="outerboarder"]
+offset_top = 1032.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="left" type="ColorRect" parent="outerboarder"]
+offset_right = 48.0
+offset_bottom = 1080.0
+color = Color(0.956863, 0.705882, 0, 1)
+
+[node name="right" type="ColorRect" parent="outerboarder"]
+offset_left = 1872.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="center-topbottom" type="ColorRect" parent="outerboarder"]
+offset_left = 960.0
+offset_right = 961.0
+offset_bottom = 1080.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="center-topbottom2" type="ColorRect" parent="outerboarder"]
+offset_left = 475.0
+offset_top = 1.0
+offset_right = 476.0
+offset_bottom = 1081.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="center-topbottom3" type="ColorRect" parent="outerboarder"]
+offset_left = 1446.0
+offset_top = 1.0
+offset_right = 1447.0
+offset_bottom = 1081.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="center-topbottom-24px" type="ColorRect" parent="outerboarder"]
+visible = false
+offset_left = 1864.0
+offset_top = 1.0
+offset_right = 1872.0
+offset_bottom = 1081.0
+color = Color(0.439216, 0.376471, 0.2, 1)
+
+[node name="center-leftright" type="ColorRect" parent="outerboarder"]
+offset_top = 540.0
+offset_right = 1920.0
+offset_bottom = 541.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="center-leftright2" type="ColorRect" parent="outerboarder"]
+offset_top = 79.0
+offset_right = 1920.0
+offset_bottom = 80.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)

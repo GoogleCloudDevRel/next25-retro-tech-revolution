@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://d1kwhqsve0a4x"]
+
+[ext_resource type="Texture2D" uid="uid://drop2v4x2xw8i" path="res://levels/level_1/floor/floor_vent.png" id="1_v7lvn"]
+[ext_resource type="Texture2D" uid="uid://2bp2tvmjnuuh" path="res://levels/level_1/white_smoke.png" id="2_sfdmm"]
+
+[sub_resource type="Gradient" id="Gradient_wvrqb"]
+offsets = PackedFloat32Array(0, 0.169617, 1)
+colors = PackedColorArray(0.712818, 0.724011, 0.98619, 1, 0.984331, 0.705573, 0.784481, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_340xl"]
+gradient = SubResource("Gradient_wvrqb")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tfjgx"]
+lifetime_randomness = 0.15
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 128.0
+angle_min = -84.3
+angle_max = 132.3
+gravity = Vector3(50, -150, 0)
+linear_accel_min = -29.53
+linear_accel_max = 41.79
+scale_min = 6.0
+scale_max = 14.43
+color = Color(0.859915, 0.560524, 0.555234, 0.568627)
+color_ramp = SubResource("GradientTexture1D_340xl")
+
+[node name="vents" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_v7lvn")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+amount = 200
+amount_ratio = 0.4614
+process_material = SubResource("ParticleProcessMaterial_tfjgx")
+texture = ExtResource("2_sfdmm")
+lifetime = 6.79

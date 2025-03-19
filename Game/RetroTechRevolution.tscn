@@ -1,0 +1,81 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8crmjsg0br8d"]
+
+[ext_resource type="Shader" path="res://shaders/scanline_v2gdshader.gdshader" id="1_jh1b8"]
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="2_sabek"]
+[ext_resource type="FontFile" uid="uid://bx342ftu5vnhe" path="res://fonts/DelaGothicOne-Regular.ttf" id="3_aksgs"]
+[ext_resource type="Script" path="res://scripts/server.gd" id="4_iwxs6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lgvmp"]
+shader = ExtResource("1_jh1b8")
+shader_parameter/scan_line_count = 480.0
+shader_parameter/scan_line_intensity = 0.3
+shader_parameter/noise_intensity = 0.05
+shader_parameter/curvature = 0.0
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/brightness = 1.4
+shader_parameter/flicker_intensity = 0.145
+shader_parameter/rgb_shift = 0.5
+
+[node name="Game" type="Node2D"]
+top_level = true
+y_sort_enabled = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 20
+
+[node name="Scanlines" type="ColorRect" parent="CanvasLayer"]
+z_index = 120
+z_as_relative = false
+material = SubResource("ShaderMaterial_lgvmp")
+custom_minimum_size = Vector2(1920, 1080)
+offset_right = 1920.0
+offset_bottom = 1080.0
+size_flags_horizontal = 4
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="GameManager" type="Node" parent="." groups=["Enemies", "Players"]]
+process_mode = 3
+script = ExtResource("2_sabek")
+
+[node name="pauseTimer" type="Timer" parent="GameManager"]
+wait_time = 3.0
+
+[node name="PauseCanvas" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="bg" type="ColorRect" parent="PauseCanvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.52549)
+
+[node name="Label" type="Label" parent="PauseCanvas/bg"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_aksgs")
+theme_override_font_sizes/font_size = 50
+text = "Paused
+Pressed 3 lines to restart"
+horizontal_alignment = 1
+
+[node name="Server" type="Node" parent="."]
+script = ExtResource("4_iwxs6")
+
+[node name="Players" type="Node2D" parent="."]
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[connection signal="timeout" from="GameManager/pauseTimer" to="GameManager" method="_on_timer_timeout"]

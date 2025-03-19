@@ -1,0 +1,94 @@
+[gd_scene load_steps=7 format=3 uid="uid://ckh3ulwanctr0"]
+
+[ext_resource type="Texture2D" uid="uid://dc5vl232wj3lt" path="res://Player/Sprites/ItemSprites.png" id="1_chrgf"]
+[ext_resource type="Texture2D" uid="uid://bv0csemkndvxa" path="res://Player/Assets/Shadow.png" id="2_jpiii"]
+[ext_resource type="Texture2D" uid="uid://bojl7g2v4vc1d" path="res://Player/Assets/light.png" id="3_txv3t"]
+
+[sub_resource type="Animation" id="Animation_cdm6f"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_j64vp"]
+resource_name = "ui_w2_rotate"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.00178907, 1.00179, 2.00179),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 5), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pjxmw"]
+_data = {
+"RESET": SubResource("Animation_cdm6f"),
+"ui_w2_rotate": SubResource("Animation_j64vp")
+}
+
+[node name="UI_W2" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_chrgf")
+hframes = 20
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_pjxmw")
+}
+autoplay = "ui_w2_rotate"
+
+[node name="ShadowSprite2D2" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(0, 26)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_jpiii")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(0, 10)
+color = Color(0.94553, 0.858386, 0.421633, 1)
+shadow_enabled = true
+shadow_filter = 1
+shadow_filter_smooth = 5.0
+texture = ExtResource("3_txv3t")
+texture_scale = 0.4

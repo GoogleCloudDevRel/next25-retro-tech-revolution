@@ -1,0 +1,235 @@
+[gd_scene load_steps=32 format=3 uid="uid://cbvswwtrwmmv4"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_58uyw"]
+[ext_resource type="Shader" path="res://shaders/player_flash.gdshader" id="1_ctfb3"]
+[ext_resource type="Texture2D" uid="uid://ckxtnhndxb8cc" path="res://assets/players/player_walk.png" id="2_6lu4d"]
+[ext_resource type="PackedScene" uid="uid://ctiryxaafma1a" path="res://assets/tools/gun/gun.tscn" id="3_4haub"]
+[ext_resource type="Texture2D" uid="uid://cih0txfwhxj2s" path="res://assets/players/player-idle-v2.png" id="4_8jnf0"]
+[ext_resource type="Texture2D" uid="uid://l3fi57kiyua2" path="res://assets/players/player-shooting.png" id="5_buo4q"]
+[ext_resource type="Shader" path="res://shaders/Bullet.gdshader" id="7_ed14o"]
+[ext_resource type="Texture2D" uid="uid://d3xsaug1by40g" path="res://shaders/LightSprite.png" id="7_seoly"]
+[ext_resource type="Shader" path="res://shaders/torchlight.gdshader" id="9_gpa11"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e0xoq"]
+resource_local_to_scene = true
+shader = ExtResource("1_ctfb3")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_value = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u26xt"]
+atlas = ExtResource("4_8jnf0")
+region = Rect2(0, 0, 99, 155)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ontci"]
+atlas = ExtResource("4_8jnf0")
+region = Rect2(158, 0, 99, 155)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u1gqc"]
+atlas = ExtResource("5_buo4q")
+region = Rect2(0, 0, 85, 152)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7jcqn"]
+atlas = ExtResource("5_buo4q")
+region = Rect2(157, 0, 85, 152)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cucmr"]
+atlas = ExtResource("5_buo4q")
+region = Rect2(314, 0, 85, 152)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cuof1"]
+atlas = ExtResource("2_6lu4d")
+region = Rect2(0, 0, 118, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ac1ir"]
+atlas = ExtResource("2_6lu4d")
+region = Rect2(118, 0, 118, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_76ejj"]
+atlas = ExtResource("2_6lu4d")
+region = Rect2(236, 0, 118, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jc7hf"]
+atlas = ExtResource("2_6lu4d")
+region = Rect2(354, 0, 118, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_chrro"]
+atlas = ExtResource("2_6lu4d")
+region = Rect2(472, 0, 118, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1mqiv"]
+atlas = ExtResource("2_6lu4d")
+region = Rect2(590, 0, 118, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gmx72"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u26xt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ontci")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u1gqc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7jcqn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cucmr")
+}],
+"loop": true,
+"name": &"shooting",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cuof1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ac1ir")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_76ejj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jc7hf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_chrro")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1mqiv")
+}],
+"loop": true,
+"name": &"walking",
+"speed": 10.0
+}]
+
+[sub_resource type="Animation" id="Animation_s1t47"]
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/flash_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333),
+"transitions": PackedFloat32Array(0.406126),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_mi4v3"]
+resource_name = "player_animation"
+length = 0.47
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/flash_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j0ci4"]
+_data = {
+"RESET": SubResource("Animation_s1t47"),
+"player_animation": SubResource("Animation_mi4v3")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_385gl"]
+shader = ExtResource("7_ed14o")
+shader_parameter/influence = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p03tn"]
+shader = ExtResource("9_gpa11")
+shader_parameter/intensity = 10.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sxxa0"]
+size = Vector2(45, 54)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5v67w"]
+size = Vector2(82, 163)
+
+[sub_resource type="SystemFont" id="SystemFont_sl052"]
+font_names = PackedStringArray("Google Sans")
+font_weight = 800
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4dcyp"]
+bg_color = Color(0.232811, 0.376847, 0.821331, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="Player" type="CharacterBody2D"]
+z_index = 2
+collision_mask = 31
+platform_floor_layers = 4278190080
+script = ExtResource("1_58uyw")
+
+[node name="AnimatedPlayer" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_e0xoq")
+position = Vector2(17, 10)
+sprite_frames = SubResource("SpriteFrames_gmx72")
+animation = &"walking"
+
+[node name="healthDepletion" type="AnimationPlayer" parent="AnimatedPlayer"]
+libraries = {
+"": SubResource("AnimationLibrary_j0ci4")
+}
+
+[node name="Camera2D" type="Camera2D" parent="AnimatedPlayer"]
+
+[node name="Gun" parent="." instance=ExtResource("3_4haub")]
+material = SubResource("ShaderMaterial_385gl")
+
+[node name="Light2DAdd" type="PointLight2D" parent="Gun"]
+material = SubResource("ShaderMaterial_p03tn")
+color = Color(0.880483, 0.877499, 0.991036, 1)
+shadow_enabled = true
+texture = ExtResource("7_seoly")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(8.5, 13)
+shape = SubResource("RectangleShape2D_sxxa0")
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionArea" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(5, 13)
+shape = SubResource("RectangleShape2D_5v67w")
+debug_color = Color(0.919235, 0.219135, 0.458756, 0.42)
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = 26.0
+offset_top = 58.0
+offset_right = 94.0
+offset_bottom = 72.0
+theme_override_fonts/font = SubResource("SystemFont_sl052")
+theme_override_styles/fill = SubResource("StyleBoxFlat_4dcyp")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="CallGeminiTimer" type="Timer" parent="."]
+wait_time = 60.0
+
+[connection signal="health_depleted" from="." to="." method="_on_health_depleted"]
+[connection signal="timeout" from="CallGeminiTimer" to="." method="_on_call_gemini_timer_timeout"]

@@ -1,0 +1,227 @@
+[gd_scene load_steps=15 format=3 uid="uid://f0n0vydjafpc"]
+
+[ext_resource type="Script" path="res://assets/screens/splashscreen/splashscreen.gd" id="1_0ojax"]
+[ext_resource type="VideoStream" path="res://assets/screens/splashscreen/RetroTech_Intro_part2.ogv" id="1_hhwpq"]
+[ext_resource type="Texture2D" uid="uid://blqd6tvosa684" path="res://assets/screens/splashscreen/Screenshot 2025-03-08 at 2.58.51 PM.png" id="1_r8qcn"]
+[ext_resource type="Script" path="res://assets/screens/splashscreen/SplashScreenButton.gd" id="2_1fptx"]
+[ext_resource type="VideoStream" path="res://assets/screens/splashscreen/RetroTech_Intro_part1.ogv" id="5_s05xw"]
+
+[sub_resource type="SystemFont" id="SystemFont_73tva"]
+font_names = PackedStringArray("Google Sans")
+font_weight = 925
+subpixel_positioning = 0
+
+[sub_resource type="Theme" id="Theme_ryw3k"]
+
+[sub_resource type="SystemFont" id="SystemFont_mwmgj"]
+subpixel_positioning = 0
+
+[sub_resource type="SystemFont" id="SystemFont_o4axj"]
+font_names = PackedStringArray("Google Sans Display")
+font_weight = 900
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_djes7"]
+bg_color = Color(0, 0, 0, 0.764)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(1, 1, 1, 0.629)
+shadow_size = 11
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sawh2"]
+bg_color = Color(0, 0, 0, 0.764)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.921569, 0.682353, 0.0196078, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0.925, 0.686, 0.008, 0.565)
+shadow_size = 11
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_im4bx"]
+bg_color = Color(0, 0, 0, 0.764)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+corner_radius_top_left = 13
+corner_radius_top_right = 13
+corner_radius_bottom_right = 13
+corner_radius_bottom_left = 13
+expand_margin_left = 100.0
+expand_margin_top = 25.0
+expand_margin_right = 100.0
+expand_margin_bottom = 25.0
+shadow_color = Color(1, 1, 1, 0.629)
+shadow_size = 6
+
+[sub_resource type="Theme" id="Theme_advgx"]
+Button/font_sizes/font_size = 32
+Button/fonts/font = SubResource("SystemFont_o4axj")
+Button/styles/disabled = SubResource("StyleBoxFlat_djes7")
+Button/styles/hover = SubResource("StyleBoxFlat_sawh2")
+Button/styles/normal = SubResource("StyleBoxFlat_im4bx")
+
+[sub_resource type="SystemFont" id="SystemFont_bq8qf"]
+font_names = PackedStringArray("Google Sans")
+font_weight = 800
+subpixel_positioning = 0
+
+[node name="SplashScreen" type="Node"]
+script = ExtResource("1_0ojax")
+
+[node name="Backgroundvideo" type="VideoStreamPlayer" parent="."]
+clip_contents = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+stream = ExtResource("1_hhwpq")
+autoplay = true
+loop = true
+
+[node name="StartScreenCanvas" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+process_mode = 3
+
+[node name="TextureRect" type="TextureRect" parent="StartScreenCanvas"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -958.0
+offset_top = -538.0
+offset_right = 962.0
+offset_bottom = 542.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_r8qcn")
+expand_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="StartScreenCanvas/TextureRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -475.0
+offset_top = -215.0
+offset_right = 475.0
+offset_bottom = 215.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0.871, 0.871, 0.871, 0.479)
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_offset_x = 6
+theme_override_constants/shadow_outline_size = 33
+theme_override_fonts/normal_font = SubResource("SystemFont_73tva")
+theme_override_font_sizes/bold_italics_font_size = 170
+theme_override_font_sizes/italics_font_size = 170
+theme_override_font_sizes/mono_font_size = 170
+theme_override_font_sizes/normal_font_size = 170
+theme_override_font_sizes/bold_font_size = 170
+text = "Retro Tech 
+Revolution"
+fit_content = true
+
+[node name="HUD" type="Control" parent="StartScreenCanvas"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = -183.0
+offset_right = -0.5
+offset_bottom = -183.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="StartScreenCanvas/HUD"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -78.5
+offset_top = 196.0
+offset_right = -78.5
+offset_bottom = 196.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="StartScreenCanvas/HUD/Panel"]
+layout_mode = 0
+offset_left = -66.0
+offset_top = 234.0
+offset_right = 232.0
+offset_bottom = 312.0
+
+[node name="HostGame" type="Button" parent="StartScreenCanvas/HUD/Panel/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme = SubResource("Theme_ryw3k")
+theme_override_colors/font_color = Color(1, 0.541176, 0.815686, 1)
+theme_override_fonts/font = SubResource("SystemFont_mwmgj")
+theme_override_font_sizes/font_size = 21
+disabled = true
+text = "Host New Game"
+
+[node name="JoinAsPlayer2" type="Button" parent="StartScreenCanvas/HUD/Panel/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.27451, 0.792157, 0.94902, 1)
+theme_override_font_sizes/font_size = 20
+disabled = true
+text = "Join as new player"
+
+[node name="Start" type="Button" parent="StartScreenCanvas/HUD/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(300, 32)
+layout_mode = 2
+theme = SubResource("Theme_advgx")
+text = "START"
+
+[node name="SinglePlayer" type="Button" parent="StartScreenCanvas/HUD/Panel/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.866667, 0.643137, 0.0392157, 1)
+theme_override_fonts/font = SubResource("SystemFont_bq8qf")
+theme_override_font_sizes/font_size = 20
+action_mode = 0
+text = "PRESS ANY BUTTON TO START"
+script = ExtResource("2_1fptx")
+
+[node name="InitialVideo" type="VideoStreamPlayer" parent="StartScreenCanvas"]
+unique_name_in_owner = true
+z_index = 1
+clip_contents = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+stream = ExtResource("5_s05xw")
+autoplay = true
+
+[connection signal="finished" from="StartScreenCanvas/InitialVideo" to="." method="_on_initial_video_finished"]

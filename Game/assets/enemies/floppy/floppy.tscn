@@ -1,0 +1,180 @@
+[gd_scene load_steps=22 format=3 uid="uid://db8x6ltbsbls5"]
+
+[ext_resource type="Script" path="res://scripts/floppy.gd" id="1_6a204"]
+[ext_resource type="Texture2D" uid="uid://dtq46sp34kb6d" path="res://assets/enemies/floppy/floppy-disk-bouncing.png" id="1_inpsm"]
+[ext_resource type="Shader" path="res://shaders/player_flash.gdshader" id="2_i2mlg"]
+[ext_resource type="Texture2D" uid="uid://2bp2tvmjnuuh" path="res://levels/level_0_5/white_smoke.png" id="4_wsjpc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vpt3u"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cewip"]
+resource_local_to_scene = true
+shader = ExtResource("2_i2mlg")
+shader_parameter/flash_color = Color(0.762484, 0.090139, 0.589687, 1)
+shader_parameter/flash_value = null
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yq5ej"]
+atlas = ExtResource("1_inpsm")
+region = Rect2(0, 0, 80, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_62ynl"]
+atlas = ExtResource("1_inpsm")
+region = Rect2(240, 0, 80, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uimjc"]
+atlas = ExtResource("1_inpsm")
+region = Rect2(0, 0, 80, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jxnhj"]
+atlas = ExtResource("1_inpsm")
+region = Rect2(80, 0, 80, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pb86k"]
+atlas = ExtResource("1_inpsm")
+region = Rect2(160, 0, 80, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_12gje"]
+atlas = ExtResource("1_inpsm")
+region = Rect2(240, 0, 80, 62)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p3pui"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yq5ej")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_62ynl")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uimjc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jxnhj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pb86k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_12gje")
+}],
+"loop": true,
+"name": &"bouncing",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_iojw5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/flash_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [null]
+}
+
+[sub_resource type="Animation" id="Animation_10dai"]
+resource_name = "enemyHit"
+length = 0.45
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/flash_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.366667, 0.4, 0.433333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [null, 0.5, 0.5, 1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gm04l"]
+_data = {
+"RESET": SubResource("Animation_iojw5"),
+"enemyHit": SubResource("Animation_10dai")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jmtoh"]
+size = Vector2(68, 63)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ka8f5"]
+bg_color = Color(0.760849, 0.561279, 0.170325, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="Gradient" id="Gradient_jfa7b"]
+offsets = PackedFloat32Array(0, 0.169617, 1)
+colors = PackedColorArray(0.712818, 0.724011, 0.98619, 1, 0.984331, 0.705573, 0.784481, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6quel"]
+gradient = SubResource("Gradient_jfa7b")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_58yrh"]
+lifetime_randomness = 0.15
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 128.0
+angle_min = -84.3
+angle_max = 132.3
+gravity = Vector3(50, -150, 0)
+linear_accel_min = -29.53
+linear_accel_max = 41.79
+scale_min = 6.0
+scale_max = 14.43
+color = Color(0.859915, 0.560524, 0.555234, 0.568627)
+color_ramp = SubResource("GradientTexture1D_6quel")
+
+[node name="floppy" type="CharacterBody2D"]
+light_mask = 3
+material = SubResource("ShaderMaterial_vpt3u")
+collision_layer = 2
+collision_mask = 15
+platform_floor_layers = 4278190080
+script = ExtResource("1_6a204")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_cewip")
+sprite_frames = SubResource("SpriteFrames_p3pui")
+animation = &"bouncing"
+autoplay = "bouncing"
+frame_progress = 0.879117
+
+[node name="healthDepletion" type="AnimationPlayer" parent="AnimatedSprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_gm04l")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 1.5)
+shape = SubResource("RectangleShape2D_jmtoh")
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = 26.0
+offset_top = 58.0
+offset_right = 94.0
+offset_bottom = 72.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_ka8f5")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="absorption" type="GPUParticles2D" parent="."]
+visible = false
+amount = 200
+amount_ratio = 0.4614
+process_material = SubResource("ParticleProcessMaterial_58yrh")
+texture = ExtResource("4_wsjpc")
+lifetime = 6.79

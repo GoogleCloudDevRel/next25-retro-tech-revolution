@@ -1,0 +1,191 @@
+[gd_scene load_steps=16 format=3 uid="uid://dn63sblg3fy3m"]
+
+[ext_resource type="Script" path="res://scripts/controls_screen.gd" id="1_dvn23"]
+[ext_resource type="PackedScene" uid="uid://daatymj755m4a" path="res://assets/random_squares.tscn" id="2_b1q8q"]
+[ext_resource type="Texture2D" uid="uid://daapbfosnxnwf" path="res://assets/screens/controlsScreen/controller.png" id="2_r1eg8"]
+[ext_resource type="Texture2D" uid="uid://dokg7y7bc3k1i" path="res://assets/screens/controlsScreen/Vector 536.png" id="4_sxqrw"]
+[ext_resource type="Texture2D" uid="uid://c38luix6xwbea" path="res://assets/screens/controlsScreen/Vector 537.png" id="5_y8kl4"]
+[ext_resource type="Texture2D" uid="uid://d1olp65i3uqtp" path="res://assets/screens/controlsScreen/USE THE TOOL.png" id="6_hw1yn"]
+[ext_resource type="Texture2D" uid="uid://ceukx37gdenq0" path="res://assets/screens/controlsScreen/NEXT TOOL.png" id="7_6w002"]
+[ext_resource type="Texture2D" uid="uid://cgbdinkc5u0m7" path="res://assets/screens/controlsScreen/PAUSE GAME.png" id="8_y7v3h"]
+[ext_resource type="Texture2D" uid="uid://duesf5u241gjq" path="res://assets/screens/controlsScreen/CALL FOR GEMINI ASSISTANCE.png" id="9_pxm22"]
+[ext_resource type="Texture2D" uid="uid://bbyockhj5k2vt" path="res://assets/screens/controlsScreen/CHARACTER CONTROLS.png" id="10_gkkv0"]
+[ext_resource type="Texture2D" uid="uid://dophn2sdh82ha" path="res://assets/screens/controlsScreen/Vector 538.png" id="11_rr720"]
+[ext_resource type="Texture2D" uid="uid://c4tdmkihm7u2x" path="res://assets/screens/controlsScreen/Vector 542.png" id="12_jbqjc"]
+[ext_resource type="PackedScene" uid="uid://ykfi24r6o3m3" path="res://assets/gcp_overlay/gcp_overlay.tscn" id="13_s3htl"]
+
+[sub_resource type="SystemFont" id="SystemFont_nqgue"]
+font_names = PackedStringArray("Google Sans")
+font_weight = 800
+subpixel_positioning = 0
+
+[sub_resource type="SystemFont" id="SystemFont_40jaw"]
+font_names = PackedStringArray("Google Sans")
+font_weight = 500
+subpixel_positioning = 0
+
+[node name="Controls" type="Node"]
+script = ExtResource("1_dvn23")
+
+[node name="outerboarder" type="Node2D" parent="."]
+visible = false
+
+[node name="top" type="ColorRect" parent="outerboarder"]
+offset_right = 1920.0
+offset_bottom = 48.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="32px-spacer" type="ColorRect" parent="outerboarder"]
+offset_left = -10.0
+offset_top = 665.0
+offset_right = 1910.0
+offset_bottom = 713.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="32px-spacer2" type="ColorRect" parent="outerboarder"]
+offset_left = 961.0
+offset_top = 966.0
+offset_right = 1446.0
+offset_bottom = 1014.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="bottom" type="ColorRect" parent="outerboarder"]
+offset_top = 1032.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="left" type="ColorRect" parent="outerboarder"]
+offset_right = 48.0
+offset_bottom = 1080.0
+color = Color(0.956863, 0.705882, 0, 1)
+
+[node name="right" type="ColorRect" parent="outerboarder"]
+offset_left = 1872.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="center-topbottom" type="ColorRect" parent="outerboarder"]
+offset_left = 960.0
+offset_right = 961.0
+offset_bottom = 1080.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="center-topbottom2" type="ColorRect" parent="outerboarder"]
+offset_left = 475.0
+offset_top = 1.0
+offset_right = 476.0
+offset_bottom = 1081.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="center-topbottom3" type="ColorRect" parent="outerboarder"]
+offset_left = 1446.0
+offset_top = 1.0
+offset_right = 1447.0
+offset_bottom = 1081.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="center-leftright" type="ColorRect" parent="outerboarder"]
+offset_top = 540.0
+offset_right = 1920.0
+offset_bottom = 541.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="RandomSquares" parent="." instance=ExtResource("2_b1q8q")]
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 48
+theme_override_constants/margin_bottom = 48
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="title" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/normal_font = SubResource("SystemFont_nqgue")
+theme_override_font_sizes/normal_font_size = 54
+bbcode_enabled = true
+text = "[center]GAME CONTROLS[/center]"
+fit_content = true
+
+[node name="Background" type="TextureRect" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("2_r1eg8")
+stretch_mode = 2
+
+[node name="PressXKeyLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+theme_override_colors/default_color = Color(0.513726, 0.52549, 0.541176, 1)
+theme_override_fonts/normal_font = SubResource("SystemFont_40jaw")
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "[center]PRESS [color=\"#F4B400\"]X[/color] TO CONTINUE[/center]"
+fit_content = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="MarginContainer"]
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/CanvasLayer"]
+offset_left = 1158.0
+offset_top = 331.0
+offset_right = 1662.0
+offset_bottom = 561.0
+rotation = 0.445668
+texture = ExtResource("4_sxqrw")
+
+[node name="TextureRect4" type="TextureRect" parent="MarginContainer/CanvasLayer"]
+offset_left = 1043.0
+offset_top = 245.0
+offset_right = 1594.0
+offset_bottom = 537.0
+texture = ExtResource("5_y8kl4")
+
+[node name="TextureRect3" type="TextureRect" parent="MarginContainer/CanvasLayer"]
+offset_left = 1152.0
+offset_top = 337.0
+offset_right = 1656.0
+offset_bottom = 567.0
+scale = Vector2(0.837986, 0.922302)
+texture = ExtResource("4_sxqrw")
+
+[node name="UseTheTool" type="Sprite2D" parent="MarginContainer/CanvasLayer"]
+position = Vector2(1549, 602)
+texture = ExtResource("6_hw1yn")
+
+[node name="NextTool" type="Sprite2D" parent="MarginContainer/CanvasLayer"]
+position = Vector2(1559, 446)
+texture = ExtResource("7_6w002")
+
+[node name="PauseGame" type="Sprite2D" parent="MarginContainer/CanvasLayer"]
+position = Vector2(1056, 211)
+texture = ExtResource("8_y7v3h")
+
+[node name="CallForGeminiAssistance" type="Sprite2D" parent="MarginContainer/CanvasLayer"]
+position = Vector2(1666, 358)
+texture = ExtResource("9_pxm22")
+
+[node name="CharacterControls" type="Sprite2D" parent="MarginContainer/CanvasLayer"]
+position = Vector2(821, 770)
+texture = ExtResource("10_gkkv0")
+
+[node name="Vector538" type="Sprite2D" parent="MarginContainer/CanvasLayer"]
+position = Vector2(821, 656)
+texture = ExtResource("11_rr720")
+
+[node name="Vector542" type="Sprite2D" parent="MarginContainer/CanvasLayer"]
+position = Vector2(1057, 299)
+texture = ExtResource("12_jbqjc")
+
+[node name="gcp_overlay" parent="MarginContainer" instance=ExtResource("13_s3htl")]

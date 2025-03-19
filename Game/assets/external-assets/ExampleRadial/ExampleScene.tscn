@@ -1,0 +1,88 @@
+[gd_scene load_steps=10 format=3 uid="uid://dp10l18ehlv1b"]
+
+[ext_resource type="Script" path="res://assets/external-assets/ExampleRadial/ExampleScene.gd" id="3"]
+[ext_resource type="Texture2D" uid="uid://s7g8ojicba0c" path="res://assets/radial-menu/icons/spray-can-s.png" id="3_to2tl"]
+[ext_resource type="Script" path="res://addons/radial_menu/RadialMenu.gd" id="4"]
+[ext_resource type="Texture2D" uid="uid://dab7txjnol7mc" path="res://assets/radial-menu/icons/shredder-s.png" id="4_dkvms"]
+[ext_resource type="Texture2D" uid="uid://btnbslpkj4k3d" path="res://assets/radial-menu/icons/blower-s.png" id="5_7hwa7"]
+[ext_resource type="Texture2D" uid="uid://bhgfgdk2lxhe3" path="res://assets/radial-menu/icons/crimping-tool-s.png" id="6_wamds"]
+[ext_resource type="Texture2D" uid="uid://c4pmc5qambcwl" path="res://assets/radial-menu/icons/floppy-disk-cleaner.png" id="7_ys4ec"]
+[ext_resource type="Texture2D" uid="uid://cib1anl1ny3gc" path="res://assets/radial-menu/icons/universal-connector-s.png" id="8_k35gm"]
+[ext_resource type="Texture2D" uid="uid://cuevvjryf1ucv" path="res://assets/radial-menu/icons/firewall-v2-s.png" id="9_vun0k"]
+
+[node name="ExampleScene" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3")
+
+[node name="RadialMenu" type="Container" parent="."]
+layout_mode = 2
+script = ExtResource("4")
+snap = true
+color_fg = Color(0.387697, 0.331346, 0.553387, 1)
+bevel_width = 0.38
+bevel_color = Color(0.674784, 0.199184, 0.507264, 1)
+modulate_enabled = true
+modulate_default = Color(0.227451, 0.227451, 0.227451, 1)
+
+[node name="spraycan" type="Button" parent="RadialMenu"]
+modulate = Color(0.227451, 0.227451, 0.227451, 1)
+layout_mode = 2
+focus_mode = 0
+icon = ExtResource("3_to2tl")
+flat = true
+icon_alignment = 1
+
+[node name="shredder" type="Button" parent="RadialMenu"]
+modulate = Color(0.227451, 0.227451, 0.227451, 1)
+layout_mode = 2
+focus_mode = 0
+icon = ExtResource("4_dkvms")
+flat = true
+icon_alignment = 1
+
+[node name="blower" type="Button" parent="RadialMenu"]
+modulate = Color(0.227451, 0.227451, 0.227451, 1)
+layout_mode = 2
+focus_mode = 0
+icon = ExtResource("5_7hwa7")
+flat = true
+icon_alignment = 1
+
+[node name="crimping-tool" type="Button" parent="RadialMenu"]
+modulate = Color(0.227451, 0.227451, 0.227451, 1)
+layout_mode = 2
+focus_mode = 0
+icon = ExtResource("6_wamds")
+flat = true
+icon_alignment = 1
+
+[node name="floppy-cleaner" type="Button" parent="RadialMenu"]
+modulate = Color(0.227451, 0.227451, 0.227451, 1)
+layout_mode = 2
+focus_mode = 0
+icon = ExtResource("7_ys4ec")
+flat = true
+icon_alignment = 1
+
+[node name="universal-connector" type="Button" parent="RadialMenu"]
+modulate = Color(0.227451, 0.227451, 0.227451, 1)
+layout_mode = 2
+focus_mode = 0
+icon = ExtResource("8_k35gm")
+flat = true
+icon_alignment = 1
+
+[node name="firewall" type="Button" parent="RadialMenu"]
+modulate = Color(0.227451, 0.227451, 0.227451, 1)
+layout_mode = 2
+focus_mode = 0
+icon = ExtResource("9_vun0k")
+flat = true
+icon_alignment = 1
+
+[connection signal="hovered" from="RadialMenu" to="." method="_on_radial_menu_hovered"]
+[connection signal="selected" from="RadialMenu" to="." method="_on_radial_menu_selected"]

@@ -1,0 +1,691 @@
+[gd_scene load_steps=55 format=3 uid="uid://dkddtwn5gkisp"]
+
+[ext_resource type="Script" path="res://levels/level_1/Player/Scripts/player.gd" id="1_dhwja"]
+[ext_resource type="Texture2D" uid="uid://dojw02iv386ie" path="res://levels/level_1/Player/Sprites/RetroPlayerSprite.png" id="1_i1wrl"]
+[ext_resource type="Texture2D" uid="uid://bv0csemkndvxa" path="res://levels/level_1/Player/Assets/Shadow.png" id="2_d1u7b"]
+[ext_resource type="Shader" path="res://shaders/player_flash.gdshader" id="3_1ynf5"]
+[ext_resource type="Texture2D" uid="uid://bojl7g2v4vc1d" path="res://levels/level_1/Player/Assets/light.png" id="3_l6ng5"]
+[ext_resource type="Script" path="res://levels/level_1/Player/Scripts/player_state_machine.gd" id="4_egucv"]
+[ext_resource type="Script" path="res://levels/level_1/Player/Scripts/state_idle.gd" id="5_04s8s"]
+[ext_resource type="Script" path="res://levels/level_1/Player/Scripts/state_walk.gd" id="6_ldc3a"]
+[ext_resource type="Script" path="res://levels/level_1/Player/Scripts/state_attack_unarmed.gd" id="8_hj8sk"]
+[ext_resource type="Script" path="res://levels/level_1/Player/Scripts/state_attack_blaster.gd" id="9_1753t"]
+[ext_resource type="Script" path="res://levels/level_1/Player/Scripts/state_attack_gauntlet.gd" id="10_f7hm8"]
+[ext_resource type="PackedScene" uid="uid://ctiryxaafma1a" path="res://assets/tools/gun/gun.tscn" id="12_0eawm"]
+[ext_resource type="Shader" path="res://shaders/Bullet.gdshader" id="13_1eh3v"]
+[ext_resource type="Shader" path="res://shaders/torchlight.gdshader" id="14_br2u3"]
+[ext_resource type="Texture2D" uid="uid://d3xsaug1by40g" path="res://shaders/LightSprite.png" id="15_mt3th"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fbcb4"]
+shader = ExtResource("3_1ynf5")
+shader_parameter/flash_color = Color(0.928753, 0.16564, 0.33566, 0.968627)
+shader_parameter/flash_value = 0.0
+
+[sub_resource type="Animation" id="Animation_s1t47"]
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/flash_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(0.406126),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_mi4v3"]
+resource_name = "depleting"
+length = 0.47
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/flash_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j0ci4"]
+_data = {
+"RESET": SubResource("Animation_s1t47"),
+"depleting": SubResource("Animation_mi4v3")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ianlx"]
+
+[sub_resource type="Animation" id="Animation_u138x"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_r7ydt"]
+resource_name = "blaster_attack_down"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [63, 64, 65]
+}
+
+[sub_resource type="Animation" id="Animation_ffih3"]
+resource_name = "blaster_attack_side"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [69, 70, 71]
+}
+
+[sub_resource type="Animation" id="Animation_ephsp"]
+resource_name = "blaster_attack_up"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [66, 67, 68]
+}
+
+[sub_resource type="Animation" id="Animation_oe2mg"]
+resource_name = "blaster_idle_down"
+length = 0.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [42, 43, 44]
+}
+
+[sub_resource type="Animation" id="Animation_lliqd"]
+resource_name = "blaster_idle_side"
+length = 0.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [56, 57, 58]
+}
+
+[sub_resource type="Animation" id="Animation_uuho7"]
+resource_name = "blaster_idle_up"
+length = 0.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [49, 50, 51]
+}
+
+[sub_resource type="Animation" id="Animation_xt385"]
+resource_name = "blaster_walk_down"
+length = 0.3
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [45, 46, 47, 48]
+}
+
+[sub_resource type="Animation" id="Animation_8ud0r"]
+resource_name = "blaster_walk_side"
+length = 0.3
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [59, 60, 61, 62]
+}
+
+[sub_resource type="Animation" id="Animation_v7q6c"]
+resource_name = "blaster_walk_up"
+length = 0.3
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [52, 53, 54, 55]
+}
+
+[sub_resource type="Animation" id="Animation_ou5sn"]
+resource_name = "gauntlet_attack_down"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [105, 106, 107]
+}
+
+[sub_resource type="Animation" id="Animation_jvkwf"]
+resource_name = "gauntlet_attack_side"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [111, 112, 113]
+}
+
+[sub_resource type="Animation" id="Animation_8k4h3"]
+resource_name = "gauntlet_attack_up"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [108, 109, 110]
+}
+
+[sub_resource type="Animation" id="Animation_nmwtv"]
+resource_name = "gauntlet_idle_down"
+length = 0.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [84, 85, 86]
+}
+
+[sub_resource type="Animation" id="Animation_kxif0"]
+resource_name = "gauntlet_idle_side"
+length = 0.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [98, 99, 100]
+}
+
+[sub_resource type="Animation" id="Animation_a5kug"]
+resource_name = "gauntlet_idle_up"
+length = 0.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [91, 92, 93]
+}
+
+[sub_resource type="Animation" id="Animation_m406q"]
+resource_name = "gauntlet_walk_down"
+length = 0.3
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [87, 88, 89, 90]
+}
+
+[sub_resource type="Animation" id="Animation_y210j"]
+resource_name = "gauntlet_walk_side"
+length = 0.3
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [101, 102, 103, 104]
+}
+
+[sub_resource type="Animation" id="Animation_l6ekf"]
+resource_name = "gauntlet_walk_up"
+length = 0.3
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [94, 95, 96, 97]
+}
+
+[sub_resource type="Animation" id="Animation_fronf"]
+resource_name = "unarmed_attack_down"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [21, 22, 23]
+}
+
+[sub_resource type="Animation" id="Animation_cs8kb"]
+resource_name = "unarmed_attack_side"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [27, 28, 29]
+}
+
+[sub_resource type="Animation" id="Animation_mbvv5"]
+resource_name = "unarmed_attack_up"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [24, 25, 26]
+}
+
+[sub_resource type="Animation" id="Animation_uburn"]
+resource_name = "unarmed_idle_down"
+length = 0.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_uwboy"]
+resource_name = "unarmed_idle_side"
+length = 0.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [14, 15, 16]
+}
+
+[sub_resource type="Animation" id="Animation_88jgc"]
+resource_name = "unarmed_idle_up"
+length = 0.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [7, 8, 9]
+}
+
+[sub_resource type="Animation" id="Animation_fnp2s"]
+resource_name = "unarmed_walk_down"
+length = 0.3
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [3, 4, 5, 6]
+}
+
+[sub_resource type="Animation" id="Animation_4i1a0"]
+resource_name = "unarmed_walk_side"
+length = 0.3
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [17, 18, 19, 20]
+}
+
+[sub_resource type="Animation" id="Animation_wydma"]
+resource_name = "unarmed_walk_up"
+length = 0.3
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [10, 11, 12, 13]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nxqh2"]
+_data = {
+"RESET": SubResource("Animation_u138x"),
+"blaster_attack_down": SubResource("Animation_r7ydt"),
+"blaster_attack_side": SubResource("Animation_ffih3"),
+"blaster_attack_up": SubResource("Animation_ephsp"),
+"blaster_idle_down": SubResource("Animation_oe2mg"),
+"blaster_idle_side": SubResource("Animation_lliqd"),
+"blaster_idle_up": SubResource("Animation_uuho7"),
+"blaster_walk_down": SubResource("Animation_xt385"),
+"blaster_walk_side": SubResource("Animation_8ud0r"),
+"blaster_walk_up": SubResource("Animation_v7q6c"),
+"gauntlet_attack_down": SubResource("Animation_ou5sn"),
+"gauntlet_attack_side": SubResource("Animation_jvkwf"),
+"gauntlet_attack_up": SubResource("Animation_8k4h3"),
+"gauntlet_idle_down": SubResource("Animation_nmwtv"),
+"gauntlet_idle_side": SubResource("Animation_kxif0"),
+"gauntlet_idle_up": SubResource("Animation_a5kug"),
+"gauntlet_walk_down": SubResource("Animation_m406q"),
+"gauntlet_walk_side": SubResource("Animation_y210j"),
+"gauntlet_walk_up": SubResource("Animation_l6ekf"),
+"unarmed_attack_down": SubResource("Animation_fronf"),
+"unarmed_attack_side": SubResource("Animation_cs8kb"),
+"unarmed_attack_up": SubResource("Animation_mbvv5"),
+"unarmed_idle_down": SubResource("Animation_uburn"),
+"unarmed_idle_side": SubResource("Animation_uwboy"),
+"unarmed_idle_up": SubResource("Animation_88jgc"),
+"unarmed_walk_down": SubResource("Animation_fnp2s"),
+"unarmed_walk_side": SubResource("Animation_4i1a0"),
+"unarmed_walk_up": SubResource("Animation_wydma")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qj0eg"]
+size = Vector2(82, 163)
+
+[sub_resource type="SystemFont" id="SystemFont_rvmw2"]
+font_names = PackedStringArray("Google Sans")
+font_weight = 800
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_40aef"]
+bg_color = Color(0.203922, 0.658824, 0.321569, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rhdgm"]
+shader = ExtResource("13_1eh3v")
+shader_parameter/influence = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kkl17"]
+shader = ExtResource("14_br2u3")
+shader_parameter/intensity = 10.0
+
+[node name="Player" type="CharacterBody2D"]
+z_index = 1
+scale = Vector2(0.995666, 0.991305)
+collision_mask = 16
+script = ExtResource("1_dhwja")
+
+[node name="ShadowSprite2D2" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(0.0663268, 3)
+scale = Vector2(0.75, 0.9)
+texture = ExtResource("2_d1u7b")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_fbcb4")
+position = Vector2(0, -21)
+texture = ExtResource("1_i1wrl")
+hframes = 21
+vframes = 6
+
+[node name="healthDepletionAnimation" type="AnimationPlayer" parent="Sprite2D"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_j0ci4")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ianlx")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_nxqh2")
+}
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(0.752192, 0.868108, 0.994971, 1)
+energy = 0.5
+shadow_enabled = true
+shadow_filter = 1
+shadow_filter_smooth = 5.0
+texture = ExtResource("3_l6ng5")
+texture_scale = 1.2
+
+[node name="PointLight2D2" type="PointLight2D" parent="."]
+color = Color(0.960432, 0.906828, 0.908405, 1)
+energy = 0.8
+shadow_filter = 1
+shadow_filter_smooth = 5.0
+texture = ExtResource("3_l6ng5")
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("4_egucv")
+
+[node name="Walk" type="Node" parent="StateMachine"]
+script = ExtResource("6_ldc3a")
+move_speed = null
+weapon_types = null
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("5_04s8s")
+
+[node name="AttackUnarmed" type="Node" parent="StateMachine"]
+script = ExtResource("8_hj8sk")
+attack_animation_duration = null
+
+[node name="AttackBlaster" type="Node" parent="StateMachine"]
+script = ExtResource("9_1753t")
+attack_animation_duration = null
+
+[node name="AttackGauntlet" type="Node" parent="StateMachine"]
+script = ExtResource("10_f7hm8")
+attack_animation_duration = null
+
+[node name="HurtBox" type="Area2D" parent="."]
+position = Vector2(0, -24)
+scale = Vector2(0.399998, 0.360003)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionArea" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(5, 13)
+shape = SubResource("RectangleShape2D_qj0eg")
+debug_color = Color(0.919235, 0.219135, 0.458756, 0.42)
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -49.2133
+offset_top = -46.4035
+offset_right = 18.7867
+offset_bottom = -22.4035
+scale = Vector2(0.518958, 0.640001)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_rvmw2")
+theme_override_font_sizes/font_size = 15
+theme_override_styles/fill = SubResource("StyleBoxFlat_40aef")
+value = 100.0
+rounded = true
+
+[node name="Gun" parent="." instance=ExtResource("12_0eawm")]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_rhdgm")
+position = Vector2(2.96176e-07, -16.1403)
+
+[node name="Light2DAdd" type="PointLight2D" parent="Gun"]
+visible = false
+material = SubResource("ShaderMaterial_kkl17")
+color = Color(0.880483, 0.877499, 0.991036, 1)
+shadow_enabled = true
+texture = ExtResource("15_mt3th")

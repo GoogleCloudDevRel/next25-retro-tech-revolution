@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://dxxvc2j6427mo"]
+
+[ext_resource type="Texture2D" uid="uid://mbb0wp280hki" path="res://levels/level_0_5/floor/Dungeon.png" id="1_bwl1b"]
+[ext_resource type="Script" path="res://scripts/level_exit.gd" id="1_utyhx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lxc6q"]
+size = Vector2(36, 44)
+
+[node name="LevelExit" type="Area2D"]
+collision_layer = 65537
+script = ExtResource("1_utyhx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -11)
+texture = ExtResource("1_bwl1b")
+region_enabled = true
+region_rect = Rect2(9.5, 519.25, 44, 47)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_lxc6q")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

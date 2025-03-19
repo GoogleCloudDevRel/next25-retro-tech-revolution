@@ -1,0 +1,74 @@
+[gd_resource type="VisualShader" load_steps=5 format=3 uid="uid://b28tntt8ms3et"]
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_a2ble"]
+parameter_name = "tint"
+default_value_enabled = true
+default_value = Color(0, 0, 0, 1)
+
+[sub_resource type="VisualShaderNodeBooleanParameter" id="VisualShaderNodeBooleanParameter_2vkrn"]
+parameter_name = "Enabled"
+
+[sub_resource type="VisualShaderNodeIf" id="VisualShaderNodeIf_4t0j5"]
+default_input_values = [0, 0.0, 1, 1.0, 2, 1e-05, 3, Vector3(0, 0, 0), 4, Vector3(0, 0, 0), 5, Vector3(0, 0, 0)]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_coosb"]
+input_name = "color"
+
+[resource]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+uniform bool Enabled;
+uniform vec4 tint : source_color = vec4(0.000000, 0.000000, 0.000000, 1.000000);
+
+
+
+void fragment() {
+// BooleanParameter:3
+	bool n_out3p0 = Enabled;
+
+
+// ColorParameter:2
+	vec4 n_out2p0 = tint;
+
+
+// Input:6
+	vec4 n_out6p0 = COLOR;
+
+
+	vec3 n_out4p0;
+// If:4
+	float n_in4p1 = 1.00000;
+	float n_in4p2 = 0.00001;
+	if(abs((n_out3p0 ? 1.0 : 0.0) - n_in4p1) < n_in4p2)
+	{
+		n_out4p0 = vec3(n_out2p0.xyz);
+	}
+	else if((n_out3p0 ? 1.0 : 0.0) < n_in4p1)
+	{
+		n_out4p0 = vec3(n_out6p0.xyz);
+	}
+	else
+	{
+		n_out4p0 = vec3(n_out6p0.xyz);
+	}
+
+
+// Output:0
+	COLOR.rgb = n_out4p0;
+
+
+}
+"
+mode = 1
+flags/light_only = false
+nodes/fragment/0/position = Vector2(1200, 140)
+nodes/fragment/2/node = SubResource("VisualShaderNodeColorParameter_a2ble")
+nodes/fragment/2/position = Vector2(-60, 480)
+nodes/fragment/3/node = SubResource("VisualShaderNodeBooleanParameter_2vkrn")
+nodes/fragment/3/position = Vector2(-60, 80)
+nodes/fragment/4/node = SubResource("VisualShaderNodeIf_4t0j5")
+nodes/fragment/4/position = Vector2(780, 80)
+nodes/fragment/6/node = SubResource("VisualShaderNodeInput_coosb")
+nodes/fragment/6/position = Vector2(-100, 1020)
+nodes/fragment/connections = PackedInt32Array(3, 0, 4, 0, 2, 0, 4, 3, 4, 0, 0, 0, 6, 0, 4, 4, 6, 0, 4, 5)

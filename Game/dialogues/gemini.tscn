@@ -1,0 +1,71 @@
+[gd_scene load_steps=6 format=3 uid="uid://q2bsklea4iyx"]
+
+[ext_resource type="Shader" path="res://shaders/grandient_border.gdshader" id="1_dks6v"]
+[ext_resource type="Texture2D" uid="uid://c1ygngtrjj55j" path="res://dialogues/gemini-logo.png" id="2_8wqs5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s04dw"]
+shader = ExtResource("1_dks6v")
+shader_parameter/border_width_pixels = 12.5
+shader_parameter/corner_radius = 0.036
+shader_parameter/border_softness = 0.0
+shader_parameter/gradient_direction = 0
+shader_parameter/gradient_color1 = Color(0.262745, 0.615686, 0.87451, 1)
+shader_parameter/gradient_color2 = Color(0.309804, 0.529412, 0.929412, 1)
+shader_parameter/gradient_color3 = Color(0.580392, 0.462745, 0.772549, 1)
+shader_parameter/gradient_color4 = Color(0.737255, 0.407843, 0.556863, 1)
+shader_parameter/gradient_color5 = Color(0.839216, 0.392157, 0.364706, 1)
+shader_parameter/color_pos1 = 0.0
+shader_parameter/color_pos2 = 0.52
+shader_parameter/color_pos3 = 0.78
+shader_parameter/color_pos4 = 0.89
+shader_parameter/color_pos5 = 1.0
+shader_parameter/color_count = 5
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6v0ei"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q05uj"]
+bg_color = Color(0, 0, 0, 1)
+border_color = Color(0.00184107, 0.00184107, 0.00184107, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="Gemini" type="Node2D"]
+
+[node name="Panel" type="Panel" parent="."]
+visible = false
+modulate = Color(0.977988, 0.983491, 0.98614, 1)
+z_index = 1
+material = SubResource("ShaderMaterial_s04dw")
+offset_top = 1.0
+offset_right = 186.66
+offset_bottom = 60.51
+scale = Vector2(1.133, 1)
+size_flags_horizontal = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+visible = false
+layout_mode = 2
+offset_right = 160.0
+offset_bottom = 60.0
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="Panel" type="Panel" parent="Panel/MarginContainer"]
+visible = false
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 1)
+z_index = 2
+material = SubResource("CanvasItemMaterial_6v0ei")
+custom_minimum_size = Vector2(178.66, 51.51)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_q05uj")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(186.66, 59.51)
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_8wqs5")

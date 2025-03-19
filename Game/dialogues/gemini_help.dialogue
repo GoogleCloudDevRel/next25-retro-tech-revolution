@@ -1,0 +1,4 @@
+~ start
+Gemini: [wave][[Hi|Hello|Howdy]][/wave], here is some help.[wait=1]
+{{SignalBus.gemini_help}}
+=> END
