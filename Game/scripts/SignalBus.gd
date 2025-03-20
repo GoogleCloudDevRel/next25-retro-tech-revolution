@@ -3,7 +3,7 @@ extends Node
 #####Global variables
 var standalone_mode = true #expect local calls to apis
 var client_id = "1"
-var session_id  = "1"
+var session_id
 var score = 0
 var stopwatch = 0.0 
 
@@ -21,6 +21,9 @@ signal pause_game()
 signal unpause_game()
 
 signal score_up(new_score:int) #new
+
+
+signal send_screenshot_to_gcs() 
 
 #user personalisation
 var trivia_result = []
@@ -62,8 +65,10 @@ signal bullet_created(new_bullet:Bullet)
 signal enemy_created(e:Enemy)
 signal enemy_taking_damage(e:Enemy, player_damage:int)
 signal enemy_health_depleted(e:Enemy)#new
+signal floppy_created(floppy:Projectiles)
 
 func _ready() -> void:
+	session_id  = str(Time.get_unix_time_from_system())
 	SignalBus.trivia_question_received.connect(_on_trivia_question_received)
 
 #store it for gemini

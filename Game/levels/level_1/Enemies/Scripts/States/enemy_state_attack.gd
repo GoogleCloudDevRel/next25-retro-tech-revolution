@@ -4,7 +4,7 @@ class_name EnemyStateAttack extends EnemyState
 @export_category("AI")
 @export var state_animation_duration: float = 0.5
 @export var state_cycles_min: int = 1
-@export var state_cycles_max: int = 40
+@export var state_duration_max: int = 8
 @export var next_state: EnemyState 
 
 var _timer: float = 0.0
@@ -29,12 +29,14 @@ func init():
 
 ## What happens when the player enters this State?
 func Enter() -> void:
-	print("attack mode")
+	print("attack state enter")
+	_timer = state_duration_max
 	enemy.update_animation(anim_name)
 	
 	#### fire bullet
 	# Setup timer for controlling fire rate
 	if enemy.can_fire:
+		print("can fire enemy")
 		enemy.timer = Timer.new()
 		enemy.timer.wait_time = 1.0 / enemy.fire_rate
 		enemy.timer.one_shot = true
@@ -45,55 +47,67 @@ func Enter() -> void:
 
 
 func Process(_delta: float) -> EnemyState:
-	player = get_parent().get_parent().get_parent().players[0]
-	var distance_to_player = enemy.global_position.distance_to(player.global_position)
-	var direction_to_player = player.global_position - enemy.global_position
-	# Convert to 4-way direction
-	var new_direction = get_4way_direction(direction_to_player)
-	
-	if distance_to_player <= enemy.detection_radius:
-		# Shoot if we can
-		if enemy.can_fire:
-			# Face the player
-			enemy.ShootingPoint.look_at(player.global_position)
-			if new_direction != current_direction:
-				current_direction = new_direction
-				print("new direction:"+new_direction)
-				animation_player.play( "attack_" + new_direction)
-
-			
-			
-			
-			shoot_at_player()
-			enemy.can_fire = false
-			enemy.timer.start()
-	
-		
 	_timer -= _delta
 	if _timer < 0:
 		return next_state
 	return null
+
+func _physics_process(delta: float) -> void:
+	#print("attack mode")
+	player = find_closest_player(get_parent().get_parent().get_parent().players)
+	
+	if player != null and !enemy.is_dead:
+		var distance_to_player = enemy.global_position.distance_to(player.global_position)
+		
+		
+		if distance_to_player < enemy.detection_radius:
+			var direction_to_player = player.global_position - enemy.global_position
+			# Convert to 4-way direction
+			var new_direction = get_4way_direction(direction_to_player)
+			
+			enemy.sprite.scale.x = -1 if new_direction == "left" else 1
+			var new_animation_direction = "side" if new_direction == "left" or new_direction == "right" else new_direction
+			animation_player.play( "attack_" + new_animation_direction)
+			
+			if distance_to_player <= enemy.detection_radius:
+				# Shoot if we can
+				if enemy.can_fire:
+					print("Fire")
+					# Face the player
+					animation_player.play( "attack_" + new_direction)
+					shoot_at_player(new_direction)
+					enemy.can_fire = false
+					enemy.timer.start()
+	enemy.move_and_slide()
+
+
+func find_closest_player(players):
+	var closest_player
+	var closest_dist = -1
+	if players.size() > 0:
+		for i in range(0, players.size()): 
+			var new_dist = enemy.global_position.distance_to(players[i].global_position)
+			if new_dist < closest_dist or closest_dist == -1:
+				closest_player = players[i]
+				closest_dist = new_dist
+		return closest_player
+	return null
+
 
 
 ## What happens when the player exits this State?
 func Exit() -> void:
 	pass
 
-func shoot_at_player():
+#fire at a player
+func shoot_at_player(new_direction:String):	
+	
 	# Create bullet instance
-	var floppy = projectile.instantiate()
 	
-	# Set bullet position
-	floppy.global_position = enemy.ShootingPoint.global_position
-	
-	# Calculate direction vector toward player
-	var direction = (player.global_position - enemy.ShootingPoint.global_position).normalized()
-	
-	# Set bullet direction
-	floppy.direction = direction
-	
-	# Add bullet to scene
-	get_tree().current_scene.add_child(floppy)
+	for i in range(1, randi_range(1, enemy.max_bullet)):
+		var floppy = projectile.instantiate()
+		SignalBus.floppy_created.emit(floppy,  enemy.global_position)
+		SignalBus.wait(1)
 
 func get_4way_direction(direction_vector):
 	# Normalize the vector
@@ -113,11 +127,11 @@ func get_4way_direction(direction_vector):
 	# 135-225 degrees: LEFT (3)
 	# 225-315 degrees: UP (1)
 	if degrees >= 315 or degrees < 45:
-		return "side"
+		return "right"
 	elif degrees >= 45 and degrees < 135:
 		return "down"
 	elif degrees >= 135 and degrees < 225:
-		return "side"
+		return "left"
 	else:  # degrees >= 225 and degrees < 315
 		return "up"
 

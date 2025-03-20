@@ -34,9 +34,6 @@ func _ready():
 	add_child(projectile)
 	
 	
-	
-	rotation = direction.angle()
-	
 func _physics_process(delta: float) -> void:
 	#direction = Vector2.RIGHT.rotated(rotation)
 	position += direction * speed * delta
@@ -45,10 +42,7 @@ func _physics_process(delta: float) -> void:
 	if travelled_distance > MAX_BULLET_RANGE:
 		queue_free()	
 
-#set initial position
-#func set_shooting_point(p):
-	#global_position = p.global_position
-	#global_rotation = p.global_rotation
+
 	
 #we collided with an enemy
 func _on_body_entered(body: Node2D) -> void:

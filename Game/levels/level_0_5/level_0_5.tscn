@@ -443,5 +443,4 @@ position = Vector2(259, 38)
 position = Vector2(1342, 1)
 
 [node name="Boss2" parent="." index="28" instance=ExtResource("13_s0h25")]
-position = Vector2(1776, -1429)
-detection_radius = 0.0
+position = Vector2(1842, -1408)

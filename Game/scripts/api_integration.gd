@@ -16,7 +16,11 @@ var gcp_token = ""
 
 var counter_before_gemini_help = 20 #wait 20 bullets before calling gemini for help 
 
-var endpoint = "http://localhost"
+var endpoint = "localhost"
+var port = "5055"
+
+
+
 ###connect on all the messages
 func _ready():
 	##connect with bus
@@ -24,13 +28,51 @@ func _ready():
 	SignalBus.gemini_help_requested.connect(_on_need_gemini_help)
 	SignalBus.gemini_backstory_requested.connect( _on_get_gemini_backstory)
 	SignalBus.gemini_backstory_image_requested.connect(call_api_bridge_generate_backstory_image)
+	SignalBus.send_screenshot_to_gcs.connect(_on_send_screenshots_to_gcs)
 	#print("---api integration ready---")
+
+###send regularly send screenshots of the game to GCS
+func _on_send_screenshots_to_gcs():
+	print("Sending Screenshot")
+	
+	var capture = get_viewport().get_texture().get_image()
+	var buffer = capture.save_png_to_buffer()
+	var base64_string = Marshalls.raw_to_base64(buffer)
+	var body = JSON.stringify({
+		"image": "data:image/png;base64," + base64_string,
+		"session_id": SignalBus.session_id
+	})
+
+	# Make the HTTP request
+	var http_request  = HTTPRequest.new()
+	add_child(http_request)
+	http_request.request_completed.connect(_on_send_screenshots_to_gcs_request_completed.bind(http_request))
+	http_request.request(
+		"http://"+endpoint+":"+port+"/publish_screenshot_image",
+		["Content-Type: application/json"],
+		HTTPClient.METHOD_POST,
+		body
+	)
+	
+#receive result
+func _on_send_screenshots_to_gcs_request_completed(result, response_code, headers, body):
+	if result != HTTPRequest.RESULT_SUCCESS:
+		print("HTTP Request failed with error: ", result)
+		return
+	
+	if response_code == 200:
+		var json = JSON.parse_string(body.get_string_from_utf8())
+		print("Upload successful! Response: ", json)
+	else:
+		print("Upload failed with response code: ", response_code)
+		print("Response body: ", body.get_string_from_utf8())
+#############################################
 
 ###request support from Gemini sending a screenshot + prompt
 func _on_need_gemini_help():
 	var capture = get_viewport().get_texture().get_image()
 	var _time = Time.get_datetime_string_from_system()
-	var filename = "res://screenshots/Screenshot-{0}.png".format({"0":_time})
+	var filename = "res://screenshots/"+str(SignalBus.session_id)+"screenshot-{0}.png".format({"0":_time})
 	capture.save_png(filename)
 	
 	var prompt_text = "You are assisting a user who is playing a video game. you know that the boss level is on the far top right side of the level,
@@ -73,7 +115,7 @@ func call_api_bridge_generate_backstory_image(prompt):
 	var http_request  = HTTPRequest.new()
 	add_child(http_request)
 	http_request.request_completed.connect(_on_call_api_bridge_backstory_image_request_completed.bind(http_request))
-	var connection ="http://localhost:5055/get_backstory_image"
+	var connection ="http://"+endpoint+":"+port+"/get_backstory_image"
 	var headers = ["Content-type: x-www-form-urlencoded"]
 	http_request.request(connection, headers, HTTPClient.METHOD_POST, prompt) 
 
@@ -92,7 +134,7 @@ func call_api_bridge_analytics(json_string):
 	var http_request  = HTTPRequest.new()
 	add_child(http_request)
 	http_request.request_completed.connect(_on_call_api_bridge_request_completed.bind(http_request))
-	var connection ="http://localhost:5055/backendcomm"
+	var connection ="http://"+endpoint+":"+port+"/backendcomm"
 	var headers = ["Content-type: application/json"]
 	http_request.request(connection, headers, HTTPClient.METHOD_POST, json_string) 
 

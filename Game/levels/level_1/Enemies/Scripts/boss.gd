@@ -2,7 +2,6 @@ class_name Boss extends Enemy
 
 @export var floppy_speed: float = 300.0
 @export var fire_rate: float = 1.0  # Bullets per second
-@export var timer: Timer
 @export var ShootingPoint: Marker2D
 
 # Called when the node enters the scene tree for the first time.
@@ -12,7 +11,8 @@ func _ready() -> void:
 	health = 200.0
 	damage_points = 2
 	can_fire = true
-	detection_radius = 400.0
+	detection_radius = 300.0
+	max_bullet = 5
 	ShootingPoint = %ShootingPoint
 	#player = PlayerManager.player
 	pass # Replace with function body.

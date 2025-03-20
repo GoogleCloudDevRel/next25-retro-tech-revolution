@@ -4,6 +4,10 @@ extends Node2D
 @onready var viewport_display = $GameView/ViewportDisplay
 @onready var game_viewport = $GameViewport
 
+
+#screenshot trigger
+var timer = null
+
 #gemini dialog
 const dialog_template = preload("res://dialogues/gemini_help.dialogue")
 var is_displaying_dialog = false
@@ -30,6 +34,22 @@ func _ready():
 	# Wait one frame to ensure viewport texture is ready
 	await get_tree().process_frame
 	
+	# Create a new timer
+	timer = Timer.new()
+	
+	# Set timer properties
+	timer.wait_time = 10.0
+	timer.autostart = true
+	timer.one_shot = false
+	timer.timeout.connect(_on_timer_timeout)
+	add_child(timer)
+	
+	timer.start()
+	
+	
+	
+	
+	
 	# Set the viewport texture to our display node
 	#viewport_display.texture = game_viewport.get_texture()
 	
@@ -44,6 +64,11 @@ func _ready():
 	#viewport_display.scale = Vector2(3, 3)
 	
 	#game_viewport.handle_input_locally = true
+
+#trigger screen capture and send yo GCS
+func _on_timer_timeout() -> void:
+	SignalBus.send_screenshot_to_gcs.emit()
+
 
 func _input(event: InputEvent) -> void:
 	#if Input.is_action_just_released("up"):

@@ -3,9 +3,13 @@ var states: Array[EnemyState]
 var prev_state: EnemyState
 var current_state: EnemyState
 
+var enemy: Enemy
+var player: Player
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_DISABLED
+	
 	pass
 
 func _process(delta):
@@ -19,37 +23,32 @@ func _physics_process(delta):
 	
 	#manage attacks
 	var is_overlapping = false
-	var p = get_parent().get_parent().players[0]
-	var e = get_parent()
-	if !e.is_dead:
-		var overlapping_enemies = p.hurtbox.get_overlapping_bodies()
-		if overlapping_enemies.size() > 0:
-				for i in overlapping_enemies.size():
-					if overlapping_enemies[i].get_instance_id() == e.get_instance_id():
-						SignalBus.player_taking_damage.emit(p, e)
-						change_state(states[2])
-						p.is_getting_hit(get_parent().damage_points)
-						is_overlapping = true
-		
-		if !is_overlapping: #not overlapping
-			change_state(states[0])		
+	player = get_parent().get_parent().players[0]
+	enemy = get_parent()
+	
+	if !enemy.is_dead:
+		if player != null:
+			var distance_to_player = enemy.global_position.distance_to(player.global_position)
+			if distance_to_player < enemy.detection_radius:
+				change_state(states[2])
+				var overlapping_enemies = player.hurtbox.get_overlapping_bodies()
+				if overlapping_enemies.size() > 0:
+					for i in overlapping_enemies.size():
+						if overlapping_enemies[i].get_instance_id() == enemy.get_instance_id():
+							SignalBus.player_taking_damage.emit(player, enemy)
+							player.is_getting_hit(get_parent().damage_points)
+							is_overlapping = true
+			else: 
+				change_state(states[0])
 	
 		#dead
-		if e.health == 0:
-			print("dead")
+		if enemy.health <= 0:
 			change_state(states[3])
-			e.is_dead = true
+			print("dead")
+			enemy.on_death()
 			
-			SignalBus.player_score_increased.emit(e.points)
-			SignalBus.enemy_health_depleted.emit(e)	
-			%CollisionShape.call_deferred("set", "disabled", true)
-			var script = e.get_script()
+		
 			
-			if script.get_global_name() == "Boss":
-				print("Congrats")
-				SignalBus.wait(5) #wait 5s
-				SignalBus.screen_state.emit(SignalBus.GAMEOVER)
-				
 
 func initialize(_enemy: Enemy) -> void:
 	states = []

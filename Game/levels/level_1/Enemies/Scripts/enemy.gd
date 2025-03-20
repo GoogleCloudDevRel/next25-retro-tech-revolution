@@ -11,7 +11,9 @@ var hit_count = 0
 @export  var is_dead = false
 @export  var id = 0
 @export var can_fire: bool = false
-@export var detection_radius: float = 100.0
+@export var detection_radius: float = 150.0
+@export var timer: Timer
+
 ####Added enemies base mgt ######
 
 #@onready var players = get_parent().players
@@ -29,6 +31,7 @@ var invulnerable: bool = false
 @onready var sprite: Sprite2D = $Sprite2D
 # @onready var hit_box: Hitbox = $Hitbox
 @onready var state_machine: EnemyStateMachine = $EnemyStateMachine
+@export var max_bullet:int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -107,3 +110,18 @@ func _on_body_entered(body: Node2D) -> void:
 	queue_free()
 	if body.has_method("_is_moving"):
 		body.is_getting_hit(damage_points)
+		
+func on_death() -> void:
+		if !is_dead:
+			is_dead = true
+			print("dying ...")
+			SignalBus.player_score_increased.emit(points)
+			SignalBus.enemy_health_depleted.emit(self)	
+			%CollisionShape.call_deferred("set", "disabled", true)
+			var script = self.get_script()
+			if script.get_global_name() == "Boss":
+				print("Congrats")
+				SignalBus.wait(5) #wait 5s
+				SignalBus.screen_state.emit(SignalBus.GAMEOVER)
+	
+	

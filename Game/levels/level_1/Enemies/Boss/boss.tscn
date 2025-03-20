@@ -338,6 +338,7 @@ corner_radius_bottom_left = 8
 
 [node name="Boss" type="CharacterBody2D"]
 collision_layer = 258
+collision_mask = 2
 script = ExtResource("1_1crnf")
 detection_radius = 0.0
 
@@ -346,6 +347,13 @@ modulate = Color(0, 0, 0, 1)
 position = Vector2(0.727042, 80)
 scale = Vector2(2.17092, 1.875)
 texture = ExtResource("1_tbnuk")
+
+[node name="ColorRect" type="ColorRect" parent="ShadowSprite2D2"]
+visible = false
+offset_left = -72.6545
+offset_top = -109.333
+offset_right = 77.3455
+offset_bottom = 40.6667
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_uebxg")
@@ -394,7 +402,7 @@ next_state = NodePath("../Attack")
 
 [node name="Attack" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("next_state")]
 script = ExtResource("7_4vhy7")
-next_state = NodePath("../Death")
+next_state = NodePath("../Idle")
 
 [node name="Death" type="Node" parent="EnemyStateMachine"]
 script = ExtResource("8_187ld")

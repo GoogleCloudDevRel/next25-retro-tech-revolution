@@ -42,6 +42,7 @@ func _ready():
 	players.append(%player)
 	SignalBus.player_created.emit(%player)
 	SignalBus.bullet_created.connect(_on_new_bullet)
+	SignalBus.floppy_created.connect(_on_new_floppy)
 	generateEnemies()
 
 #func _input(event: InputEvent) -> void:
@@ -56,6 +57,18 @@ func _on_new_bullet(b:Bullet):
 	add_child(b)
 	bullets.append(b)
 
+func _on_new_floppy(b:Projectiles, origine_position):
+
+	var direction_to_player = origine_position.direction_to(players[0].global_position).normalized()
+	var variation = Vector2(
+			randf_range(-30, 30),
+			randf_range(-30, 30)
+		)
+	print(direction_to_player)
+	add_child(b)
+	bullets.append(b)
+	b.global_position = origine_position + variation
+	b.direction = direction_to_player
 
 #randomly add enemies
 func generateEnemies():
