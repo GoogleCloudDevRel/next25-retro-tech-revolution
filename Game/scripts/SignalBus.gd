@@ -5,7 +5,9 @@ var standalone_mode = true #expect local calls to apis
 var client_id = "1"
 var session_id
 var score = 0
-var stopwatch = 0.0 
+var stopwatch = 0.0
+
+const SEND_SCREENSHOTS = false 
 
 ### message bus that dispatch events between classes of the game
 ######All game states - our Finite state machine	
@@ -50,7 +52,10 @@ signal gemini_help_requested_details(prompt_text:String, base64_image:String)
 signal gemini_backstory_requested_details(prompt_text:String)
 
 ######options######
-signal tool_changed(new_tool)#new
+signal tool_changed(new_tool)#new to replace with weapon_changed(old_weapon, new_weapon)
+
+signal weapon_activated(weapon_name:String, weapon_idx:int) #to be implemented on server side
+signal weapon_changed(weapon_name:String, weapon_idx:String) #to be implemented on server side
 
 ######player behavior######
 signal player_created(player:Player)

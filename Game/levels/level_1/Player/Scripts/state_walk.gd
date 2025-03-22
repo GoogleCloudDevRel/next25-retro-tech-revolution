@@ -31,6 +31,13 @@ func Physics(_delta: float) -> State:
 ## What happens with input events in this State?
 func HandleInput(_event: InputEvent) -> State:
 	if _event.is_action_pressed("attack"):  # Make sure space is mapped to "attack"
+		#if player.current_weapon == "blaster" and player.is_current_weapon_usable():
+		#	return $"../AttackBlaster"  # Transition to blaster attack state
+		#elif player.current_weapon == "gauntlet" and player.is_current_weapon_usable():
+		#	return $"../AttackGauntlet"  # Transition to gauntlet attack state
+		#else:
+		#	return $"../AttackUnarmed"  # Transition to unarmed attack state
+		
 		match player.current_weapon:
 			"unarmed":
 				return $"../AttackUnarmed"  # Transition to unarmed attack state
@@ -41,6 +48,8 @@ func HandleInput(_event: InputEvent) -> State:
 	elif _event.is_action_pressed("cycle_weapon"):
 		# Cycle to the next weapon
 		current_weapon_index = (current_weapon_index + 1) % weapon_types.size()
+		
+		
 		UpdatePlayerAnimation()
 		player.current_weapon = weapon_types[current_weapon_index]
 	return null

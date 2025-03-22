@@ -13,7 +13,7 @@ func init() -> void:
 
 ## What happens when the player enters this State?
 func Enter() -> void:
-	print("idle state enter")
+	#print("idle state enter")
 	enemy.velocity = Vector2.ZERO
 	_timer = randf_range(state_duration_min, state_duration_max)
 	enemy.update_animation(anim_name)

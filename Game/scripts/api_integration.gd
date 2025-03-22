@@ -33,38 +33,38 @@ func _ready():
 
 ###send regularly send screenshots of the game to GCS
 func _on_send_screenshots_to_gcs():
-	print("Sending Screenshot")
-	
-	var capture = get_viewport().get_texture().get_image()
-	var buffer = capture.save_png_to_buffer()
-	var base64_string = Marshalls.raw_to_base64(buffer)
-	var body = JSON.stringify({
-		"image": "data:image/png;base64," + base64_string,
-		"session_id": SignalBus.session_id
-	})
+	#print("Sending Screenshot")
+	if SignalBus.SEND_SCREENSHOTS:
+		var capture = get_viewport().get_texture().get_image()
+		var buffer = capture.save_png_to_buffer()
+		var base64_string = Marshalls.raw_to_base64(buffer)
+		var body = JSON.stringify({
+			"image": "data:image/png;base64," + base64_string,
+			"session_id": SignalBus.session_id
+		})
 
-	# Make the HTTP request
-	var http_request  = HTTPRequest.new()
-	add_child(http_request)
-	http_request.request_completed.connect(_on_send_screenshots_to_gcs_request_completed.bind(http_request))
-	http_request.request(
-		"http://"+endpoint+":"+port+"/publish_screenshot_image",
-		["Content-Type: application/json"],
-		HTTPClient.METHOD_POST,
-		body
-	)
+		# Make the HTTP request
+		var http_request  = HTTPRequest.new()
+		add_child(http_request)
+		http_request.request_completed.connect(_on_send_screenshots_to_gcs_request_completed.bind(http_request))
+		http_request.request(
+			"http://"+endpoint+":"+port+"/publish_screenshot_image",
+			["Content-Type: application/json"],
+			HTTPClient.METHOD_POST,
+			body
+		)
 	
-#receive result
-func _on_send_screenshots_to_gcs_request_completed(result, response_code, headers, body):
+#receive result result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray, _req_node : HTTPRequest = null
+func _on_send_screenshots_to_gcs_request_completed(result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray, _req_node : HTTPRequest = null):
 	if result != HTTPRequest.RESULT_SUCCESS:
 		print("HTTP Request failed with error: ", result)
 		return
 	
-	if response_code == 200:
+	if _response_code == 200:
 		var json = JSON.parse_string(body.get_string_from_utf8())
 		print("Upload successful! Response: ", json)
 	else:
-		print("Upload failed with response code: ", response_code)
+		print("Upload failed with response code: ", _response_code)
 		print("Response body: ", body.get_string_from_utf8())
 #############################################
 

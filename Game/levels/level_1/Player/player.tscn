@@ -636,23 +636,18 @@ script = ExtResource("4_egucv")
 
 [node name="Walk" type="Node" parent="StateMachine"]
 script = ExtResource("6_ldc3a")
-move_speed = null
-weapon_types = null
 
 [node name="Idle" type="Node" parent="StateMachine"]
 script = ExtResource("5_04s8s")
 
 [node name="AttackUnarmed" type="Node" parent="StateMachine"]
 script = ExtResource("8_hj8sk")
-attack_animation_duration = null
 
 [node name="AttackBlaster" type="Node" parent="StateMachine"]
 script = ExtResource("9_1753t")
-attack_animation_duration = null
 
 [node name="AttackGauntlet" type="Node" parent="StateMachine"]
 script = ExtResource("10_f7hm8")
-attack_animation_duration = null
 
 [node name="HurtBox" type="Area2D" parent="."]
 position = Vector2(0, -24)

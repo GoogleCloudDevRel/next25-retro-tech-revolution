@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://d0p6wso088i1o"]
 
-[ext_resource type="Texture2D" uid="uid://dc5vl232wj3lt" path="res://Player/Sprites/ItemSprites.png" id="1_up1es"]
-[ext_resource type="Texture2D" uid="uid://bv0csemkndvxa" path="res://Player/Assets/Shadow.png" id="2_p1x5s"]
-[ext_resource type="Texture2D" uid="uid://bojl7g2v4vc1d" path="res://Player/Assets/light.png" id="3_1deij"]
+[ext_resource type="Texture2D" uid="uid://dc5vl232wj3lt" path="res://levels/level_1/Player/Sprites/ItemSprites.png" id="1_up1es"]
+[ext_resource type="Texture2D" uid="uid://bv0csemkndvxa" path="res://levels/level_1/Player/Assets/Shadow.png" id="2_p1x5s"]
+[ext_resource type="Texture2D" uid="uid://bojl7g2v4vc1d" path="res://levels/level_1/Player/Assets/light.png" id="3_1deij"]
 
 [sub_resource type="Animation" id="Animation_cdm6f"]
 length = 2.0

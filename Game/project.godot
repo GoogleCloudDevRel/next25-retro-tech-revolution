@@ -83,6 +83,7 @@ config/icon="res://assets/screens/splashscreen/splashscreen.png"
 [autoload]
 
 AgonesSDK="*res://addons/agones/agones_sdk.gd"
+MultiplayerManager="res://scripts/multiplayer_manager.gd"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 SignalBus="*res://scripts/SignalBus.gd"
 ApiIntegration="*res://scripts/api_integration.gd"

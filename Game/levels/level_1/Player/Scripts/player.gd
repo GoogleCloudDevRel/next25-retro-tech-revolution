@@ -1,7 +1,15 @@
 class_name Player extends CharacterBody2D
 var cardinal_direction: Vector2 = Vector2.DOWN
 var direction: Vector2 = Vector2.ZERO
+
+
 var current_weapon: String = "unarmed" # Default weapon state
+#managed the weapons retrieved by the player
+var weapons = [
+	{"name": "unarmed", "disabled":false},
+	{"name": "blaster", "disabled":true},
+	{"name": "gauntlet", "disabled":true},	
+]
 
 ####added to player
 var strength = 50
@@ -25,6 +33,7 @@ var counter = 0
 func _ready():
 		PlayerManager.player = self
 		state_machine.Initialize(self)
+		SignalBus.player_created.emit(self)
 		pass
 
 func _process(_delta):
@@ -63,6 +72,22 @@ func SetDirection() -> bool:
 	cardinal_direction = new_dir
 	sprite.scale.x = -1 if cardinal_direction == Vector2.LEFT else 1
 	return true
+
+#check if a weapon is active or not
+func is_current_weapon_disabled()-> bool:
+	return weapons[weapons.find(current_weapon)]['disabled']
+
+func is_weapon_disabled(idx)-> bool:
+	return weapons[idx]['disabled']
+	
+#activate a weapon
+func activate_weapon(weapon_name:String):
+	var weapon_idx = weapons.find(weapon_name)
+	if weapons[weapon_idx]['disabled']:
+		weapons[weapon_idx]['disabled'] = false
+		SignalBus.weapon_activated.emit(weapon_name, weapon_idx)
+		
+
 
 
 

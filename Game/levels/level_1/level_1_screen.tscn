@@ -1,7 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bpbmk7rt2sikx"]
+[gd_scene load_steps=8 format=3 uid="uid://bpbmk7rt2sikx"]
 
 [ext_resource type="Script" path="res://levels/level_1/Scripts/level_1_screen.gd" id="1_x41gi"]
 [ext_resource type="PackedScene" uid="uid://cd25yxxiep0a5" path="res://levels/level_0_5/level_0_5.tscn" id="2_jdjf6"]
+[ext_resource type="PackedScene" uid="uid://c3i2ddpnr2yju" path="res://assets/hud/hud_weapons.tscn" id="3_0yc1k"]
+[ext_resource type="Script" path="res://levels/level_1/Scripts/level_1_minimap.gd" id="4_miiqm"]
+[ext_resource type="Texture2D" uid="uid://cgwo84ayjbsch" path="res://levels/level_1/minimap/mini_map.png" id="5_12itk"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f7jsx"]
 blend_mode = 1
@@ -42,6 +45,20 @@ size_2d_override = Vector2i(640, 360)
 size_2d_override_stretch = true
 render_target_update_mode = 4
 
+[node name="minimap" type="Control" parent="."]
+z_index = 2
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_miiqm")
+
+[node name="Background" type="TextureRect" parent="minimap"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("5_12itk")
+
 [node name="Test" type="SubViewport" parent="."]
 disable_3d = true
 physics_object_picking = true
@@ -51,3 +68,70 @@ size_2d_override = Vector2i(640, 360)
 size_2d_override_stretch = true
 
 [node name="level_0" parent="Test" instance=ExtResource("2_jdjf6")]
+
+[node name="hud_weapons" parent="." instance=ExtResource("3_0yc1k")]
+position = Vector2(1518, 881)
+
+[node name="outerboarder2" type="Node2D" parent="."]
+
+[node name="top" type="ColorRect" parent="outerboarder2"]
+offset_right = 1920.0
+offset_bottom = 48.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="32px-spacer" type="ColorRect" parent="outerboarder2"]
+offset_left = -10.0
+offset_top = 665.0
+offset_right = 1910.0
+offset_bottom = 713.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="32px-spacer2" type="ColorRect" parent="outerboarder2"]
+offset_left = 961.0
+offset_top = 966.0
+offset_right = 1446.0
+offset_bottom = 1014.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="bottom" type="ColorRect" parent="outerboarder2"]
+offset_top = 1032.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="left" type="ColorRect" parent="outerboarder2"]
+offset_right = 48.0
+offset_bottom = 1080.0
+color = Color(0.956863, 0.705882, 0, 1)
+
+[node name="right" type="ColorRect" parent="outerboarder2"]
+offset_left = 1872.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="center-topbottom" type="ColorRect" parent="outerboarder2"]
+offset_left = 960.0
+offset_right = 961.0
+offset_bottom = 1080.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="center-topbottom2" type="ColorRect" parent="outerboarder2"]
+offset_left = 475.0
+offset_top = 1.0
+offset_right = 476.0
+offset_bottom = 1081.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="center-topbottom3" type="ColorRect" parent="outerboarder2"]
+offset_left = 1446.0
+offset_top = 1.0
+offset_right = 1447.0
+offset_bottom = 1081.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="center-leftright" type="ColorRect" parent="outerboarder2"]
+offset_top = 540.0
+offset_right = 1920.0
+offset_bottom = 541.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)

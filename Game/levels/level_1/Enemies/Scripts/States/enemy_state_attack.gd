@@ -29,14 +29,14 @@ func init():
 
 ## What happens when the player enters this State?
 func Enter() -> void:
-	print("attack state enter")
+	#print("attack state enter")
 	_timer = state_duration_max
 	enemy.update_animation(anim_name)
 	
 	#### fire bullet
 	# Setup timer for controlling fire rate
 	if enemy.can_fire:
-		print("can fire enemy")
+		#print("can fire enemy")
 		enemy.timer = Timer.new()
 		enemy.timer.wait_time = 1.0 / enemy.fire_rate
 		enemy.timer.one_shot = true

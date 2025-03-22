@@ -29,11 +29,26 @@ func HandleInput(_event: InputEvent) -> State:
 
 # Helper function to cycle weapons
 func _cycle_weapon():
-	player.current_weapon = get_next_weapon(player.current_weapon)
+	var selected_weapon = get_next_weapon(player.current_weapon)
+	player.current_weapon = selected_weapon.weapon_name
+	SignalBus.weapon_changed.emit(selected_weapon.weapon_name, selected_weapon.weapon_idx)
+	print("-->"+player.current_weapon)
 	player.UpdateAnimation(player.current_weapon + "_idle")
 
 # Helper function to get the next weapon in the list
-func get_next_weapon(current_weapon: String) -> String:
+func get_next_weapon(current_weapon: String) -> Dictionary:
+	var weapon_name = "unarmed"
+	
 	var weapon_types = ["unarmed", "blaster", "gauntlet"]
+	var counter = 1
 	var index = weapon_types.find(current_weapon)
-	return weapon_types[(index + 1) % weapon_types.size()]
+	var next_index = index
+	while counter < 4:
+		next_index = (index + counter) % weapon_types.size()
+		print(weapon_types[next_index] + " "+ str(next_index)+" "+str(player.is_weapon_disabled(next_index)))
+		if !player.is_weapon_disabled(next_index):
+			weapon_name = weapon_types[next_index]
+			break
+		counter += 1
+	return {"weapon_name":weapon_name, "weapon_idx":next_index}
+	

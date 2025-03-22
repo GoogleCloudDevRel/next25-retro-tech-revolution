@@ -433,14 +433,17 @@ texture_scale = 2.0
 [node name="UI_W2" parent="." index="24" instance=ExtResource("16_wtgk4")]
 position = Vector2(2112, 23)
 
-[node name="UI_W1" parent="." index="25" instance=ExtResource("17_w3g7w")]
+[node name="UI_W3" parent="." index="25" instance=ExtResource("16_wtgk4")]
+position = Vector2(116, 16)
+
+[node name="UI_W1" parent="." index="26" instance=ExtResource("17_w3g7w")]
 position = Vector2(775, 282)
 
-[node name="CRT_prime" parent="." index="26" instance=ExtResource("15_41fxk")]
+[node name="CRT_prime" parent="." index="27" instance=ExtResource("15_41fxk")]
 position = Vector2(259, 38)
 
-[node name="Printer12" parent="." index="27" instance=ExtResource("14_uwd2d")]
+[node name="Printer12" parent="." index="28" instance=ExtResource("14_uwd2d")]
 position = Vector2(1342, 1)
 
-[node name="Boss2" parent="." index="28" instance=ExtResource("13_s0h25")]
+[node name="Boss2" parent="." index="29" instance=ExtResource("13_s0h25")]
 position = Vector2(1842, -1408)

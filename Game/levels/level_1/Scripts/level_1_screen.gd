@@ -78,9 +78,9 @@ func _input(event: InputEvent) -> void:
 
 
 	####Game View port END
-func _unhandled_input(event):
+#func _unhandled_input(event):
 		# Convert the input event's position from outer viewport space to inner viewport space
-		$Test.push_input(event)
+		#$Test.push_input(event)
 		
 		#var transformed_event
 		#if event is Input or event is InputEventScreenTouch:

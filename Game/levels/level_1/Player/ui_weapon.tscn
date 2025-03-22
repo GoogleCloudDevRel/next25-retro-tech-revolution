@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://ckh3ulwanctr0"]
+[gd_scene load_steps=11 format=3 uid="uid://ckh3ulwanctr0"]
 
-[ext_resource type="Texture2D" uid="uid://dc5vl232wj3lt" path="res://Player/Sprites/ItemSprites.png" id="1_chrgf"]
-[ext_resource type="Texture2D" uid="uid://bv0csemkndvxa" path="res://Player/Assets/Shadow.png" id="2_jpiii"]
-[ext_resource type="Texture2D" uid="uid://bojl7g2v4vc1d" path="res://Player/Assets/light.png" id="3_txv3t"]
+[ext_resource type="Texture2D" uid="uid://dc5vl232wj3lt" path="res://levels/level_1/Player/Sprites/ItemSprites.png" id="1_chrgf"]
+[ext_resource type="Script" path="res://levels/level_1/Player/Scripts/ui_weapon.gd" id="1_ryysq"]
+[ext_resource type="Texture2D" uid="uid://bv0csemkndvxa" path="res://levels/level_1/Player/Assets/Shadow.png" id="2_jpiii"]
+[ext_resource type="Texture2D" uid="uid://bojl7g2v4vc1d" path="res://levels/level_1/Player/Assets/light.png" id="3_txv3t"]
+[ext_resource type="Shader" path="res://levels/level_1/Player/Scripts/ui_weapon.gdshader" id="4_x5k48"]
 
 [sub_resource type="Animation" id="Animation_cdm6f"]
 length = 0.001
@@ -66,7 +68,32 @@ _data = {
 "ui_w2_rotate": SubResource("Animation_j64vp")
 }
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8w54j"]
+radius = 13.0
+height = 38.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1qewy"]
+render_priority = 0
+shader = ExtResource("4_x5k48")
+shader_parameter/beams = 2
+shader_parameter/energy = 3.0
+shader_parameter/roughness = 3
+shader_parameter/frequency = 10
+shader_parameter/speed = 1.0
+shader_parameter/thickness = 0.006
+shader_parameter/outline_thickness = 0.03
+shader_parameter/beam_difference = 0.0
+shader_parameter/glow = 0.0
+shader_parameter/outline_glow = 0.0
+shader_parameter/color = Color(0.909804, 0.835294, 1, 1)
+shader_parameter/outline_color = Color(0.557533, 0.0638271, 0.396189, 1)
+shader_parameter/progress = 1.0
+shader_parameter/y_offset = 0.0
+shader_parameter/fixed_edge_size = 0.05
+shader_parameter/noise_scale = Vector2(1, 1)
+
 [node name="UI_W2" type="Node2D"]
+script = ExtResource("1_ryysq")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_chrgf")
@@ -92,3 +119,23 @@ shadow_filter = 1
 shadow_filter_smooth = 5.0
 texture = ExtResource("3_txv3t")
 texture_scale = 0.4
+
+[node name="Area2D" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 16
+
+[node name="CollisionShape" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 19)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_8w54j")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_1qewy")
+offset_left = 68.0
+offset_top = -78.0
+offset_right = 94.0
+offset_bottom = 66.0
+color = Color(1, 1, 1, 0)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]

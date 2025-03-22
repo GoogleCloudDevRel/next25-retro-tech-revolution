@@ -3,7 +3,7 @@ extends Node
 const SERVER_PORT = 8080
 const SERVER_IP ="127.0.0.1"
 
-var player_scene = preload("res://assets/players/player.tscn")
+var player_scene = preload("res://assets/players/player_v0.tscn")
 var _players_spawn_node
 var connected_peers_ids = []
 

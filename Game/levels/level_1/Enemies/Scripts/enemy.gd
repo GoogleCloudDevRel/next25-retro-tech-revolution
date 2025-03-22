@@ -37,7 +37,7 @@ var invulnerable: bool = false
 func _ready() -> void:
 	id = get_instance_id()
 	state_machine.initialize( self )
-	#player = PlayerManager.player
+	SignalBus.enemy_created.emit(self)
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -80,31 +80,13 @@ func anim_direction() -> String:
 	else:
 		return "side"
 
-
-#
 func take_damage(player_damage):
 	#add health counter
 	health -= player_damage
 	hit_count += 1
 	$HealthBar.value = health
 	$Sprite2D/healthDepletion.play("enemyHit")
-	#SignalBus.enemy_taking_damage.emit(self, player_damage)
-	#print("nhealth:" + str(health))
-	#if health <= 0: #dead
-		#SignalBus.player_score_increased.emit(points)
-		#SignalBus.enemy_health_depleted.emit(self)
-		#$/root/Game/GameManager.update_score(points)
-		#queue_free()
-		# we don t remove the object as it seems to create problem when refreshing the mini map
-		# but set them as invisible and no longer participating to the collision detection
-		#self.visible = false
-		#$CollisionShape2D.call_deferred("set", "disabled", true)
-		
-		
-		#const SMOKE_SCENE = preload("res://assets/enemies/smoke_explosion/smoke_explosion.tscn")
-		#var smoke = SMOKE_SCENE.instantiate()
-		#get_parent().add_child(smoke)
-		#smoke.global_position = global_position
+	
 
 func _on_body_entered(body: Node2D) -> void:
 	queue_free()

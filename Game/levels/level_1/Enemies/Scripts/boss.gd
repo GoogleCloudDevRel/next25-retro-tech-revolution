@@ -8,6 +8,7 @@ class_name Boss extends Enemy
 func _ready() -> void:
 	id = get_instance_id()
 	state_machine.initialize( self )
+	points = 40
 	health = 200.0
 	damage_points = 2
 	can_fire = true
