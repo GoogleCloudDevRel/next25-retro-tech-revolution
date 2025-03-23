@@ -49,14 +49,24 @@ render_target_update_mode = 4
 z_index = 2
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 49.0
+offset_top = 760.0
+offset_right = 370.0
+offset_bottom = 1026.0
 script = ExtResource("4_miiqm")
 
 [node name="Background" type="TextureRect" parent="minimap"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.013
+anchor_top = 1.667
+anchor_right = 0.013
+anchor_bottom = 1.667
+offset_left = -4.173
+offset_top = -443.422
+offset_right = 658.827
+offset_bottom = 114.578
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("5_12itk")
 
 [node name="Test" type="SubViewport" parent="."]

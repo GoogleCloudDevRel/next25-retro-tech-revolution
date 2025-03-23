@@ -6,6 +6,8 @@ var client_id = "1"
 var session_id
 var score = 0
 var stopwatch = 0.0
+enum {EASY, MEDIUM, HARD}
+var game_difficulty = EASY #difficulty level
 
 const SEND_SCREENSHOTS = false 
 
@@ -53,7 +55,7 @@ signal gemini_backstory_requested_details(prompt_text:String)
 
 ######options######
 signal tool_changed(new_tool)#new to replace with weapon_changed(old_weapon, new_weapon)
-
+signal weapon_created(weapon:Weapon) #added 
 signal weapon_activated(weapon_name:String, weapon_idx:int) #to be implemented on server side
 signal weapon_changed(weapon_name:String, weapon_idx:String) #to be implemented on server side
 
@@ -71,6 +73,8 @@ signal enemy_created(e:Enemy)
 signal enemy_taking_damage(e:Enemy, player_damage:int)
 signal enemy_health_depleted(e:Enemy)#new
 signal floppy_created(floppy:Projectiles)
+
+signal boss_created(b:Boss)
 
 func _ready() -> void:
 	session_id  = str(Time.get_unix_time_from_system())

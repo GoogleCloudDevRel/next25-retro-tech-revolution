@@ -15,6 +15,7 @@ func _ready() -> void:
 	detection_radius = 300.0
 	max_bullet = 5
 	ShootingPoint = %ShootingPoint
+	SignalBus.boss_created.emit(self)
 	#player = PlayerManager.player
 	pass # Replace with function body.
 

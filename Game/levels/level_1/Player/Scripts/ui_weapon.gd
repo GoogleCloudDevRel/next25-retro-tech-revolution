@@ -1,8 +1,9 @@
 extends Node2D
-
+class_name Weapon
 var type = "gauntlet"
 
 func _ready():
+	SignalBus.weapon_created.emit(self)
 	pass
 	# Create an Area2D child node programmatically
 	#var area = %Area2D
@@ -25,5 +26,5 @@ func _on_body_entered(body):
 		print("Player entered this Node2D!")
 	# Do whatever you need her
 	if body.has_method("_is_moving"): #player
-		print("got a weapon")
+		print("got a blaster")
 		body.activate_weapon(type)

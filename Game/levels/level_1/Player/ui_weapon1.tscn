@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://d0p6wso088i1o"]
+[gd_scene load_steps=9 format=3 uid="uid://d0p6wso088i1o"]
 
 [ext_resource type="Texture2D" uid="uid://dc5vl232wj3lt" path="res://levels/level_1/Player/Sprites/ItemSprites.png" id="1_up1es"]
+[ext_resource type="Script" path="res://levels/level_1/Player/Scripts/ui_weapon_1.gd" id="1_whyre"]
 [ext_resource type="Texture2D" uid="uid://bv0csemkndvxa" path="res://levels/level_1/Player/Assets/Shadow.png" id="2_p1x5s"]
 [ext_resource type="Texture2D" uid="uid://bojl7g2v4vc1d" path="res://levels/level_1/Player/Assets/light.png" id="3_1deij"]
 
@@ -67,7 +68,12 @@ _data = {
 "ui_w1_rotate": SubResource("Animation_wp8a3")
 }
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_07q05"]
+radius = 13.0
+height = 38.0
+
 [node name="UI_W1" type="Node2D"]
+script = ExtResource("1_whyre")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_up1es")
@@ -94,3 +100,14 @@ shadow_filter = 1
 shadow_filter_smooth = 5.0
 texture = ExtResource("3_1deij")
 texture_scale = 0.4
+
+[node name="Area2D" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 16
+
+[node name="CollisionShape" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 19)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_07q05")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
