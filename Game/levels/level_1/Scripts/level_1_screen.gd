@@ -18,7 +18,7 @@ var is_displaying_dialog = false
 
 func _ready():
 	SignalBus.gemini_help_received.connect(_on_gemini_help)
-
+	SignalBus.show_congratulations.connect(_on_show_congratulations)
 	#stopwarch & score loading
 	var hud_st =  hud_score_time.instantiate()
 	add_child(hud_st)
@@ -69,6 +69,20 @@ func _ready():
 func _on_timer_timeout() -> void:
 	SignalBus.send_screenshot_to_gcs.emit()
 
+#defeated the boss
+func _on_show_congratulations() -> void:
+	%Congratulations.visible = true
+	SignalBus.stop_game_stopwatch.emit()
+	var timer = Timer.new()
+	add_child(timer)
+	timer.wait_time = 10
+	timer.one_shot = true  # Only run once
+	timer.timeout.connect(_on_show_gameover)
+	timer.start()
+	
+#after displaying congratulations go to gameover
+func _on_show_gameover() -> void:
+	SignalBus.screen_state.emit(SignalBus.GAMEOVER)
 
 func _input(event: InputEvent) -> void:
 	#if Input.is_action_just_released("up"):

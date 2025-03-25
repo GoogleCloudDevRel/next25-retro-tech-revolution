@@ -71,6 +71,12 @@ func cycle_weapon():
 			found_next = true
 	
 	update_weapon_display()
+
+
+func _find_weapon_index(weapon_name):
+	for i in range(weapons.size()):
+		if weapons[i]['name'] == weapon_name:
+			return i
 	
 func update_weapon_display():
 	# Update all weapon textures based on selection state

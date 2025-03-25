@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=3 uid="uid://txomv4j8okk2"]
+[gd_scene load_steps=76 format=3 uid="uid://txomv4j8okk2"]
 
 [ext_resource type="Script" path="res://scripts/game_over.gd" id="1_poa64"]
 [ext_resource type="PackedScene" uid="uid://ykfi24r6o3m3" path="res://assets/gcp_overlay/gcp_overlay.tscn" id="3_iuf8g"]
@@ -56,6 +56,7 @@
 [ext_resource type="Texture2D" uid="uid://ckf0tmb7ybloh" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00070.png" id="50_b5bxi"]
 [ext_resource type="Texture2D" uid="uid://lafva1js1spt" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00071.png" id="51_2hxhb"]
 [ext_resource type="Texture2D" uid="uid://h03trrc7ox0w" path="res://assets/screens/gameover/QR.png" id="56_pbkuf"]
+[ext_resource type="VideoStream" path="res://assets/Background.ogv" id="57_uqg6v"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_setkf"]
 animations = [{
@@ -347,6 +348,7 @@ subpixel_positioning = 0
 script = ExtResource("1_poa64")
 
 [node name="RandomSquares" parent="." instance=ExtResource("4_sm61w")]
+visible = false
 
 [node name="gcp_overlay" parent="." instance=ExtResource("3_iuf8g")]
 
@@ -678,3 +680,17 @@ offset_top = 540.0
 offset_right = 1920.0
 offset_bottom = 541.0
 color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="BackgroundVideo" type="VideoStreamPlayer" parent="."]
+z_index = -1
+clip_contents = true
+offset_left = -4.0
+offset_top = -2.0
+offset_right = 3836.0
+offset_bottom = 2158.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+stream = ExtResource("57_uqg6v")
+autoplay = true
+loop = true

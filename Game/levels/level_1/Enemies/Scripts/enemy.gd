@@ -102,8 +102,6 @@ func on_death() -> void:
 			%CollisionShape.call_deferred("set", "disabled", true)
 			var script = self.get_script()
 			if script.get_global_name() == "Boss":
-				print("Congrats")
-				SignalBus.wait(5) #wait 5s
-				SignalBus.screen_state.emit(SignalBus.GAMEOVER)
+				SignalBus.show_congratulations.emit()
 	
 	

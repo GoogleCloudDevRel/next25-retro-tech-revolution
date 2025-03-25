@@ -123,14 +123,15 @@ func distance_to_player(entity: Node2D) -> float:
 	return 0.0
 
 func draw_distance_circle(radius: float):
-	var circle = $MiniMapContainer/DistanceCircle
-	if not circle:
+	var circle 
+	if not $minimap/DistanceCircle:
 		circle = Line2D.new()
 		circle.name = "DistanceCircle"
 		circle.width = 1.0
 		circle.default_color = Color(1, 1, 1, 0.3)
 		$Background.add_child(circle)
-	
+	else:
+		circle = $minimap/DistanceCircle
 	# Clear previous points
 	circle.clear_points()
 	

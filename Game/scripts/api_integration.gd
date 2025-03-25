@@ -166,16 +166,18 @@ func _on_call_gemini_backstory_request_completed(result: int, _response_code: in
 		print("Error")
 	else:
 		var dict_body = JSON.parse_string(body.get_string_from_utf8())
-		print(dict_body.candidates[0].content.parts[0].text)
-		SignalBus.gemini_backstory_text = dict_body.candidates[0].content.parts[0].text
-		
-		#send to backgound story
-		call_api_bridge_generate_backstory_image(dict_body.candidates[0].content.parts[0].text)
-		#SignalBus.gemini_backstory_received.emit(dict_body.candidates[0].content.parts[0].text)
-		
-		#generate an image that goes with the text
-		#call_imagen3_generate_image("Generate an image representing the following story for a video game:" + dict_body.candidates[0].content.parts[0].text)
-		
+		if dict_body.has("candidates") and \
+		   dict_body.candidates is Array and \
+		   dict_body.candidates.size() > 0 and \
+		   dict_body.candidates[0].has("content") and \
+		   dict_body.candidates[0].content.has("parts") and \
+		   dict_body.candidates[0].content.parts.size() > 0:
+			print(dict_body.candidates[0].content.parts[0].text)
+			SignalBus.gemini_backstory_text = dict_body.candidates[0].content.parts[0].text
+			#send to backgound story
+			call_api_bridge_generate_backstory_image(dict_body.candidates[0].content.parts[0].text)
+		else:
+			printerr("Error accessing gemini for the backstory")
 		
 		
 		

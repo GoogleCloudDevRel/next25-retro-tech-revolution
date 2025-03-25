@@ -16,7 +16,6 @@ var current_direction = "down"
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
 @onready var projectile = preload("res://levels/level_1/Enemies/Projectiles/projectiles.tscn")
 
-
 ## Stores a reference to the player that this State belongs to
 var player: Player
 
@@ -107,7 +106,7 @@ func shoot_at_player(new_direction:String):
 	for i in range(1, randi_range(1, enemy.max_bullet)):
 		var floppy = projectile.instantiate()
 		SignalBus.floppy_created.emit(floppy,  enemy.global_position)
-		SignalBus.wait(1)
+		#SignalBus.wait(1)
 
 func get_4way_direction(direction_vector):
 	# Normalize the vector

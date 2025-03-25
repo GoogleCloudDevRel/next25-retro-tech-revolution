@@ -23,9 +23,19 @@ func _ready():
 	SignalBus.player_health_depleted.connect(_on_player_health_depleted_action)
 	SignalBus.player_iddle.connect(_on_player_iddle_action)
 	
+	#weapons new 
+	SignalBus.weapon_activated.connect(_on_weapon_activated_action)
+	SignalBus.weapon_changed.connect(_on_weapon_changed_action)
+	
 	#Enemy signals
 	SignalBus.enemy_created.connect(_on_enemy_created_action)
 	SignalBus.enemy_taking_damage.connect(_on_enemy_taking_damage_action)
+	SignalBus.enemy_health_depleted.connect(_on_enemy_health_depleted_action)
+	
+	#Boss signals
+	SignalBus.boss_created.connect(_on_boss_created_action)
+	
+	
 
 ###game events
 func _on_game_screen_state_action(new_state): #OK except boss
@@ -231,8 +241,8 @@ func _on_player_iddle_action(p:Player): #OK
 	var json_string = JSON.stringify(request_data)
 	_call_rpc_backend(json_string)
 
-func _on_player_weapon_changed_action(p:Player): #TODO
-	pass #TODO
+#func _on_player_weapon_changed_action(p:Player): #TODO
+#	pass #TODO
 
 func _on_player_health_depleted_action(p:Player): #OK
 	var request_data = {
@@ -279,6 +289,30 @@ func _on_player_score_increased_action(): #TODO
 	#TODO
 	pass
 
+###weapons
+func _on_weapon_activated_action(weapon_name:String, weapon_idx:int): #TODO
+	var request_data = {
+			"event_type": "on_weapon_activated",
+			"session_id": SignalBus.session_id,
+			"client_id": SignalBus.client_id,
+			"ts": Time.get_unix_time_from_system(),
+			"activated_weapon": weapon_name,
+			"activated_weapon_idx":  weapon_idx
+	}
+	var json_string = JSON.stringify(request_data)
+	_call_rpc_backend(json_string)		
+
+func _on_weapon_changed_action(weapon_name:String, weapon_idx:String): #TODO
+	var request_data = {
+			"event_type": "on_weapon_changed",
+			"session_id": SignalBus.session_id,
+			"client_id": SignalBus.client_id,
+			"ts": Time.get_unix_time_from_system(),
+			"new_weapon": weapon_name,
+			"new_weapon_idx":  weapon_idx
+	}
+	var json_string = JSON.stringify(request_data)
+	_call_rpc_backend(json_string)		
 
 ###Enemies event
 func _on_enemy_created_action(e:Floppy): #OK
@@ -318,10 +352,42 @@ func _on_enemy_taking_damage_action(e:Floppy, player_damage:int): #OK
 	var json_string = JSON.stringify(request_data)
 	_call_rpc_backend(json_string)
 
-func _on_enemy_health_depleted_action(_e:Enemy): #TODO
-	#TODO
-	pass
+func _on_enemy_health_depleted_action(e:Enemy): #TODO
+	var request_data = {
+			"event_type": "on_enemy_created",
+			"session_id": SignalBus.session_id,
+			"client_id": SignalBus.client_id,
+			"ts": Time.get_unix_time_from_system(),
+			"enemy_id": e.get_instance_id(),
+			"enemy_type": e.type,
+			"enemy_x": e.position.x, 
+			"enemy_y": e.position.y, 
+			"enemy_health": e.health, 
+			"enemy_hit_count": e.hit_count,
+			"enemy_points": e.points	
+	}
+	var json_string = JSON.stringify(request_data)
+	_call_rpc_backend(json_string)
 
+###Boss event
+func _on_boss_created_action(b:Boss):
+	var request_data = {
+			"event_type": "on_boss_created",
+			"session_id": SignalBus.session_id,
+			"client_id": SignalBus.client_id,
+			"ts": Time.get_unix_time_from_system(),
+			"enemy_id": b.get_instance_id(),
+			"enemy_type": b.type,
+			"enemy_x": b.position.x, 
+			"enemy_y": b.position.y, 
+			"enemy_health": b.health, 
+			"enemy_hit_count": b.hit_count,
+			"enemy_points": b.points	
+	}
+	var json_string = JSON.stringify(request_data)
+	_call_rpc_backend(json_string)
+	
+	
 	#print("bullet" + b.name + " @" + str(Time.get_unix_time_from_system()))
 
 ###RPC declaration###

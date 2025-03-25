@@ -1,10 +1,10 @@
 [gd_scene load_steps=15 format=3 uid="uid://f0n0vydjafpc"]
 
 [ext_resource type="Script" path="res://assets/screens/splashscreen/splashscreen.gd" id="1_0ojax"]
-[ext_resource type="VideoStream" path="res://assets/screens/splashscreen/RetroTech_Intro_part2.ogv" id="1_hhwpq"]
 [ext_resource type="Texture2D" uid="uid://blqd6tvosa684" path="res://assets/screens/splashscreen/Screenshot 2025-03-08 at 2.58.51 PM.png" id="1_r8qcn"]
 [ext_resource type="Script" path="res://assets/screens/splashscreen/SplashScreenButton.gd" id="2_1fptx"]
-[ext_resource type="VideoStream" path="res://assets/screens/splashscreen/RetroTech_Intro_part1.ogv" id="5_s05xw"]
+[ext_resource type="VideoStream" path="res://assets/screens/splashscreen/RTR-Intro_part2_320.ogv" id="2_16blj"]
+[ext_resource type="VideoStream" path="res://assets/screens/splashscreen/RTR-Intro_part1_320.ogv" id="5_yniib"]
 
 [sub_resource type="SystemFont" id="SystemFont_73tva"]
 font_names = PackedStringArray("Google Sans")
@@ -90,7 +90,7 @@ offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
-stream = ExtResource("1_hhwpq")
+stream = ExtResource("2_16blj")
 autoplay = true
 loop = true
 
@@ -221,7 +221,7 @@ offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
-stream = ExtResource("5_s05xw")
+stream = ExtResource("5_yniib")
 autoplay = true
 
 [connection signal="finished" from="StartScreenCanvas/InitialVideo" to="." method="_on_initial_video_finished"]

@@ -79,12 +79,21 @@ func is_current_weapon_disabled()-> bool:
 
 func is_weapon_disabled(idx)-> bool:
 	return weapons[idx]['disabled']
+
+func _find_weapon_index(weapon_name):
+	for i in range(weapons.size()):
+		if weapons[i]['name'] == weapon_name:
+			return i
+	return -1
+
 	
 #activate a weapon
 func activate_weapon(weapon_name:String):
-	var weapon_idx = weapons.find(weapon_name)
+	var weapon_idx =_find_weapon_index(weapon_name)
+	print(weapon_name+" "+str(weapon_idx))
 	if weapons[weapon_idx]['disabled']:
 		weapons[weapon_idx]['disabled'] = false
+		
 		SignalBus.weapon_activated.emit(weapon_name, weapon_idx)
 		
 
@@ -108,13 +117,30 @@ func is_getting_hit(damage_points) -> void:
 		hit_count += 1
 		health -= damage_points
 		$HealthBar.value = health
-		#else: #reset counter if no overlap
-		#	$Sprite2D/healthDepletionAnimation.play("RESET")
-		#	counter = 0
+		
+		#attach a timer to switch back
+		if not $Player/TimerHit:
+			var timer = Timer.new()
+			add_child(timer)
+			timer.wait_time = 2
+			timer.name = "TimerHit"
+			timer.one_shot = true  # Only run once
+			timer.timeout.connect(_on_reset_getting_hit)
+			timer.start()
+		else:
+			$Player/TimerHit.wait_time += 2
 			
 		##we are dead
 		if health <= 0:			
 			SignalBus.player_health_depleted.emit(self)
+
+func _on_reset_getting_hit():
+	$Sprite2D/healthDepletionAnimation.play("RESET")
+	for child in get_children():
+		if child is Timer and child.is_stopped():
+			child.queue_free()
+			break
+
 
 #func is_not_getting_hit() -> void:
 #	$Sprite2D/healthDepletionAnimation.play("RESET")

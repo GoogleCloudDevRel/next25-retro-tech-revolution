@@ -121,8 +121,9 @@ func update_score(points: int):
 
 func _on_player_health_depleted(_p:Player) -> void:
 	print("I m dead")
+	SignalBus.stop_game_stopwatch.emit()
 	SignalBus.screen_state.emit(SignalBus.GAMEOVER)
-	#get_tree().paused = true
+	
 	
 ### health management
 

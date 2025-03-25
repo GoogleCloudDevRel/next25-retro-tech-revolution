@@ -1,7 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://ccua3m5urvcrm"]
+[gd_scene load_steps=20 format=3 uid="uid://ccua3m5urvcrm"]
 
 [ext_resource type="Texture2D" uid="uid://dx3im452arqlw" path="res://assets/screens/questionsscreen/background.png" id="1_g3e5r"]
 [ext_resource type="Script" path="res://scripts/questions_screen.gd" id="1_r2mss"]
+[ext_resource type="VideoStream" path="res://assets/Background.ogv" id="2_ci4l8"]
 [ext_resource type="PackedScene" uid="uid://ykfi24r6o3m3" path="res://assets/gcp_overlay/gcp_overlay.tscn" id="2_mtuyq"]
 [ext_resource type="Texture2D" uid="uid://dgpqtls5hdacq" path="res://dialogues/portraits/gemini.png" id="2_wptdb"]
 [ext_resource type="PackedScene" uid="uid://daatymj755m4a" path="res://assets/random_squares.tscn" id="3_rjtc6"]
@@ -133,6 +134,7 @@ offset_bottom = 1080.0
 texture = ExtResource("1_g3e5r")
 
 [node name="RandomSquares" parent="." instance=ExtResource("3_rjtc6")]
+visible = false
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -235,5 +237,20 @@ custom_minimum_size = Vector2(300, 32)
 layout_mode = 2
 theme = SubResource("Theme_j05d4")
 text = "JUST SURPRISE ME"
+
+[node name="BackgroundVideo" type="VideoStreamPlayer" parent="."]
+z_index = -1
+clip_contents = true
+layout_mode = 2
+offset_left = -4.0
+offset_top = -2.0
+offset_right = 3836.0
+offset_bottom = 2158.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+stream = ExtResource("2_ci4l8")
+autoplay = true
+loop = true
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/AnswersHBox2/Answer5" to="." method="_on_answer5_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dn63sblg3fy3m"]
+[gd_scene load_steps=17 format=3 uid="uid://dn63sblg3fy3m"]
 
 [ext_resource type="Script" path="res://scripts/controls_screen.gd" id="1_dvn23"]
 [ext_resource type="PackedScene" uid="uid://daatymj755m4a" path="res://assets/random_squares.tscn" id="2_b1q8q"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://dophn2sdh82ha" path="res://assets/screens/controlsScreen/Vector 538.png" id="11_rr720"]
 [ext_resource type="Texture2D" uid="uid://c4tdmkihm7u2x" path="res://assets/screens/controlsScreen/Vector 542.png" id="12_jbqjc"]
 [ext_resource type="PackedScene" uid="uid://ykfi24r6o3m3" path="res://assets/gcp_overlay/gcp_overlay.tscn" id="13_s3htl"]
+[ext_resource type="VideoStream" path="res://assets/Background.ogv" id="14_dnrqm"]
 
 [sub_resource type="SystemFont" id="SystemFont_nqgue"]
 font_names = PackedStringArray("Google Sans")
@@ -93,6 +94,7 @@ offset_bottom = 541.0
 color = Color(0.330424, 0.0282391, 0.108228, 1)
 
 [node name="RandomSquares" parent="." instance=ExtResource("2_b1q8q")]
+visible = false
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
@@ -132,7 +134,7 @@ theme_override_colors/default_color = Color(0.513726, 0.52549, 0.541176, 1)
 theme_override_fonts/normal_font = SubResource("SystemFont_40jaw")
 theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
-text = "[center]PRESS [color=\"#F4B400\"]X[/color] TO CONTINUE[/center]"
+text = "[center]PRESS [color=\"#F4B400\"]A[/color] TO CONTINUE[/center]"
 fit_content = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="MarginContainer"]
@@ -189,3 +191,17 @@ position = Vector2(1057, 299)
 texture = ExtResource("12_jbqjc")
 
 [node name="gcp_overlay" parent="MarginContainer" instance=ExtResource("13_s3htl")]
+
+[node name="BackgroundVideo" type="VideoStreamPlayer" parent="."]
+z_index = -1
+clip_contents = true
+offset_left = -4.0
+offset_top = -2.0
+offset_right = 3836.0
+offset_bottom = 2158.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+stream = ExtResource("14_dnrqm")
+autoplay = true
+loop = true

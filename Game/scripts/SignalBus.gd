@@ -24,8 +24,10 @@ signal end_game()
 signal pause_game()
 signal unpause_game()
 
-signal score_up(new_score:int) #new
+signal stop_game_stopwatch() #new 3/24
+signal show_congratulations() #new 3/24
 
+signal score_up(new_score:int) #new
 
 signal send_screenshot_to_gcs() 
 
@@ -56,8 +58,8 @@ signal gemini_backstory_requested_details(prompt_text:String)
 ######options######
 signal tool_changed(new_tool)#new to replace with weapon_changed(old_weapon, new_weapon)
 signal weapon_created(weapon:Weapon) #added 
-signal weapon_activated(weapon_name:String, weapon_idx:int) #to be implemented on server side
-signal weapon_changed(weapon_name:String, weapon_idx:String) #to be implemented on server side
+signal weapon_activated(weapon_name:String, weapon_idx:int) #Added on 03/24
+signal weapon_changed(weapon_name:String, weapon_idx:String) #Added on 03/24
 
 ######player behavior######
 signal player_created(player:Player)
@@ -74,7 +76,8 @@ signal enemy_taking_damage(e:Enemy, player_damage:int)
 signal enemy_health_depleted(e:Enemy)#new
 signal floppy_created(floppy:Projectiles)
 
-signal boss_created(b:Boss)
+######Boss Signal######
+signal boss_created(b:Boss) #Added on 03/24
 
 func _ready() -> void:
 	session_id  = str(Time.get_unix_time_from_system())
@@ -85,5 +88,10 @@ func _on_trivia_question_received(_idx, qa):
 	trivia_result.append(qa)
 
 #wait X seconds
-func wait(seconds: float) -> void:
-	await get_tree().create_timer(seconds).timeout
+func wait(seconds: float, function) -> void:
+	var timer = Timer.new()
+	add_child(timer)
+	timer.wait_time = seconds  # Wait for 2 seconds
+	timer.one_shot = true  # Only run once
+	timer.timeout.connect(function)
+	timer.start()

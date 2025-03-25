@@ -12,5 +12,5 @@ func _on_body_entered(body):
 		print("Player entered this Node2D!")
 	# Do whatever you need her
 	if body.has_method("_is_moving"): #player
-		print("got a gauntlet")
+		print("got a blaster")
 		body.activate_weapon(type)

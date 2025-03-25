@@ -9,6 +9,7 @@ var time_paused = false
 func _ready():
 	SignalBus.score = 0
 	SignalBus.stopwatch = 0.0
+	SignalBus.stop_game_stopwatch.connect(_on_stop_game_stopwatch)
 	SignalBus.pause_game.connect(_on_game_paused)
 	SignalBus.unpause_game.connect(_on_game_unpaused)
 	SignalBus.player_score_increased.connect(_on_player_score_increased)
@@ -39,10 +40,13 @@ func _on_player_score_increased(points:int):
 func _on_game_paused():
 	time_paused = true
 
+func _on_stop_game_stopwatch():
+	time_paused = true
+	
 #restart
 func _on_game_unpaused():
 	time_paused = false
-	
+
 func _on_reset_game():
 	SignalBus.score = 0
 	SignalBus.stopwatch = 0
