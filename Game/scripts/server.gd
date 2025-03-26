@@ -9,9 +9,11 @@ func _ready():
 	SignalBus.unpause_game.connect(_on_game_unpaused_action)
 	SignalBus.trivia_question_received.connect(_on_trivia_question_received_action)
 	#Gemini
+	
 	SignalBus.gemini_help_requested_details.connect(_on_gemini_help_requested_action)
 	SignalBus.gemini_help_received.connect(_on_gemini_help_received_action)
 	
+	SignalBus.gemini_backstory_requested.connect(_on_gemini_backstory_requested_action)
 	SignalBus.gemini_backstory_received.connect(_on_gemini_backstory_requested_action)
 	SignalBus.gemini_backstory_image_received.connect(_on_gemini_backstory_image_receive_action)
 	
@@ -22,6 +24,8 @@ func _ready():
 	SignalBus.player_taking_damage.connect(_on_player_taking_damage_action)
 	SignalBus.player_health_depleted.connect(_on_player_health_depleted_action)
 	SignalBus.player_iddle.connect(_on_player_iddle_action)
+	SignalBus.player_score_increased.connect(_on_player_score_increased_action)
+	
 	
 	#weapons new 
 	SignalBus.weapon_activated.connect(_on_weapon_activated_action)
@@ -69,6 +73,7 @@ func _on_game_screen_state_action(new_state): #OK except boss
 	_call_rpc_backend(json_string)
 			
 func _on_game_paused_action(): #OK
+	print("game paused")
 	var request_data = {
 			"event_type": "on_game_paused",
 			"session_id": SignalBus.session_id,
@@ -106,14 +111,14 @@ func _on_trivia_question_received_action(question, answer): #tobe tested
 	_call_rpc_backend(json_string)
 
 #### Gemini
-func _on_gemini_help_requested_action(prompt_text, base64_image): #NG
+func _on_gemini_help_requested_action(prompt_text, screenshot_filename): #NG
 	var request_data = {
 			"event_type": "on_gemini_help_requested",
 			"session_id": SignalBus.session_id,
 			"client_id": SignalBus.client_id,
 			"ts": Time.get_unix_time_from_system(),
 			"prompt_text": prompt_text,
-			"screenshot": base64_image,
+			"screenshot": screenshot_filename,
 			"score": SignalBus.score, #score
 			"stopwatch": SignalBus.stopwatch#ms 
 	}
@@ -260,7 +265,7 @@ func _on_player_health_depleted_action(p:Player): #OK
 	_call_rpc_backend(json_string)
 
 
-func _on_player_taking_damage_action(p:Player, e:Floppy): #OK
+func _on_player_taking_damage_action(p:Player, e:Enemy): #OK
 	var request_data = {
 			"event_type": "on_player_taking_damage",
 			"session_id": SignalBus.session_id,
@@ -281,13 +286,23 @@ func _on_player_taking_damage_action(p:Player, e:Floppy): #OK
 	var json_string = JSON.stringify(request_data)
 	_call_rpc_backend(json_string)
 
-func _on_player_score_increased_action(): #TODO 
+func _on_player_score_increased_action(points:int):
 	#send score + stopwatch
 	
 			#"score": 0, #score
 			#"stopwatch": 30000#ms
 	#TODO
-	pass
+	var request_data = {
+			"event_type": "on_weapon_activated",
+			"session_id": SignalBus.session_id,
+			"client_id": SignalBus.client_id,
+			"ts": Time.get_unix_time_from_system(),
+			"added_points": points,
+			"score":  SignalBus.score,
+			"stopwatch": SignalBus.stopwatch#ms
+	}
+	var json_string = JSON.stringify(request_data)
+	_call_rpc_backend(json_string)	
 
 ###weapons
 func _on_weapon_activated_action(weapon_name:String, weapon_idx:int): #TODO
@@ -302,7 +317,7 @@ func _on_weapon_activated_action(weapon_name:String, weapon_idx:int): #TODO
 	var json_string = JSON.stringify(request_data)
 	_call_rpc_backend(json_string)		
 
-func _on_weapon_changed_action(weapon_name:String, weapon_idx:String): #TODO
+func _on_weapon_changed_action(weapon_name:String, weapon_idx:int): #TODO
 	var request_data = {
 			"event_type": "on_weapon_changed",
 			"session_id": SignalBus.session_id,
@@ -315,7 +330,7 @@ func _on_weapon_changed_action(weapon_name:String, weapon_idx:String): #TODO
 	_call_rpc_backend(json_string)		
 
 ###Enemies event
-func _on_enemy_created_action(e:Floppy): #OK
+func _on_enemy_created_action(e:Enemy): #OK
 	var request_data = {
 			"event_type": "on_enemy_created",
 			"session_id": SignalBus.session_id,
@@ -332,7 +347,7 @@ func _on_enemy_created_action(e:Floppy): #OK
 	var json_string = JSON.stringify(request_data)
 	_call_rpc_backend(json_string)
 
-func _on_enemy_taking_damage_action(e:Floppy, player_damage:int): #OK
+func _on_enemy_taking_damage_action(e:Enemy, player_damage:int): #OK
 	var request_data = {
 			"event_type": "on_enemy_taking_damage",
 			"session_id": SignalBus.session_id,

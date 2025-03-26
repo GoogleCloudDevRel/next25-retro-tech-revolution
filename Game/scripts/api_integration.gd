@@ -9,7 +9,9 @@ const GEMINI_API_KEY =""
 
 #const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key" + GEMINI_API_KEY
 
-const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-pro-exp-02-05:generateContent?key=" + GEMINI_API_KEY
+const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro-exp-03-25:generateContent?key=" + GEMINI_API_KEY
+
+#const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-pro-exp-02-05:generateContent?key=" + GEMINI_API_KEY
 const IMAGEN3_URL ="https://us-central1-aiplatform.googleapis.com/v1/projects/data-cloud-interactive-demo/locations/us-central1/publishers/google/models/imagen-3.0-generate-002:predict"
 
 var gcp_token = ""
@@ -26,13 +28,14 @@ func _ready():
 	##connect with bus
 	#SignalBus.bullet_created.connect(_on_add_bullet_action)
 	SignalBus.gemini_help_requested.connect(_on_need_gemini_help)
-	SignalBus.gemini_backstory_requested.connect( _on_get_gemini_backstory)
+	SignalBus.gemini_backstory_requested.connect(_on_get_gemini_backstory)
 	SignalBus.gemini_backstory_image_requested.connect(call_api_bridge_generate_backstory_image)
 	SignalBus.send_screenshot_to_gcs.connect(_on_send_screenshots_to_gcs)
 	#print("---api integration ready---")
 
 ###send regularly send screenshots of the game to GCS
 func _on_send_screenshots_to_gcs():
+	SignalBus.last_screenshot_timestamp = Time.get_datetime_string_from_system()
 	#print("Sending Screenshot")
 	if SignalBus.SEND_SCREENSHOTS:
 		var capture = get_viewport().get_texture().get_image()
@@ -40,9 +43,10 @@ func _on_send_screenshots_to_gcs():
 		var base64_string = Marshalls.raw_to_base64(buffer)
 		var body = JSON.stringify({
 			"image": "data:image/png;base64," + base64_string,
-			"session_id": SignalBus.session_id
+			"session_id": SignalBus.session_id,
+			" timestamp_seconds": SignalBus.last_screenshot_timestamp
 		})
-
+		
 		# Make the HTTP request
 		var http_request  = HTTPRequest.new()
 		add_child(http_request)
@@ -53,6 +57,12 @@ func _on_send_screenshots_to_gcs():
 			HTTPClient.METHOD_POST,
 			body
 		)
+		#save to file
+		
+		var filename = "res://screenshots/"+str(SignalBus.session_id)+"screenshot-{0}.png".format({"0":SignalBus.last_screenshot_timestamp})
+		capture.save_png(filename)
+		SignalBus.last_screenshot = filename
+		
 	
 #receive result result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray, _req_node : HTTPRequest = null
 func _on_send_screenshots_to_gcs_request_completed(result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray, _req_node : HTTPRequest = null):
@@ -70,10 +80,10 @@ func _on_send_screenshots_to_gcs_request_completed(result: int, _response_code: 
 
 ###request support from Gemini sending a screenshot + prompt
 func _on_need_gemini_help():
-	var capture = get_viewport().get_texture().get_image()
-	var _time = Time.get_datetime_string_from_system()
-	var filename = "res://screenshots/"+str(SignalBus.session_id)+"screenshot-{0}.png".format({"0":_time})
-	capture.save_png(filename)
+	#var capture = get_viewport().get_texture().get_image()
+	#var _time = Time.get_datetime_string_from_system()
+	#var filename = "res://screenshots/"+str(SignalBus.session_id)+"screenshot-{0}.png".format({"0":_time})
+	#capture.save_png(filename)
 	
 	var prompt_text = "You are assisting a user who is playing a video game. you know that the boss level is on the far top right side of the level,
 	and that to beat him you can go retrieve an object placed in the middle of the level. You also know that the tornado can  protect you against floppy disk,
@@ -81,14 +91,15 @@ func _on_need_gemini_help():
 		health is 80/100, hit count is 5 score=0, player hasn't moved for 1min, and time since starting the game is 2 mins, he doesn t have the necessary object yet. If you think you should not help just yet just crack a joke or give a fun fact. Prepare your answer with the textual help for the first field and a second field that represents the difficulty level of the game from 0 to 3 with 0 being easy and 3 being hard if you consider that the user is not doing well, the last field is the reason why you adjusted the difficulty a certain way, please follow a JSON format {\"help\":\"\", \"difficulty_level\":0, \"reason\":\"\"}"
 	#var image_path = #"res://screenshots/screenshot-1741159543.png"  # Or "user://your_image.png", etc.
 	
-	var image = Image.load_from_file(filename)
-	
+	var base64_image = ""
+	if FileAccess.file_exists(SignalBus.last_screenshot):
+		var image = Image.load_from_file(SignalBus.last_screenshot)
 	# 1. Encode the image to base64.
-	var image_bytes = image.save_png_to_buffer() # Use PNG for best results with Gemini
-	var base64_image = Marshalls.raw_to_base64(image_bytes)
+		var image_bytes = image.save_png_to_buffer() # Use PNG for best results with Gemini
+		base64_image = Marshalls.raw_to_base64(image_bytes)
 	
 	#signal for analytics
-	SignalBus.gemini_help_requested_details.emit(prompt_text, base64_image)
+	SignalBus.gemini_help_requested_details.emit(prompt_text, str(SignalBus.session_id)+ "_screenshot_"+str(SignalBus.last_screenshot_timestamp)+".png")
 	
 	#call gemini
 	call_gemini_with_prompt_and_image(base64_image, prompt_text) 

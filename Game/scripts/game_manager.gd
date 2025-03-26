@@ -77,12 +77,12 @@ func load_level1():
 func _process(_delta: float) -> void:
 	#pause / unpaused was pressed
 	if Input.is_action_pressed(pause_game_action) and !is_paused and is_able_to_pause:
-		get_tree().paused = true #pause
 		SignalBus.pause_game.emit()
 		is_paused = true
 		pauseScreen.visible = true
 		is_able_to_pause = false
 		$pauseTimer.start()
+		get_tree().paused = true #pause
 	elif Input.is_action_pressed(pause_game_action) and is_paused and is_able_to_pause:
 		get_tree().paused = false #unpause
 		SignalBus.unpause_game.emit()

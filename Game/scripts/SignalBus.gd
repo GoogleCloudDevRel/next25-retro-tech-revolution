@@ -8,7 +8,8 @@ var score = 0
 var stopwatch = 0.0
 enum {EASY, MEDIUM, HARD}
 var game_difficulty = EASY #difficulty level
-
+var last_screenshot = "" #last screenshot taken in base64
+var last_screenshot_timestamp = ""
 const SEND_SCREENSHOTS = false 
 
 ### message bus that dispatch events between classes of the game
@@ -59,14 +60,14 @@ signal gemini_backstory_requested_details(prompt_text:String)
 signal tool_changed(new_tool)#new to replace with weapon_changed(old_weapon, new_weapon)
 signal weapon_created(weapon:Weapon) #added 
 signal weapon_activated(weapon_name:String, weapon_idx:int) #Added on 03/24
-signal weapon_changed(weapon_name:String, weapon_idx:String) #Added on 03/24
+signal weapon_changed(weapon_name:String, weapon_idx:int) #Added on 03/24
 
 ######player behavior######
 signal player_created(player:Player)
 signal player_moving(player:Player, pressed_button)
 signal player_taking_damage(p:Player, e:Enemy)
 signal player_iddle(player:Player)
-signal player_score_increased(player:Player) #--> check
+signal player_score_increased(points:int) #--> check
 signal player_health_depleted(player:Player)#new
 signal bullet_created(new_bullet:Bullet)
 

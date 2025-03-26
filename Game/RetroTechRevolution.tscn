@@ -72,6 +72,7 @@ Pressed 3 lines to restart"
 horizontal_alignment = 1
 
 [node name="Server" type="Node" parent="."]
+process_mode = 3
 script = ExtResource("4_iwxs6")
 
 [node name="Players" type="Node2D" parent="."]

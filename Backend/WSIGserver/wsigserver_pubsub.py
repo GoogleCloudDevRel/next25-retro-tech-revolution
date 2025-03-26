@@ -145,9 +145,9 @@ def generate_backstory_image(prompt, image=None):
 
 
 #upload screenshots to GCP
-def upload_screenshot_to_gcs(base64_image, session_id):
+def upload_screenshot_to_gcs(base64_image, session_id,  timestamp_seconds):
 	image_data = base64.b64decode(base64_image)
-	timestamp_seconds = int(time.time())
+	#timestamp_seconds = int(time.time())
 	destination_blob_name = "{}/{}_screenshot_{}.png".format(session_id, session_id, timestamp_seconds) 
 	storage_client = storage.Client()
 	bucket = storage_client.bucket(SCREENSHOT_BUCKET)
@@ -188,14 +188,14 @@ def publish_screenshot():
 			data = request.get_json()
 			base64_image = data.get('image')
 			session_id  = data.get('session_id')
-
+			timestamp_seconds = data.get('timestamp_seconds')
 			if not base64_image:
 				return jsonify({'error': 'No image data provided'}), 400
 
 			if ',' in base64_image:
 				base64_image = base64_image.split(',')[1]
 			
-			upload_screenshot_to_gcs(base64_image, session_id)
+			upload_screenshot_to_gcs(base64_image, session_id, timestamp_seconds)
 
 		#except Exception as e:
 		#	return jsonify({'error': str(e)}), 500

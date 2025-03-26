@@ -37,8 +37,14 @@ var invulnerable: bool = false
 func _ready() -> void:
 	id = get_instance_id()
 	state_machine.initialize( self )
+	call_deferred("setup")
+	
+
+
+func setup():
 	SignalBus.enemy_created.emit(self)
-	pass # Replace with function body.
+
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:

@@ -684,3 +684,5 @@ material = SubResource("ShaderMaterial_kkl17")
 color = Color(0.880483, 0.877499, 0.991036, 1)
 shadow_enabled = true
 texture = ExtResource("15_mt3th")
+
+[node name="TimerHit" type="Timer" parent="."]

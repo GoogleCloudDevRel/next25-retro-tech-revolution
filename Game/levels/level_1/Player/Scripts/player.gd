@@ -25,7 +25,6 @@ var counter = 0
 @onready var hurtbox = $HurtBox
 
 #####
-
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var state_machine : PlayerStateMachine = $StateMachine
@@ -43,6 +42,7 @@ func _process(_delta):
 	# Normalize direction to prevent faster diagonal movement
 	if direction.length() > 1.0:
 		direction = direction.normalized()
+		_is_moving()
 	
 func _physics_process(delta):
 	velocity = direction * speed #added
@@ -119,7 +119,7 @@ func is_getting_hit(damage_points) -> void:
 		$HealthBar.value = health
 		
 		#attach a timer to switch back
-		if not $Player/TimerHit:
+		if not $TimerHit:
 			var timer = Timer.new()
 			add_child(timer)
 			timer.wait_time = 2
@@ -127,8 +127,10 @@ func is_getting_hit(damage_points) -> void:
 			timer.one_shot = true  # Only run once
 			timer.timeout.connect(_on_reset_getting_hit)
 			timer.start()
+			
 		else:
-			$Player/TimerHit.wait_time += 2
+			$TimerHit.start()
+			$TimerHit.wait_time += 2
 			
 		##we are dead
 		if health <= 0:			
@@ -136,10 +138,11 @@ func is_getting_hit(damage_points) -> void:
 
 func _on_reset_getting_hit():
 	$Sprite2D/healthDepletionAnimation.play("RESET")
-	for child in get_children():
-		if child is Timer and child.is_stopped():
-			child.queue_free()
-			break
+	$TimerHit.stop()
+	#for child in get_children():
+	#	if child is Timer and child.is_stopped():
+	#		child.queue_free()
+	#		break
 
 
 #func is_not_getting_hit() -> void:

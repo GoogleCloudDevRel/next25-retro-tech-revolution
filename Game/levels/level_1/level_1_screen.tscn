@@ -269,6 +269,8 @@ offset_bottom = 114.578
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("5_12itk")
 
+[node name="DistanceCircle" type="Line2D" parent="minimap"]
+
 [node name="Test" type="SubViewport" parent="."]
 disable_3d = true
 physics_object_picking = true
@@ -356,3 +358,5 @@ sprite_frames = SubResource("SpriteFrames_gxh8k")
 autoplay = "default"
 frame = 45
 frame_progress = 0.862317
+
+[node name="TimerHit" type="Timer" parent="."]
