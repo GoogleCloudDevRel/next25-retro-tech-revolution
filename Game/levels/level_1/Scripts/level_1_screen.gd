@@ -45,6 +45,7 @@ func _ready():
 	add_child(timer)
 	
 	timer.start()
+	SignalBus.send_screenshot_to_gcs.emit()
 	
 	
 	

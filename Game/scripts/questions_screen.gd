@@ -76,7 +76,7 @@ func set_button_texts(qa_array):
 func _on_button_pressed(button_index):
 	disable_buttons = true
 	print("Question " + trivia[current_trivia_selection]['a'][button_index])
-	SignalBus.trivia_question_received.emit(trivia[current_trivia_selection]['q'], trivia[current_trivia_selection]['a'][button_index])
+	SignalBus.trivia_question_received.emit(trivia[current_trivia_selection]['q'][button_index], trivia[current_trivia_selection]['a'][button_index])
 	current_trivia_selection += 1
 	if current_trivia_selection < trivia.size():
 		print("next question")

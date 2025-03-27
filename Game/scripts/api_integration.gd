@@ -8,10 +8,10 @@ const GEMINI_API_KEY =""
 #const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:generateContent?key=" + GEMINI_API_KEY
 
 #const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key" + GEMINI_API_KEY
+const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + GEMINI_API_KEY
+#const GEMINI_PRO_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro-exp-03-25:generateContent?key=" + GEMINI_API_KEY
 
-const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro-exp-03-25:generateContent?key=" + GEMINI_API_KEY
-
-#const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-pro-exp-02-05:generateContent?key=" + GEMINI_API_KEY
+const GEMINI_PRO_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-pro-exp-02-05:generateContent?key=" + GEMINI_API_KEY
 const IMAGEN3_URL ="https://us-central1-aiplatform.googleapis.com/v1/projects/data-cloud-interactive-demo/locations/us-central1/publishers/google/models/imagen-3.0-generate-002:predict"
 
 var gcp_token = ""
@@ -44,7 +44,7 @@ func _on_send_screenshots_to_gcs():
 		var body = JSON.stringify({
 			"image": "data:image/png;base64," + base64_string,
 			"session_id": SignalBus.session_id,
-			" timestamp_seconds": SignalBus.last_screenshot_timestamp
+			"timestamp_seconds": SignalBus.last_screenshot_timestamp
 		})
 		
 		# Make the HTTP request
@@ -85,10 +85,53 @@ func _on_need_gemini_help():
 	#var filename = "res://screenshots/"+str(SignalBus.session_id)+"screenshot-{0}.png".format({"0":_time})
 	#capture.save_png(filename)
 	
-	var prompt_text = "You are assisting a user who is playing a video game. you know that the boss level is on the far top right side of the level,
-	and that to beat him you can go retrieve an object placed in the middle of the level. You also know that the tornado can  protect you against floppy disk,
-	and the flow can work against the crt. Give instruction to the player to help him go to the 2 locations. Here are some information on the player status:
-		health is 80/100, hit count is 5 score=0, player hasn't moved for 1min, and time since starting the game is 2 mins, he doesn t have the necessary object yet. If you think you should not help just yet just crack a joke or give a fun fact. Prepare your answer with the textual help for the first field and a second field that represents the difficulty level of the game from 0 to 3 with 0 being easy and 3 being hard if you consider that the user is not doing well, the last field is the reason why you adjusted the difficulty a certain way, please follow a JSON format {\"help\":\"\", \"difficulty_level\":0, \"reason\":\"\"}"
+	var prompt_text = "You are assisting a user who is playing a video game that takes place in an old datacenter where old technologies like CRTs and Printers have taken over and he is task to go and clean it \n."
+	
+	##############Context
+	
+	###############Player stats
+	var gm = $/root/Game/GameManager
+	prompt_text += "Player has been playing for "+SignalBus.get_stopwatch()+"\n" 
+	prompt_text += "Player health level is "+str(gm.players[0].health)+" out of 100 \n"
+	prompt_text += "Player has been hit "+str(gm.players[0].hit_count)+" times.\n" 
+	prompt_text += "Player score is "+str(SignalBus.score)+".\n"
+	prompt_text += "Player current difficulty level is "+str(SignalBus.game_difficulty)+"\n"
+	
+	##############Weapons
+	var has_blaster = !gm.players[0].weapons[1]['disabled']
+	var has_gauntlet = !gm.players[0].weapons[2]['disabled']
+	
+	#user has 2 weapons
+	if has_blaster and has_gauntlet:
+		#You know that the boss is located on the top right side of the level.
+		prompt_text += "The player has both tools and is ready to go meet his destiny\n"
+		prompt_text += "Give instructions to the player on how to get to the large room located on the top right where the final boss is located.\n"
+		prompt_text += "explain that to defeat the final boss you should use the gauntlet 2000 to create a barrier and therefore avoid being hit by floppy disks.\n"
+		prompt_text += "3.5 floppy disks are faster but inflict less damage, larger 5.25 are slower but inflict more damage"
+		prompt_text += "moving around would give him enough time to use the blaster  cleaner 80 to shoot at the boss. The boss has 200 of health."
+		
+	elif has_blaster:
+		#user has the blaster only
+		prompt_text += "The player already has the blaster cleaner 80 but will need to protect himself more if he wants to defeat the final boss.\n"
+		prompt_text += "Recommend to the player to go fetch the weapon on the very far right represented by a yellow triangle. \n"
+	elif has_gauntlet:
+		#user has the gauntlet
+		prompt_text += "The player already has the gauntlet 2000 a power protective tool against various tech notably floppy disks.\n"
+		prompt_text += "Recommend to the player to also retrieve a tool for the offense, the mighty blaster 80.\n" 
+	else:
+		#user has no weapon
+		prompt_text += "The player does not currently have any tools to defend itself or get rid of the old techs \n"
+		prompt_text += "Recommend to the player to go fetch the weapon closest to where the player started the level which is where the blaster cleaner 80 is located, on the map represented by a yellow triangle. \n"
+	
+	prompt_text += "Based on the screenshot of the game, the mini map in the screenshot and the information you have, give short and concise instructions to the user so that they know what to do"
+		
+	prompt_text += "If you think you should not help just yet just crack a joke or give a fun fact and keep your explaination fuzzy." 
+	
+	prompt_text += "Prepare your answer with the textual help for the first field, a second field that represents the difficulty level of the game from 0 to 2 with 0 being easy and 2 being hard."
+	prompt_text += "If you consider that the user is not doing well lower the difficulty level, if they are too strong highten the difficulty level." 
+	prompt_text += "the last field is the reason why you adjusted the difficulty a certain way, please follow a JSON format {\"help\":\"\", \"difficulty_level\":0, \"reason\":\"\"}"
+	
+	
 	#var image_path = #"res://screenshots/screenshot-1741159543.png"  # Or "user://your_image.png", etc.
 	
 	var base64_image = ""
@@ -109,13 +152,25 @@ func _on_need_gemini_help():
 #using answers from the user ask gemini to generate a story about the datacenter
 #using the backstory ask imagen3 gemini for a background image 
 func _on_get_gemini_backstory():
+	
+	#Ask for an image
+	var prompt_img = "Illustrate the following story using a 16 bits retro style design with neon glows using google color palette:\n"
+	prompt_img += " You have been tasked to clean a datacenter that have been overtaken by the 80s and 90s old technologies like matrix printers & CRTs and flying floppy disks.\n"
+	prompt_img += "Make sure to have a "+SignalBus.trivia_result[0]['a']+"\n"
+			
+	call_api_bridge_generate_backstory_image(prompt_img)
+	
+	#ask for a compelling story
 	var prompt = "You are a video game story writer and you are tasked to write a very short backstory of the game to make the player want to play.\n" 
-	prompt += "The game takes place in an old  datacenter from the 80s or 90s swarming with old technologies like CRTs or floppies. the hero of the story is tasked to clean those technology and find the boss that controls the old tech and hide in the datacenter.  \n 
-	Use the following answers to the questions asked to the player in your story:.\n"
+	prompt += "The game takes place in an old datacenter from the 80s or 90s swarming with old technologies like CRTs, old matrix dot printers or floppy disks." 
+	prompt += "The hero of the story is tasked to clean the datacenter from thos antiquities and find the boss, an old angry ATX Server that controls the old tech and hide in the datacenter.\n" 
+	prompt += "To tailor the story to the player, he gave you the following indications on his personality through a Q&A session." 
+	prompt += "Color your story with element from his answers and keep the story short\n"
 	for i in SignalBus.trivia_result.size():
 		prompt +="Question:" + SignalBus.trivia_result[i]['q'] +", Answer:"+ SignalBus.trivia_result[i]['a'] + ".\n"	
-	prompt += "Finally, Also provide instruction telling that the player needs to first find the secret tool to increase his chances to win against the boss level"
 	call_gemini_backstory(prompt)
+	
+	
 
 ##########################################API Integration	
 
@@ -127,9 +182,16 @@ func call_api_bridge_generate_backstory_image(prompt):
 	add_child(http_request)
 	http_request.request_completed.connect(_on_call_api_bridge_backstory_image_request_completed.bind(http_request))
 	var connection ="http://"+endpoint+":"+port+"/get_backstory_image"
-	var headers = ["Content-type: x-www-form-urlencoded"]
-	http_request.request(connection, headers, HTTPClient.METHOD_POST, prompt) 
+	var headers = ["Content-Type: application/json"]
+	
+	var body = JSON.stringify({
+			"session_id": SignalBus.session_id,
+			"prompt": prompt
+		})
+	
+	http_request.request(connection, headers, HTTPClient.METHOD_POST, body) 
 
+#Got the image that we need to display
 func _on_call_api_bridge_backstory_image_request_completed(result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray, _req_node : HTTPRequest = null):
 	if result != OK:
 			printerr("Imagen3: failed to generate image")
@@ -137,7 +199,7 @@ func _on_call_api_bridge_backstory_image_request_completed(result: int, _respons
 		var base64_image = body.get_string_from_utf8()
 		#print(base64_image)
 		SignalBus.gemini_backstory_image = base64_image
-		SignalBus.gemini_backstory_image_received.emit(base64_image)
+		SignalBus.gemini_backstory_image_received.emit()
 
 
 #connect locally to send analytic sensors data
@@ -160,18 +222,21 @@ func call_gemini_backstory(prompt:String) -> String:
 	var http_request  = HTTPRequest.new()
 	add_child(http_request)
 	http_request.request_completed.connect(_on_call_gemini_backstory_request_completed.bind(http_request))
-	var connection = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + GEMINI_API_KEY
+	var connection = GEMINI_URL
 	var post_data = '{
   "contents": [{
 	"parts":[{"text":"'+prompt+'"}]
 	}]
    }'
 	#var json_data = JSON.print(post_data) #convert dictionary to json string
+	
+	SignalBus.gemini_backstory_requested_details.emit(prompt)
+	
 	var headers = ["Content-Type: application/json"] #set header
 	http_request.request(connection, headers, HTTPClient.METHOD_POST, post_data)
 	return ""
 
-#results received
+#Backstory generated now let s get an image to illustrate
 func _on_call_gemini_backstory_request_completed(result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray, _req_node : HTTPRequest = null):
 	if result != OK:
 		print("Error")
@@ -185,8 +250,7 @@ func _on_call_gemini_backstory_request_completed(result: int, _response_code: in
 		   dict_body.candidates[0].content.parts.size() > 0:
 			print(dict_body.candidates[0].content.parts[0].text)
 			SignalBus.gemini_backstory_text = dict_body.candidates[0].content.parts[0].text
-			#send to backgound story
-			call_api_bridge_generate_backstory_image(dict_body.candidates[0].content.parts[0].text)
+			
 		else:
 			printerr("Error accessing gemini for the backstory")
 		
@@ -227,7 +291,7 @@ func call_gemini_with_prompt_and_image(base64_image:String, prompt_text: String)
 		]
 
 	# 5. Make the request.
-	var error = http_request.request(GEMINI_URL, headers, HTTPClient.METHOD_POST, json_string)
+	var error = http_request.request(GEMINI_PRO_URL, headers, HTTPClient.METHOD_POST, json_string)
 	if error != OK:
 		printerr("HTTP request failed: ", error)
 		http_request.queue_free()  # Clean up on error
@@ -249,7 +313,7 @@ func _on_request_completed(_result, response_code, _headers, body):
 				var parsedJSON = JSON.parse_string(generated_text.replace("```json", "").replace("```", ""))  
 				
 				print(parsedJSON)
-				SignalBus.gemini_help_received.emit(parsedJSON ["help"])
+				SignalBus.gemini_help_received.emit(parsedJSON["help"])
 				SignalBus.gemini_difficulty_adjusted.emit(parsedJSON["difficulty_level"], parsedJSON['reason'])
 			else:
 				printerr("Unexpected response format (no content/parts):", response_json)
@@ -257,7 +321,7 @@ func _on_request_completed(_result, response_code, _headers, body):
 			printerr("Unexpected response format (no candidates):", response_json)
 
 	else:
-		printerr("Gemini HTTP request failed with code ", response_code)
+		printerr("Gemini ask for help HTTP request failed with code ", response_code)
 		printerr("Response body:\n", body.get_string_from_utf8())  # Print the raw response for debugging.
 
 ####### generate story background image with imagen3

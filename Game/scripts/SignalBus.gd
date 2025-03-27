@@ -10,8 +10,8 @@ enum {EASY, MEDIUM, HARD}
 var game_difficulty = EASY #difficulty level
 var last_screenshot = "" #last screenshot taken in base64
 var last_screenshot_timestamp = ""
-const SEND_SCREENSHOTS = false 
-
+const SEND_SCREENSHOTS = true 
+const GCS_BUCKET_BACKSTORIES = "gs://rtr_backstories"
 ### message bus that dispatch events between classes of the game
 ######All game states - our Finite state machine	
 enum {SPLASHSCREEN, QUESTIONS, CONTROLS, BACKSTORY, LEVEL1, BOSS1, GAMEOVER}
@@ -42,7 +42,7 @@ var gemini_backstory_image: String = "image"
 ######gemini interaction######
 signal gemini_help_received(help:String)
 signal gemini_backstory_received(msg)
-signal gemini_backstory_image_received(base64_image:String)
+signal gemini_backstory_image_received()
 
 #internal signals only
 signal gemini_help_requested() #for triggering the call in the game
@@ -85,8 +85,8 @@ func _ready() -> void:
 	SignalBus.trivia_question_received.connect(_on_trivia_question_received)
 
 #store it for gemini
-func _on_trivia_question_received(_idx, qa):
-	trivia_result.append(qa)
+func _on_trivia_question_received(q, a):
+	trivia_result.append({'q':q,'a':a})
 
 #wait X seconds
 func wait(seconds: float, function) -> void:
@@ -96,3 +96,11 @@ func wait(seconds: float, function) -> void:
 	timer.one_shot = true  # Only run once
 	timer.timeout.connect(function)
 	timer.start()
+
+func get_stopwatch():
+	var  msec = fmod(SignalBus.stopwatch, 1) * 1000
+	var  sec = fmod(SignalBus.stopwatch, 60)
+	var minutes = SignalBus.stopwatch/60
+	#00 : 00 . 000
+	var format_string = "%02d : %02d . %02d"
+	return format_string % [minutes, sec, msec]

@@ -137,11 +137,11 @@ func _on_change_screen_state(new_state) -> void:
 		SignalBus.SPLASHSCREEN:
 			current_scene_instance = splashScreen.instantiate()
 			add_child(current_scene_instance)
-			SignalBus.gemini_backstory_requested.emit()
 		SignalBus.QUESTIONS:
 			current_scene_instance = questionsScreen.instantiate()
 			add_child(current_scene_instance)
 		SignalBus.CONTROLS:
+			SignalBus.gemini_backstory_requested.emit()
 			current_scene_instance = controlsScreen.instantiate()
 			add_child(current_scene_instance)
 		SignalBus.BACKSTORY:

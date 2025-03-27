@@ -9,6 +9,8 @@ func _ready():
 	
 	SignalBus.gemini_backstory_received.connect(_on_story_received)
 	SignalBus.gemini_backstory_image_received.connect(_on_image_received)
+	
+	
 
 
 func _process(_delta: float) -> void:
@@ -39,6 +41,8 @@ func scroll_text_from_top_to_bottom():
 	# Animate the scrollbar value from 0 to max
 	tween.tween_property(v_scroll, "value", max_scroll, duration)
 	tween.set_ease(Tween.EASE_IN)
+	
+	v_scroll.grab_focus()
 
 #display the generated image
 func _on_image_received(base64_image):

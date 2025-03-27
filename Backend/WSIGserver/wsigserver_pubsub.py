@@ -40,6 +40,7 @@ generation_model_fast = "imagen-3.0-fast-generate-001"
 
 #GCS 
 SCREENSHOT_BUCKET = "rtr_screenshots"
+BACKSTORY_BUCKET="rtr_backstories"
 
 
 def get_publisher_client():
@@ -110,10 +111,10 @@ def resize_image_maintain_aspect(image_bytes, max_width, max_height):
 
 
 #ask gemini to generate the backstory image
-def generate_backstory_image(prompt, image=None):
-	prompt = """
-	16 bits version with tron like neon of a datacenter in the 80s
-	"""
+def generate_backstory_image(prompt, session_id):
+	#prompt = """
+	#16 bits version with tron like neon of a datacenter in the 80s
+	#"""
 	print("---Calling Imagen3---")
 
 	vertexai.init(project=project_id, location="us-central1")
@@ -141,16 +142,31 @@ def generate_backstory_image(prompt, image=None):
 	base64_encoded = base64_bytes.decode('utf-8')
 	
 	print(f"Base64 encoded image: {base64_encoded[:100]}...")
+	upload_backstory_to_gcs(base64_encoded, session_id)
+
 	return base64_encoded
 
 
-#upload screenshots to GCP
-def upload_screenshot_to_gcs(base64_image, session_id,  timestamp_seconds):
+#upload screenshots image to GCP
+def upload_screenshot_to_gcs(base64_image, session_id, timestamp_seconds):
 	image_data = base64.b64decode(base64_image)
 	#timestamp_seconds = int(time.time())
 	destination_blob_name = "{}/{}_screenshot_{}.png".format(session_id, session_id, timestamp_seconds) 
+
 	storage_client = storage.Client()
 	bucket = storage_client.bucket(SCREENSHOT_BUCKET)
+	blob = bucket.blob(destination_blob_name)
+	blob.upload_from_string(image_data, content_type="image/png")
+
+
+
+#upload backstory to GCP
+def upload_backstory_to_gcs(base64_image, session_id):
+	image_data = base64.b64decode(base64_image)
+	#timestamp_seconds = int(time.time())
+	destination_blob_name = "{}_backstory.png".format(session_id) 
+	storage_client = storage.Client()
+	bucket = storage_client.bucket(BACKSTORY_BUCKET)
 	blob = bucket.blob(destination_blob_name)
 	blob.upload_from_string(image_data, content_type="image/png")
 
@@ -176,9 +192,11 @@ def publish_messages():
 @app.route('/get_backstory_image', methods=['POST'])
 def get_backstory_image():
 	#try:
-		 prompt = request.form.get('prompt')
+		 data = request.get_json()
+		 prompt =  data.get('prompt')
+		 session_id  = data.get('session_id')
 		 #img_base64 = request.form.get('img_base64')
-		 result = generate_backstory_image(prompt)
+		 result = generate_backstory_image(prompt, session_id)
 		 return result
 
 @app.route('/publish_screenshot_image', methods=['POST'])
@@ -196,6 +214,7 @@ def publish_screenshot():
 				base64_image = base64_image.split(',')[1]
 			
 			upload_screenshot_to_gcs(base64_image, session_id, timestamp_seconds)
+			return jsonify("Sent")
 
 		#except Exception as e:
 		#	return jsonify({'error': str(e)}), 500

@@ -13,8 +13,8 @@ func _ready():
 	SignalBus.gemini_help_requested_details.connect(_on_gemini_help_requested_action)
 	SignalBus.gemini_help_received.connect(_on_gemini_help_received_action)
 	
-	SignalBus.gemini_backstory_requested.connect(_on_gemini_backstory_requested_action)
-	SignalBus.gemini_backstory_received.connect(_on_gemini_backstory_requested_action)
+	SignalBus.gemini_backstory_requested_details.connect(_on_gemini_backstory_requested_action)
+	#SignalBus.gemini_backstory_received.connect(_on_gemini_backstory_received_action)
 	SignalBus.gemini_backstory_image_received.connect(_on_gemini_backstory_image_receive_action)
 	
 	#player signals
@@ -127,7 +127,7 @@ func _on_gemini_help_requested_action(prompt_text, screenshot_filename): #NG
 
 func _on_gemini_help_received_action(help): #NG
 	var request_data = {
-			"event_type": "on_received_gemini_help",
+			"event_type": "on_gemini_help_received",
 			"session_id": SignalBus.session_id,
 			"client_id": SignalBus.client_id,
 			"ts": Time.get_unix_time_from_system(),
@@ -152,7 +152,9 @@ func _on_adjust_difficulty_action(new_difficulty, reason): #NG
 	var json_string = JSON.stringify(request_data)
 	_call_rpc_backend(json_string)
 
-func _on_gemini_backstory_requested_action(prompt_text:String): #OK
+func _on_gemini_backstory_requested_action(prompt_text:String):
+	
+	print("sending bs signal")
 	var request_data = {
 			"event_type": "on_gemini_backstory_requested",
 			"session_id": SignalBus.session_id,
@@ -174,13 +176,13 @@ func _on_gemini_backstory_text_received_action(story:String): #OK
 	var json_string = JSON.stringify(request_data)
 	_call_rpc_backend(json_string)
 
-func _on_gemini_backstory_image_receive_action(base64_image): #TBT
+func _on_gemini_backstory_image_receive_action(): 
 	var request_data = {
-			"event_type": "on_gemini_backstory_text_received",
+			"event_type": "on_gemini_backstory_image_received",
 			"session_id": SignalBus.session_id,
 			"client_id": SignalBus.client_id,
 			"ts": Time.get_unix_time_from_system(),
-			"backstory_image": base64_image
+			"backstory_image": SignalBus.GCS_BUCKET_BACKSTORIES+"/"+ SignalBus.session_id +".png"
 	}
 	var json_string = JSON.stringify(request_data)
 	_call_rpc_backend(json_string)
