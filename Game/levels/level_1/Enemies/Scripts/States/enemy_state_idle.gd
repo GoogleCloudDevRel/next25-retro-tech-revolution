@@ -8,7 +8,7 @@ var _timer: float = 0.0
 
 # Called when the node enters the scene tree for the first time.
 func init() -> void:
-	#print("idle state init")
+	print("idle state init")
 	pass
 
 ## What happens when the player enters this State?
@@ -17,6 +17,8 @@ func Enter() -> void:
 	enemy.velocity = Vector2.ZERO
 	_timer = randf_range(state_duration_min, state_duration_max)
 	enemy.update_animation(anim_name)
+	
+	
 	pass
 
 ## What happens when the player exits this State?

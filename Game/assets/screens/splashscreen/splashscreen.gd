@@ -6,6 +6,7 @@ func _physics_process(_delta):
 		if Input.is_action_just_pressed("attack"):
 			#StartScreenCanvas.visible = false
 			SignalBus.screen_state.emit(SignalBus.QUESTIONS)
+			
 
 #wait a certain time before replaying the initial video
 func _on_initial_video_finished() -> void:

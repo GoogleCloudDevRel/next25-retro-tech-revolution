@@ -8,15 +8,15 @@ class_name Boss extends Enemy
 func _ready() -> void:
 	id = get_instance_id()
 	state_machine.initialize( self )
-	points = 40
-	health = 200.0
-	damage_points = 2
+	
+	SignalBus.gemini_difficulty_adjusted.connect(_on_game_difficulty_changed)
+	_on_game_difficulty_changed(SignalBus.game_difficulty, "Init")
 	can_fire = true
-	detection_radius = 300.0
-	max_bullet = 5
+
 	ShootingPoint = %ShootingPoint
 	SignalBus.boss_created.emit(self)
-	#player = PlayerManager.player
+	
+
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -57,3 +57,28 @@ func take_damage(player_damage):
 	hit_count += 1
 	$HealthBar.value = health
 	$Sprite2D/healthDepletion.play("enemyHit")
+	
+	
+func _on_game_difficulty_changed(new_level, reason):
+	if SignalBus.game_difficulty == SignalBus.EASY:
+		points = 40
+		health = 100.0
+		detection_radius = 200.0
+		max_bullet = 2
+		damage_points = 1
+		speed = 5
+	elif SignalBus.game_difficulty == SignalBus.MEDIUM:
+		points = 70
+		health = 150.0
+		detection_radius = 300.0
+		max_bullet = 3
+		damage_points = 2
+		speed = 20
+	else:
+		points = 70
+		health = 300.0
+		detection_radius = 300.0
+		max_bullet = 5
+		fire_rate = 2.0
+		damage_points = 5
+		speed = 50

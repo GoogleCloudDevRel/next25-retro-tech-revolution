@@ -8,7 +8,7 @@ var current_trivia_selection = 0
 var buttons = []
 var current_button_index = 0
 
-var disable_buttons = false
+var disable_buttons = true
 
 
 #pick randomly an answer 
@@ -41,7 +41,7 @@ func _ready() -> void:
 	#Q3
 	trivia.append({
 	"q" : "✦ HOW MUCH OF A GAMER ARE YOU?",
-	"a" : ["BRING IT ON, I LOVE SUPER HARD GAMES!", "I'M MODERATELY INTO GAMES", "I ENJOY MORE WATCHING", "NOT A PLAYER, I'M HERE FOR THE INSGHTS"]
+	"a" : ["BRING IT ON, I LOVE SUPER HARD GAMES!", "I'M MODERATELY INTO GAMES", "I ENJOY MORE WATCHING", "NOT A PLAYER, I'M HERE FOR THE INSIGHTS"]
 	})
 	
 	set_button_texts(trivia[current_trivia_selection])
@@ -50,6 +50,9 @@ func _ready() -> void:
 	# Connect signals for all buttons
 	for i in range(buttons.size()):
 		buttons[i].pressed.connect(_on_button_pressed.bind(i))
+	
+	await get_tree().create_timer(2.0).timeout  # Wait time for cooldown
+	disable_buttons = false
 	
 func _process(_delta):
 	#manage focus with joypad
@@ -68,22 +71,23 @@ func _process(_delta):
 func set_button_texts(qa_array):
 	#print( qa_array['q'])
 	%Question.text = qa_array['q']
-	buttons[0].grab_focus()
+	#buttons[0].grab_focus()
 	for i in qa_array['a'].size():
 		#print( qa_array['a'][i])
 		buttons[i].text = qa_array['a'][i]
 
 func _on_button_pressed(button_index):
-	disable_buttons = true
-	print("Question " + trivia[current_trivia_selection]['a'][button_index])
-	SignalBus.trivia_question_received.emit(trivia[current_trivia_selection]['q'][button_index], trivia[current_trivia_selection]['a'][button_index])
-	current_trivia_selection += 1
-	if current_trivia_selection < trivia.size():
-		print("next question")
-		set_button_texts(trivia[current_trivia_selection])
-	else: #go back to the game
-		print("finsihed")
-		SignalBus.screen_state.emit(SignalBus.CONTROLS)	
-	
-	await get_tree().create_timer(1.0).timeout  # Wait time for cooldown
-	disable_buttons = false
+	if !disable_buttons:
+		disable_buttons = true
+		print("Question " + trivia[current_trivia_selection]['a'][button_index])
+		SignalBus.trivia_question_received.emit(trivia[current_trivia_selection]['q'][button_index], trivia[current_trivia_selection]['a'][button_index])
+		current_trivia_selection += 1
+		if current_trivia_selection < trivia.size():
+			print("next question")
+			set_button_texts(trivia[current_trivia_selection])
+		else: #go back to the game
+			print("finsihed")
+			SignalBus.screen_state.emit(SignalBus.CONTROLS)	
+		
+		await get_tree().create_timer(1.0).timeout  # Wait time for cooldown
+		disable_buttons = false

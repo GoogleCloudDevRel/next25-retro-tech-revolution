@@ -31,7 +31,34 @@ func _ready():
 	SignalBus.gemini_backstory_requested.connect(_on_get_gemini_backstory)
 	SignalBus.gemini_backstory_image_requested.connect(call_api_bridge_generate_backstory_image)
 	SignalBus.send_screenshot_to_gcs.connect(_on_send_screenshots_to_gcs)
+	SignalBus.screen_state.connect(_on_game_over)
 	#print("---api integration ready---")
+
+#get rank on game over
+func _on_game_over(state):
+	if state == SignalBus.GAMEOVER: #kick in only if we have finished
+		var http_request  = HTTPRequest.new()
+		add_child(http_request)
+		http_request.request_completed.connect(_on_rank_received.bind(http_request))
+		var connection ="http://"+endpoint+":"+port+"/get_rank"
+		var headers = ["Content-Type: application/json"]
+	
+		var body = JSON.stringify({
+			"session_id": SignalBus.session_id,
+		})
+		http_request.request(connection, headers, HTTPClient.METHOD_POST, body) 
+		
+		
+func _on_rank_received(result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray, _req_node : HTTPRequest = null):
+	if result != OK:
+			printerr("Imagen3: failed to generate image")
+	else:
+		var rank = body.get_string_from_utf8()
+		#print(base64_image)
+		SignalBus.session_rank_received.emit(rank)
+	
+
+
 
 ###send regularly send screenshots of the game to GCS
 func _on_send_screenshots_to_gcs():
@@ -90,16 +117,15 @@ func _on_need_gemini_help():
 	##############Context
 	
 	###############Player stats
-	var gm = $/root/Game/GameManager
 	prompt_text += "Player has been playing for "+SignalBus.get_stopwatch()+"\n" 
-	prompt_text += "Player health level is "+str(gm.players[0].health)+" out of 100 \n"
-	prompt_text += "Player has been hit "+str(gm.players[0].hit_count)+" times.\n" 
+	prompt_text += "Player health level is "+str(SignalBus.players[0].health)+" out of 100 \n"
+	prompt_text += "Player has been hit "+str(SignalBus.players[0].hit_count)+" times.\n" 
 	prompt_text += "Player score is "+str(SignalBus.score)+".\n"
 	prompt_text += "Player current difficulty level is "+str(SignalBus.game_difficulty)+"\n"
 	
 	##############Weapons
-	var has_blaster = !gm.players[0].weapons[1]['disabled']
-	var has_gauntlet = !gm.players[0].weapons[2]['disabled']
+	var has_blaster = !SignalBus.players[0].weapons[1]['disabled']
+	var has_gauntlet = !SignalBus.players[0].weapons[2]['disabled']
 	
 	#user has 2 weapons
 	if has_blaster and has_gauntlet:
@@ -312,8 +338,19 @@ func _on_request_completed(_result, response_code, _headers, body):
 				print(generated_text)
 				var parsedJSON = JSON.parse_string(generated_text.replace("```json", "").replace("```", ""))  
 				
-				print(parsedJSON)
-				SignalBus.gemini_help_received.emit(parsedJSON["help"])
+				
+				SignalBus.gemini_help_received.emit(parsedJSON["help"]+" "+parsedJSON["reason"])
+				#set difficulty	
+				if parsedJSON["difficulty_level"] == 2:
+						print("hard")
+						SignalBus.game_difficulty = SignalBus.HARD
+				elif parsedJSON["difficulty_level"] == 1:
+						print("med")
+						SignalBus.game_difficulty = SignalBus.MEDIUM
+				else:		
+						print("easy")
+						SignalBus.game_difficulty = SignalBus.EASY
+				
 				SignalBus.gemini_difficulty_adjusted.emit(parsedJSON["difficulty_level"], parsedJSON['reason'])
 			else:
 				printerr("Unexpected response format (no content/parts):", response_json)

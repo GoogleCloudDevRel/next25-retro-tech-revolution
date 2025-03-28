@@ -581,6 +581,7 @@ shader = ExtResource("14_br2u3")
 shader_parameter/intensity = 10.0
 
 [node name="Player" type="CharacterBody2D"]
+process_mode = 1
 z_index = 1
 scale = Vector2(0.995666, 0.991305)
 collision_mask = 16

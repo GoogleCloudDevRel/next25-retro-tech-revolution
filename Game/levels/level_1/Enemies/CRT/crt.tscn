@@ -297,7 +297,7 @@ corner_radius_bottom_left = 8
 
 [node name="CRT" type="CharacterBody2D"]
 collision_layer = 258
-collision_mask = 31
+collision_mask = 287
 script = ExtResource("1_w1cg1")
 
 [node name="ShadowSprite2D2" type="Sprite2D" parent="."]
@@ -334,11 +334,17 @@ autoplay = "idle_down"
 [node name="EnemyStateMachine" type="Node" parent="."]
 script = ExtResource("4_ifb77")
 
-[node name="Idle" type="Node" parent="EnemyStateMachine"]
+[node name="Idle" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_m2hdj")
+next_state = NodePath("../Wander")
 
-[node name="Wander" type="Node" parent="EnemyStateMachine"]
+[node name="Wander" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("next_state")]
 script = ExtResource("6_wx8i8")
+wander_speed = 80.0
+state_animation_duration = 0.6
+state_cycles_min = 2
+state_cycles_max = 6
+next_state = NodePath("../Idle")
 
 [node name="Attack" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("next_state")]
 script = ExtResource("8_2erj4")

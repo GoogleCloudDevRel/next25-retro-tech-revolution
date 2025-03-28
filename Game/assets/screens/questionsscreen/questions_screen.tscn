@@ -188,7 +188,7 @@ vertical_alignment = 1
 
 [node name="AnswersHBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 80
+theme_override_constants/separation = 40
 alignment = 1
 
 [node name="Answer1" type="Button" parent="MarginContainer/VBoxContainer/AnswersHBox"]

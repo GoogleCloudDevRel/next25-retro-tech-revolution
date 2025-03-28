@@ -11,7 +11,7 @@ var hit_count = 0
 @export  var is_dead = false
 @export  var id = 0
 @export var can_fire: bool = false
-@export var detection_radius: float = 150.0
+@export var detection_radius: float = 100.0
 @export var timer: Timer
 
 ####Added enemies base mgt ######
@@ -26,8 +26,9 @@ const DIR_4 = [Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT, Vector2.UP]
 var cardinal_direction: Vector2 = Vector2.DOWN
 var direction: Vector2 = Vector2.ZERO
 var invulnerable: bool = false
+var player: Player
 
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var animation_player: AnimationPlayer = %AnimationPlayer
 @onready var sprite: Sprite2D = $Sprite2D
 # @onready var hit_box: Hitbox = $Hitbox
 @onready var state_machine: EnemyStateMachine = $EnemyStateMachine
@@ -37,10 +38,30 @@ var invulnerable: bool = false
 func _ready() -> void:
 	id = get_instance_id()
 	state_machine.initialize( self )
+	##player = SignalBus.player[0]
 	call_deferred("setup")
 	
-
-
+	if SignalBus.game_difficulty == SignalBus.EASY:
+		points = 5
+		health = 70.0
+		detection_radius = 100.0
+		damage_points = 1
+		speed = 20
+	elif SignalBus.game_difficulty == SignalBus.MEDIUM:
+		points = 10
+		health = 100.0
+		detection_radius = 150.0
+		damage_points = 2
+		speed = 50
+	else:
+		points = 15
+		health = 120.0
+		detection_radius = 300.0
+		damage_points = 2
+		speed = 50
+	
+	
+	
 func setup():
 	SignalBus.enemy_created.emit(self)
 
@@ -76,6 +97,7 @@ func SetDirection(new_direction: Vector2) -> bool:
 	return true
 
 func update_animation(state: String) -> void:
+	print(state + "_" + anim_direction())
 	animation_player.play(state + "_" + anim_direction())
 
 func anim_direction() -> String:
@@ -92,12 +114,14 @@ func take_damage(player_damage):
 	hit_count += 1
 	$HealthBar.value = health
 	$Sprite2D/healthDepletion.play("enemyHit")
+	SignalBus.enemy_taking_damage.emit(self, player_damage)
 	
 
 func _on_body_entered(body: Node2D) -> void:
 	queue_free()
 	if body.has_method("_is_moving"):
 		body.is_getting_hit(damage_points)
+
 		
 func on_death() -> void:
 		if !is_dead:

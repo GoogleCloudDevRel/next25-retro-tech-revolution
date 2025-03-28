@@ -22,15 +22,12 @@ var player: Player
 # Called when the node enters the scene tree for the first time.
 func init():
 	
-	
-	
 	pass # Replace with function body.
 
 ## What happens when the player enters this State?
 func Enter() -> void:
 	#print("attack state enter")
 	_timer = state_duration_max
-	enemy.update_animation(anim_name)
 	
 	#### fire bullet
 	# Setup timer for controlling fire rate
@@ -41,6 +38,19 @@ func Enter() -> void:
 		enemy.timer.one_shot = true
 		enemy.timer.connect("timeout", _on_timer_timeout)
 		enemy.add_child(enemy.timer)
+	
+	##walk to the player if we are still far
+	var distance = SignalBus.players[0].global_transform.origin.distance_to(enemy.global_position)
+	if distance  > 20:
+		var _direction = get_4d(enemy.global_position.direction_to(SignalBus.players[0].global_transform.origin))
+		enemy.velocity = _direction * wander_speed * 2
+	
+		enemy.cardinal_direction = _direction
+		enemy.SetDirection(_direction)
+		enemy.update_animation("walk")
+	else:
+		enemy.update_animation(anim_name)
+	
 	
 	pass
 

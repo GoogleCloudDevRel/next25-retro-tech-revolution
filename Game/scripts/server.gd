@@ -17,6 +17,9 @@ func _ready():
 	#SignalBus.gemini_backstory_received.connect(_on_gemini_backstory_received_action)
 	SignalBus.gemini_backstory_image_received.connect(_on_gemini_backstory_image_receive_action)
 	
+	SignalBus.gemini_difficulty_adjusted.connect(_on_gemini_difficulty_adjusted_action)
+	
+	
 	#player signals
 	SignalBus.player_created.connect(_on_player_created_action)
 	SignalBus.bullet_created.connect(_on_bullet_created_action)
@@ -71,6 +74,10 @@ func _on_game_screen_state_action(new_state): #OK except boss
 			request_data['stopwatch'] = SignalBus.stopwatch#ms
 	var json_string = JSON.stringify(request_data)
 	_call_rpc_backend(json_string)
+
+
+#####pause management
+var pause_msg
 			
 func _on_game_paused_action(): #OK
 	print("game paused")
@@ -83,10 +90,12 @@ func _on_game_paused_action(): #OK
 			"stopwatch": SignalBus.stopwatch#ms
 			
 	}
-	var json_string = JSON.stringify(request_data)
-	_call_rpc_backend(json_string)
+	pause_msg = JSON.stringify(request_data)
+	#_call_rpc_backend(json_string)
 
 func _on_game_unpaused_action(): #OK
+	_call_rpc_backend(pause_msg) #sending the pause msg
+	pause_msg = ""
 	var request_data = {
 			"event_type": "on_game_unpaused",
 			"session_id": SignalBus.session_id,
@@ -95,7 +104,8 @@ func _on_game_unpaused_action(): #OK
 			"score": SignalBus.score, #score
 			"stopwatch": SignalBus.stopwatch#ms
 	}
-	var json_string = JSON.stringify(request_data)
+	var json_string = JSON.stringify(request_data) #sending the unpause
+	
 	_call_rpc_backend(json_string)
 
 func _on_trivia_question_received_action(question, answer): #tobe tested
@@ -138,9 +148,9 @@ func _on_gemini_help_received_action(help): #NG
 	var json_string = JSON.stringify(request_data)
 	_call_rpc_backend(json_string)
 
-func _on_adjust_difficulty_action(new_difficulty, reason): #NG
+func _on_gemini_difficulty_adjusted_action(new_difficulty:int, reason:String):
 	var request_data = {
-			"event_type": "on_adjust_difficulty",
+			"event_type": "on_gemini_difficulty_adjusted",
 			"session_id": SignalBus.session_id,
 			"client_id": SignalBus.client_id,
 			"ts": Time.get_unix_time_from_system(),
@@ -295,7 +305,7 @@ func _on_player_score_increased_action(points:int):
 			#"stopwatch": 30000#ms
 	#TODO
 	var request_data = {
-			"event_type": "on_weapon_activated",
+			"event_type": "on_player_score_increased_action",
 			"session_id": SignalBus.session_id,
 			"client_id": SignalBus.client_id,
 			"ts": Time.get_unix_time_from_system(),
@@ -371,7 +381,7 @@ func _on_enemy_taking_damage_action(e:Enemy, player_damage:int): #OK
 
 func _on_enemy_health_depleted_action(e:Enemy): #TODO
 	var request_data = {
-			"event_type": "on_enemy_created",
+			"event_type": "on_enemy_health_depleted",
 			"session_id": SignalBus.session_id,
 			"client_id": SignalBus.client_id,
 			"ts": Time.get_unix_time_from_system(),

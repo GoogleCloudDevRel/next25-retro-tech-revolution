@@ -20,6 +20,9 @@ import vertexai
 from vertexai.preview.vision_models import ImageGenerationModel
 
 
+#bigquery
+from google.cloud import bigquery
+
 #prerequisite:
 #increase ulimit -n
 #ulimit -n 4096
@@ -61,6 +64,74 @@ def get_publisher_client():
 	return pubsub_v1.PublisherClient(credentials=credentials, batch_settings=batch_settings)
 
 
+
+
+
+
+
+
+#bigquery get ranking
+def get_rank(session_id):
+	query = """
+				WITH RAW_DATA AS(
+			 SELECT 
+			    JSON_VALUE(data, '$.session_id') As session_id,
+			    JSON_VALUE(data, '$.score') AS score,
+			    JSON_VALUE(data, '$.stopwatch') AS stopwatch
+			  FROM  `data-cloud-interactive-demo.retro_tech_revolution.raw_game_signals` 
+			),
+			PlayerMaxScores AS (
+			  SELECT 
+			    session_id,
+			    MAX(score) AS max_score,
+			    -- Max sore --> timestamp
+			     MAX(CASE WHEN score = (SELECT MAX(score) FROM RAW_DATA t2 
+			              WHERE t2.session_id = t1.session_id) 
+			        THEN stopwatch
+			        END) AS max_score_time
+			  FROM 
+			    RAW_DATA As t1
+			  GROUP BY 
+			    session_id
+			),
+			RankedPlayers AS (
+			  SELECT 
+			    session_id,
+			    max_score,
+			    max_score_time,
+			    -- Rank players first by max score (descending), then by time (ascending)
+			    DENSE_RANK() OVER (
+			      ORDER BY 
+			        max_score DESC,  -- Higher max score ranks higher
+			        max_score_time ASC  -- If max scores are equal, earlier time ranks higher
+			    ) AS player_rank
+			  FROM 
+			    PlayerMaxScores
+			)
+
+			SELECT 
+			  player_rank
+			FROM 
+			  RankedPlayers
+			WHERE session_id = '"""+session_id+"""'
+			ORDER BY 
+			  player_rank ASC,
+			  max_score DESC,
+			  max_score_time ASC;
+	"""
+	client = bigquery.Client()
+	i = 0
+	while i < 6:
+		query_job = client.query(query)
+		results = query_job.result()
+		for row in results:
+			return str(row['player_rank']) #expect one record only
+		i += 1
+	return "0"
+
+
+
+get_rank("1742969751.0117499")
 
 # generate messages
 def publishMessage(publisher_client, content):
@@ -198,6 +269,12 @@ def get_backstory_image():
 		 #img_base64 = request.form.get('img_base64')
 		 result = generate_backstory_image(prompt, session_id)
 		 return result
+
+@app.route('/get_rank', methods=['POST'])
+def get_rank_from_bq():
+			data = request.get_json()
+			session_id  = data.get('session_id')
+			return get_rank(session_id)
 
 @app.route('/publish_screenshot_image', methods=['POST'])
 def publish_screenshot():

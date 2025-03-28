@@ -7,8 +7,8 @@ var session_id
 var score = 0
 var stopwatch = 0.0
 enum {EASY, MEDIUM, HARD}
-var game_difficulty = EASY #difficulty level
-var last_screenshot = "" #last screenshot taken in base64
+var game_difficulty = HARD #difficulty level
+var last_screenshot = "res://assets/map/mini_map.png" #last screenshot taken in base64
 var last_screenshot_timestamp = ""
 const SEND_SCREENSHOTS = true 
 const GCS_BUCKET_BACKSTORIES = "gs://rtr_backstories"
@@ -17,11 +17,18 @@ const GCS_BUCKET_BACKSTORIES = "gs://rtr_backstories"
 enum {SPLASHSCREEN, QUESTIONS, CONTROLS, BACKSTORY, LEVEL1, BOSS1, GAMEOVER}
 var current_screen_state = SPLASHSCREEN
 signal screen_state(_new_state) #new
-####
+
+####ref to main elements
+var players = []
+var enemies = []
+var bullets = []
+var boss = []
+#####
 
 signal start_game() #actual start of the game
 signal end_game()
 
+#paunsing the game
 signal pause_game()
 signal unpause_game()
 
@@ -29,6 +36,9 @@ signal stop_game_stopwatch() #new 3/24
 signal show_congratulations() #new 3/24
 
 signal score_up(new_score:int) #new
+
+signal session_rank_received(rank:String)
+
 
 signal send_screenshot_to_gcs() 
 
@@ -83,10 +93,24 @@ signal boss_created(b:Boss) #Added on 03/24
 func _ready() -> void:
 	session_id  = str(Time.get_unix_time_from_system())
 	SignalBus.trivia_question_received.connect(_on_trivia_question_received)
-
+	SignalBus.player_created.connect(_on_player_created)
+	SignalBus.enemy_created.connect(_on_enemies_created)
+	SignalBus.boss_created.connect(_on_boss_created)
+	
 #store it for gemini
 func _on_trivia_question_received(q, a):
 	trivia_result.append({'q':q,'a':a})
+
+func _on_player_created(p:Player):
+	print("received player")
+	players.append(p)
+
+func _on_enemies_created(e:Enemy):
+	enemies.append(e)
+
+func _on_boss_created(b:Boss):
+	boss.append(b)
+
 
 #wait X seconds
 func wait(seconds: float, function) -> void:

@@ -29,16 +29,14 @@ const MAX_NUMBER_ENEMIES = 4
 @export var bullets = []
 
 func _ready():
-	#create player
-	#var player_to_add = Player.instantiate()
-	#player_to_add.set_multiplayer_authority(1)
+	
+	if SignalBus.game_difficulty == SignalBus.HARD:
+		#change the weapon s position
+		$UI_W1.global_position.x = 2128
+		$UI_W1.global_position.y = 544
 	
 	
-	#player_to_add.player_id = 1
-	#player_to_add.position.x = 400
-	#player_to_add.position.y = 400
-	#add_child(player_to_add)
-	#%player.player_id = 1
+	
 	players.append(%player)
 	SignalBus.player_created.emit(%player)
 	SignalBus.bullet_created.connect(_on_new_bullet)

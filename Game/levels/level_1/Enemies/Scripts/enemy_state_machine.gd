@@ -23,8 +23,7 @@ func _physics_process(delta):
 	
 	#manage attacks
 	var is_overlapping = false
-	player = get_parent().get_parent().players[0]
-	enemy = get_parent()
+	player = SignalBus.players[0]
 	
 	if !enemy.is_dead:
 		if player != null:
@@ -38,9 +37,6 @@ func _physics_process(delta):
 							SignalBus.player_taking_damage.emit(player, enemy)
 							player.is_getting_hit(get_parent().damage_points)
 							is_overlapping = true
-			else: 
-				change_state(states[0])
-	
 		#dead
 		if enemy.health <= 0:
 			SignalBus.enemy_health_depleted.emit(enemy)
@@ -53,7 +49,7 @@ func _physics_process(delta):
 
 func initialize(_enemy: Enemy) -> void:
 	states = []
-	
+	enemy = _enemy
 	for c in get_children():
 		if c is EnemyState:
 			states.append(c)
@@ -65,7 +61,8 @@ func initialize(_enemy: Enemy) -> void:
 		
 	if states.size() > 0:
 		change_state(states[1])
-		process_mode = Node.PROCESS_MODE_INHERIT
+		process_mode = PROCESS_MODE_PAUSABLE
+		#process_mode = Node.PROCESS_MODE_INHERIT ###### PROBLEM WILL FREEZE ALL ENEMIES!!!!!
 		
 func change_state(new_state: EnemyState) -> void:
 	if new_state == null || new_state == current_state || get_parent().is_dead:

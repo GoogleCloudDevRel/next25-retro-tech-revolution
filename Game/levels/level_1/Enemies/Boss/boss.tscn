@@ -338,7 +338,7 @@ corner_radius_bottom_left = 8
 
 [node name="Boss" type="CharacterBody2D"]
 collision_layer = 258
-collision_mask = 2
+collision_mask = 287
 script = ExtResource("1_1crnf")
 detection_radius = 0.0
 

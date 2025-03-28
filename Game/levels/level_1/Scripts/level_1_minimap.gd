@@ -96,18 +96,21 @@ func update_mini_map():
 		visibility_radius = 350.0
 	else:
 		visibility_radius = 200.0
+		
 	
 	
 	for n in $Background.get_children():
 		$Background.remove_child(n)
 		n.queue_free()
+	
+
+	
+	
 	draw_distance_circle(visibility_radius)
 	if player != null: 
 		draw_on_mini_map(player, "player")
 	if boss != null: 
-		print("has boss")
 		draw_on_mini_map(boss, "boss")
-	
 	if enemies.size()> 0:
 		for enemy in enemies:
 			draw_on_mini_map(enemy, "enemy")
