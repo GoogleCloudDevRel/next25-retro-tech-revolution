@@ -3,14 +3,14 @@ extends Bullet
 var pivot = Vector2(1, 2)
 var angle = 0
 var linear_speed = 400 
-var radius = 200 
+var radius = 70 
 var radius_speed = 10
 var ShootingPoint
 
 func _ready():
 	type = "tornado"
 	MAX_BULLET_RANGE = 4000
-	damage = 20
+	damage = 2
 
 func _physics_process(delta: float) -> void:
 	

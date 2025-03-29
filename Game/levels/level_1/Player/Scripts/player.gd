@@ -28,6 +28,8 @@ var counter = 0
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var state_machine : PlayerStateMachine = $StateMachine
+@onready var timerHit =  $TimerHit
+
 
 func _ready():
 		PlayerManager.player = self
@@ -119,18 +121,11 @@ func is_getting_hit(damage_points) -> void:
 		$HealthBar.value = health
 		
 		#attach a timer to switch back
-		if not $TimerHit:
-			var timer = Timer.new()
-			add_child(timer)
-			timer.wait_time = 2
-			timer.name = "TimerHit"
-			timer.one_shot = true  # Only run once
-			timer.timeout.connect(_on_reset_getting_hit)
-			timer.start()
-			
+		if timerHit.is_stopped():
+			timerHit.wait_time = 2
+			timerHit.start()
 		else:
-			$TimerHit.start()
-			$TimerHit.wait_time += 2
+			timerHit.wait_time = 2
 			
 		##we are dead
 		if health <= 0:			
@@ -138,11 +133,7 @@ func is_getting_hit(damage_points) -> void:
 
 func _on_reset_getting_hit():
 	$Sprite2D/healthDepletionAnimation.play("RESET")
-	$TimerHit.stop()
-	#for child in get_children():
-	#	if child is Timer and child.is_stopped():
-	#		child.queue_free()
-	#		break
+	timerHit.stop()
 
 
 #func is_not_getting_hit() -> void:

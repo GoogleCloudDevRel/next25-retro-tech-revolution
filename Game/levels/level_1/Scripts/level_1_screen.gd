@@ -128,11 +128,11 @@ func _physics_process(_delta: float) -> void:
 #incoming gemini help message
 #TODO debug how to get notified when finished
 func _on_gemini_help(msg) -> void:
-	
-	SignalBus.gemini_help = msg.to_upper() #save gemini returned value
-	DialogueManager.show_dialogue_balloon(dialog_template, "start")
-	is_displaying_dialog = true
-	DialogueManager.dialogue_ended.connect(_on_dialog_finished) 
+	if(!is_displaying_dialog):
+		SignalBus.gemini_help = msg.to_upper()
+		DialogueManager.show_dialogue_balloon(dialog_template, "start")
+		is_displaying_dialog = true
+		DialogueManager.dialogue_ended.connect(_on_dialog_finished) 
 
 #enable calling gemini
 func _on_dialog_finished(t):

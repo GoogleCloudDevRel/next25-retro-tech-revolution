@@ -1,6 +1,7 @@
 extends Area2D
 
-var bullet = preload("res://assets/tools/bullet/Bullet.tscn")
+var bullet_1 = preload("res://assets/tools/bullet/Bullet.tscn")
+var bullet_2 = preload("res://assets/tools/bullet/Tornado.tscn")
 var MAX_NUM_BULLET = 3
 var current_num_bullet = MAX_NUM_BULLET
 var radius: float = 35.0 
@@ -43,14 +44,21 @@ func _physics_process_old(_delta):
 	#	else:
 	#		get_parent().call_deferred("_fire_looking_front","top")
 		
-func shoot():
-	if current_num_bullet > 0:
-		var b = bullet.instantiate()
-		b.direction = facing_direction
-		b.set_shooting_point($WeaponPivot/Pistol/ShootingPoint)
-		SignalBus.bullet_created.emit(b)
-		current_num_bullet -= 1
-
+func shoot(current_weapon):
+	if current_weapon  == "blaster":
+		if current_num_bullet > 0:
+			var b = bullet_1.instantiate()
+			b.direction = facing_direction
+			b.set_shooting_point($WeaponPivot/Pistol/ShootingPoint)
+			SignalBus.bullet_created.emit(b)
+			current_num_bullet -= 1
+	else: #gauntlet
+			var b = bullet_2.instantiate()
+			b.direction = facing_direction
+			b.set_shooting_point($WeaponPivot/Pistol/ShootingPoint)
+			SignalBus.bullet_created.emit(b)
+			current_num_bullet -= 1
+		
 
 #cool down
 func _on_timer_timeout() -> void:

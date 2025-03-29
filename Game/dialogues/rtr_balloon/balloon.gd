@@ -54,6 +54,28 @@ func _ready() -> void:
 
 	mutation_cooldown.timeout.connect(_on_mutation_cooldown_timeout)
 	add_child(mutation_cooldown)
+	
+
+
+func scroll_text_from_top_to_bottom():
+	var text2scroll = %DialogueLabel
+	var v_scroll = text2scroll.get_v_scroll_bar()
+	
+	# First, reset to top
+	v_scroll.value = 0
+	print(v_scroll.value)
+	# Get the max scroll value
+	var max_scroll = v_scroll.max_value + v_scroll.page + 200
+	print(max_scroll)
+	# Create a tween to animate the scrollbar
+	var tween = create_tween()
+	var duration = 10.0  # seconds to scroll through entire text
+
+	# Animate the scrollbar value from 0 to max
+	tween.tween_property(v_scroll, "value", max_scroll, duration)
+	tween.set_ease(Tween.EASE_IN)
+	
+	v_scroll.grab_focus()
 
 
 func _unhandled_input(_event: InputEvent) -> void:
@@ -154,6 +176,33 @@ func _on_mutated(_mutation: Dictionary) -> void:
 
 
 func _on_balloon_gui_input(event: InputEvent) -> void:
+	var scroll_direction = 0
+	var scroll_speed = 20
+	var rich_text_label = %DialogueLabel
+# For gamepad D-pad input
+	if Input.is_action_pressed("ui_down"):
+		print("down")
+		scroll_direction = 1
+	if Input.is_action_pressed("ui_up"):
+		print("up")
+		scroll_direction = -1
+	# Apply scrolling
+	if scroll_direction != 0:
+		# Get the current scroll position
+		
+		var v_scroll_bar = rich_text_label.get_v_scroll_bar()
+		# Calculate new scroll position
+		var current_scroll = v_scroll_bar.value
+		var new_scroll = current_scroll + (scroll_direction * scroll_speed)
+			
+		# Clamp between valid values
+		new_scroll = clamp(new_scroll, 0, v_scroll_bar.max_value)
+			
+		# Set the scrollbar value (this is equivalent to setting v_scroll)
+		v_scroll_bar.value = new_scroll
+		print(str(v_scroll_bar.value) + " " + str(new_scroll))
+	
+	
 	# See if we need to skip typing of the dialogue
 	if dialogue_label.is_typing:
 		var mouse_was_clicked: bool = event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed()
@@ -162,6 +211,7 @@ func _on_balloon_gui_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 			dialogue_label.skip_typing()
 			return
+	
 
 	if not is_waiting_for_input: return
 	if dialogue_line.responses.size() > 0: return

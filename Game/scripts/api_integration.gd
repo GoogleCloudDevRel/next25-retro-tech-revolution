@@ -275,6 +275,8 @@ func _on_call_gemini_backstory_request_completed(result: int, _response_code: in
 		   dict_body.candidates[0].content.has("parts") and \
 		   dict_body.candidates[0].content.parts.size() > 0:
 			print(dict_body.candidates[0].content.parts[0].text)
+			
+			SignalBus.gemini_backstory_received.emit()
 			SignalBus.gemini_backstory_text = dict_body.candidates[0].content.parts[0].text
 			
 		else:

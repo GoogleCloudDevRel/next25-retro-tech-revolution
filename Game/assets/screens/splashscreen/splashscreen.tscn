@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://assets/screens/splashscreen/splashscreen.gd" id="1_0ojax"]
 [ext_resource type="Texture2D" uid="uid://blqd6tvosa684" path="res://assets/screens/splashscreen/Screenshot 2025-03-08 at 2.58.51 PM.png" id="1_r8qcn"]
 [ext_resource type="Script" path="res://assets/screens/splashscreen/SplashScreenButton.gd" id="2_1fptx"]
-[ext_resource type="VideoStream" path="res://assets/screens/splashscreen/RTR-Intro_part2_320.ogv" id="2_16blj"]
-[ext_resource type="VideoStream" path="res://assets/screens/splashscreen/RTR-Intro_part1_320.ogv" id="5_yniib"]
+[ext_resource type="VideoStream" path="res://assets/screens/splashscreen/Intro_part2_327.ogv" id="2_x4kks"]
+[ext_resource type="VideoStream" path="res://assets/screens/splashscreen/Intro_part1_327.ogv" id="5_fsrwk"]
 
 [sub_resource type="SystemFont" id="SystemFont_73tva"]
 font_names = PackedStringArray("Google Sans")
@@ -48,7 +48,7 @@ corner_radius_bottom_left = 20
 shadow_color = Color(0.925, 0.686, 0.008, 0.565)
 shadow_size = 11
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_im4bx"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lf5vm"]
 bg_color = Color(0, 0, 0, 0.764)
 border_width_left = 6
 border_width_top = 6
@@ -70,7 +70,7 @@ Button/font_sizes/font_size = 32
 Button/fonts/font = SubResource("SystemFont_o4axj")
 Button/styles/disabled = SubResource("StyleBoxFlat_djes7")
 Button/styles/hover = SubResource("StyleBoxFlat_sawh2")
-Button/styles/normal = SubResource("StyleBoxFlat_im4bx")
+Button/styles/normal = SubResource("StyleBoxFlat_lf5vm")
 
 [sub_resource type="SystemFont" id="SystemFont_bq8qf"]
 font_names = PackedStringArray("Google Sans")
@@ -90,7 +90,7 @@ offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
-stream = ExtResource("2_16blj")
+stream = ExtResource("2_x4kks")
 autoplay = true
 loop = true
 
@@ -149,9 +149,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -0.5
+offset_left = 0.5
 offset_top = -183.0
-offset_right = -0.5
+offset_right = 0.5
 offset_bottom = -183.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -161,10 +161,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -78.5
-offset_top = 196.0
-offset_right = -78.5
-offset_bottom = 196.0
+offset_left = -79.5
+offset_top = 281.0
+offset_right = -79.5
+offset_bottom = 281.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -194,7 +194,7 @@ disabled = true
 text = "Join as new player"
 
 [node name="Start" type="Button" parent="StartScreenCanvas/HUD/Panel/VBoxContainer"]
-custom_minimum_size = Vector2(300, 32)
+custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
 theme = SubResource("Theme_advgx")
 text = "START"
@@ -221,7 +221,72 @@ offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
-stream = ExtResource("5_yniib")
+stream = ExtResource("5_fsrwk")
 autoplay = true
+
+[node name="outerboarder" type="Node2D" parent="."]
+visible = false
+
+[node name="top" type="ColorRect" parent="outerboarder"]
+offset_right = 1920.0
+offset_bottom = 48.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="32px-spacer" type="ColorRect" parent="outerboarder"]
+offset_left = -10.0
+offset_top = 665.0
+offset_right = 1910.0
+offset_bottom = 713.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="32px-spacer2" type="ColorRect" parent="outerboarder"]
+offset_left = 961.0
+offset_top = 966.0
+offset_right = 1446.0
+offset_bottom = 1014.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="bottom" type="ColorRect" parent="outerboarder"]
+offset_top = 1032.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="left" type="ColorRect" parent="outerboarder"]
+offset_right = 48.0
+offset_bottom = 1080.0
+color = Color(0.956863, 0.705882, 0, 1)
+
+[node name="right" type="ColorRect" parent="outerboarder"]
+offset_left = 1872.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="center-topbottom" type="ColorRect" parent="outerboarder"]
+offset_left = 960.0
+offset_right = 961.0
+offset_bottom = 1080.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="center-topbottom2" type="ColorRect" parent="outerboarder"]
+offset_left = 475.0
+offset_top = 1.0
+offset_right = 476.0
+offset_bottom = 1081.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="center-topbottom3" type="ColorRect" parent="outerboarder"]
+offset_left = 1446.0
+offset_top = 1.0
+offset_right = 1447.0
+offset_bottom = 1081.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="center-leftright" type="ColorRect" parent="outerboarder"]
+offset_top = 540.0
+offset_right = 1920.0
+offset_bottom = 541.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
 
 [connection signal="finished" from="StartScreenCanvas/InitialVideo" to="." method="_on_initial_video_finished"]

@@ -163,7 +163,7 @@ theme_override_constants/outline_size = 10
 theme_override_constants/shadow_outline_size = 13
 theme_override_fonts/font = SubResource("SystemFont_bgd65")
 theme_override_font_sizes/font_size = 54
-text = "✦ Backstory"
+text = "✦ BACKSTORY"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -218,6 +218,7 @@ bbcode_enabled = true
 text = "[pulse freq=1.0 color=#ffffff40 ease=-2.0]Go Play ![/pulse]"
 
 [node name="PressXKeyLabel" type="RichTextLabel" parent="VBoxContainer/HUD/Next"]
+visible = false
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 offset_left = 580.0
@@ -227,7 +228,7 @@ theme_override_colors/default_color = Color(0.513726, 0.52549, 0.541176, 1)
 theme_override_fonts/normal_font = SubResource("SystemFont_g2ilv")
 theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
-text = "[right]PRESS [color=\"#F4B400\"]X[/color] TO CONTINUE[/right]"
+text = "[right]PRESS [color=\"#F4B400\"]A[/color] TO CONTINUE[/right]"
 fit_content = true
 
 [node name="PressXKeyLabel2" type="RichTextLabel" parent="VBoxContainer/HUD"]
@@ -237,7 +238,7 @@ theme_override_colors/default_color = Color(0.513726, 0.52549, 0.541176, 1)
 theme_override_fonts/normal_font = SubResource("SystemFont_g2ilv")
 theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
-text = "[right]PRESS [color=\"#F4B400\"]X[/color] TO CONTINUE[/right]"
+text = "[right]PRESS [color=\"#F4B400\"]A[/color] TO CONTINUE[/right]"
 fit_content = true
 
 [node name="outerboarder" type="Node2D" parent="."]

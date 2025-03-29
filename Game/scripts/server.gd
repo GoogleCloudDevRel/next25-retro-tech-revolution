@@ -26,7 +26,7 @@ func _ready():
 	SignalBus.player_moving.connect(_on_player_moving_action)
 	SignalBus.player_taking_damage.connect(_on_player_taking_damage_action)
 	SignalBus.player_health_depleted.connect(_on_player_health_depleted_action)
-	SignalBus.player_iddle.connect(_on_player_iddle_action)
+	SignalBus.player_idle.connect(_on_player_idle_action)
 	SignalBus.player_score_increased.connect(_on_player_score_increased_action)
 	
 	
@@ -242,12 +242,13 @@ func _on_player_moving_action(p:Player, left_stick_x, left_stick_y): #OK
 	var json_string = JSON.stringify(request_data)
 	_call_rpc_backend( json_string)
 
-func _on_player_iddle_action(p:Player): #OK
+func _on_player_idle_action(p:Player, idle_time:int): #OK
 	var request_data = {
-			"event_type": "on_player_iddle",
+			"event_type": "on_player_idle",
 			"session_id": SignalBus.session_id,
 			"client_id": SignalBus.client_id,
 			"ts": Time.get_unix_time_from_system(),
+			"iddle_time": idle_time,
 			"player_x": p.position.x,
 			"player_y": p.position.y,
 			"player_health":p.health,

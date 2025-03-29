@@ -14,6 +14,8 @@ func Exit() -> void:
 	pass
 
 func Process(delta: float) -> State:
+	if Input.is_action_just_pressed("attack"):	
+		%Gun.shoot(player.current_weapon)
 	timer -= delta
 	if timer <= 0:
 		return walk
