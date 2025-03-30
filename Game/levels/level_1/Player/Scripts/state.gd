@@ -5,6 +5,8 @@ static var player: Player
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	SignalBus.weapon_activated.connect(_on_weapon_activated) #weapon_name, weapon_idx)
+	
 	pass # Replace with function body.
 
 ## What happens when the player enters this State?
@@ -51,4 +53,6 @@ func get_next_weapon(current_weapon: String) -> Dictionary:
 			break
 		counter += 1
 	return {"weapon_name":weapon_name, "weapon_idx":next_index}
-	
+
+func _on_weapon_activated(weapon_name, weapon_idx):
+	player.UpdateAnimation(player.current_weapon + "_idle")

@@ -37,6 +37,7 @@ func _ready():
 #get rank on game over
 func _on_game_over(state):
 	if state == SignalBus.GAMEOVER: #kick in only if we have finished
+		#retrieve rank
 		var http_request  = HTTPRequest.new()
 		add_child(http_request)
 		http_request.request_completed.connect(_on_rank_received.bind(http_request))
@@ -48,17 +49,27 @@ func _on_game_over(state):
 		})
 		http_request.request(connection, headers, HTTPClient.METHOD_POST, body) 
 		
-		
+		#retrieve gemini summary
+		var http_request2  = HTTPRequest.new()
+		add_child(http_request2)
+		http_request2.request_completed.connect(_on_gemini_summary_received.bind(http_request))
+		var connection2 ="http://"+endpoint+":"+port+"/get_gemini_summary"
+		http_request2.request(connection2, headers, HTTPClient.METHOD_POST, body) 
+
+	
 func _on_rank_received(result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray, _req_node : HTTPRequest = null):
 	if result != OK:
-			printerr("Imagen3: failed to generate image")
+			printerr("BigQuery: failed to retrieve rank for this session")
 	else:
 		var rank = body.get_string_from_utf8()
-		#print(base64_image)
 		SignalBus.session_rank_received.emit(rank)
-	
 
-
+func _on_gemini_summary_received(result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray, _req_node : HTTPRequest = null):
+	if result != OK:
+			printerr("BigQuery: failed to retrieve the summary for this session")
+	else:
+		var summary = body.get_string_from_utf8()
+		SignalBus.gemini_summary_received.emit(summary)
 
 ###send regularly send screenshots of the game to GCS
 func _on_send_screenshots_to_gcs():

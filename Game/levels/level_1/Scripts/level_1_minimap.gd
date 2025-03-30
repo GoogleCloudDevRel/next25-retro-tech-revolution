@@ -144,7 +144,7 @@ func draw_distance_circle(radius: float):
 	# Draw circle with 32 segments
 	var segments = 32
 	var player_map_pos = world_to_map(player.global_position)
-	
+	circle.position = player_map_pos
 	for i in range(segments + 1):
 		var angle = 2 * PI * i / segments
 		var x = player_map_pos.x + cos(angle) * map_radius

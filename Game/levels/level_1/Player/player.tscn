@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://dkddtwn5gkisp"]
+[gd_scene load_steps=59 format=3 uid="uid://dkddtwn5gkisp"]
 
 [ext_resource type="Script" path="res://levels/level_1/Player/Scripts/player.gd" id="1_dhwja"]
 [ext_resource type="Texture2D" uid="uid://dojw02iv386ie" path="res://levels/level_1/Player/Sprites/RetroPlayerSprite.png" id="1_i1wrl"]
@@ -16,6 +16,8 @@
 [ext_resource type="Shader" path="res://shaders/torchlight.gdshader" id="14_br2u3"]
 [ext_resource type="Texture2D" uid="uid://d3xsaug1by40g" path="res://shaders/LightSprite.png" id="15_mt3th"]
 [ext_resource type="PackedScene" uid="uid://c1cr2wayj7p71" path="res://levels/level_1/Player/Scripts/bubble.tscn" id="16_jbhtv"]
+[ext_resource type="Shader" path="res://shaders/chromakey.gdshader" id="17_su58f"]
+[ext_resource type="VideoStream" path="res://levels/level_1/Player/Assets/swirl.ogv" id="18_6w8mc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fbcb4"]
 shader = ExtResource("3_1ynf5")
@@ -581,6 +583,13 @@ shader_parameter/influence = 0.5
 shader = ExtResource("14_br2u3")
 shader_parameter/intensity = 10.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aha5o"]
+shader = ExtResource("17_su58f")
+shader_parameter/chroma_key_color = Color(0, 0, 0, 1)
+shader_parameter/fade_factor = 0.259
+shader_parameter/range = 0.234
+shader_parameter/fuzziness = 0.263
+
 [node name="Player" type="CharacterBody2D"]
 process_mode = 1
 z_index = 1
@@ -698,5 +707,16 @@ position = Vector2(-13.0566, -44.3859)
 unique_name_in_owner = true
 wait_time = 10.0
 
+[node name="swirlPlay" type="VideoStreamPlayer" parent="."]
+modulate = Color(1, 1, 1, 0.592157)
+material = SubResource("ShaderMaterial_aha5o")
+offset_left = -383.663
+offset_top = -275.395
+offset_right = 1424.34
+offset_bottom = 812.605
+scale = Vector2(0.5, 0.5)
+stream = ExtResource("18_6w8mc")
+
 [connection signal="timeout" from="TimerHit" to="." method="_on_reset_getting_hit"]
 [connection signal="timeout" from="inactivityTimer" to="StateMachine/Idle" method="_on_inactivity_timer_timeout"]
+[connection signal="finished" from="swirlPlay" to="." method="_on_video_finished"]

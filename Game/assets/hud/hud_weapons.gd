@@ -27,6 +27,7 @@ func _ready():
 func _on_weapon_activated(weapon_name, weapon_idx):
 	print("weapon activated in hud" + str(weapon_idx))
 	weapons[weapon_idx]['disabled'] = false
+	current_weapon_index = weapon_idx
 	update_weapon_display()
 
 func _on_weapon_changed(weapon_name, weapon_idx):

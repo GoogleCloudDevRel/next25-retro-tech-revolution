@@ -95,9 +95,18 @@ func activate_weapon(weapon_name:String):
 	print(weapon_name+" "+str(weapon_idx))
 	if weapons[weapon_idx]['disabled']:
 		weapons[weapon_idx]['disabled'] = false
-		
+		$swirlPlay.modulate.a = 0
+		$swirlPlay.play()
+		var tween = create_tween()
+		tween.tween_property($swirlPlay, "modulate:a", 0.8, 2.0)
+		current_weapon = weapon_name
 		SignalBus.weapon_activated.emit(weapon_name, weapon_idx)
-		
+
+#ease out the video
+func _on_video_finished():
+	# Create a new tween for the fade-out effect
+	var tween = create_tween()
+	tween.tween_property($swirlPlay, "modulate:a", 0.0, 2.0)		
 
 
 

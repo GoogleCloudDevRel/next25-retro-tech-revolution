@@ -23,6 +23,10 @@ var players = []
 var enemies = []
 var bullets = []
 var boss = []
+
+###
+var past_session_id = []
+var past_client_id = []
 #####
 
 signal start_game() #actual start of the game
@@ -31,6 +35,10 @@ signal end_game()
 #paunsing the game
 signal pause_game()
 signal unpause_game()
+
+signal reset_game()
+signal replay_game()
+
 
 signal stop_game_stopwatch() #new 3/24
 signal show_congratulations() #new 3/24
@@ -58,6 +66,8 @@ signal gemini_backstory_image_received()
 signal gemini_help_requested() #for triggering the call in the game
 signal gemini_backstory_requested() #for triggering the call in the game
 signal gemini_backstory_image_requested() #internal only
+signal gemini_summary_received(summary:String)
+
 
 #both internal & analytics
 signal gemini_difficulty_adjusted(level:int, reason:String)
@@ -65,6 +75,8 @@ signal gemini_difficulty_adjusted(level:int, reason:String)
 # Analytics only
 signal gemini_help_requested_details(prompt_text:String, base64_image:String) 
 signal gemini_backstory_requested_details(prompt_text:String)
+
+
 
 ######options######
 signal tool_changed(new_tool)#new to replace with weapon_changed(old_weapon, new_weapon)
@@ -91,7 +103,10 @@ signal floppy_created(floppy:Projectiles)
 signal boss_created(b:Boss) #Added on 03/24
 
 func _ready() -> void:
-	session_id  = str(Time.get_unix_time_from_system())
+	load_config_file()
+	session_id = generate_session_id() 
+	client_id = generate_session_id()
+	save_config_file()
 	SignalBus.trivia_question_received.connect(_on_trivia_question_received)
 	SignalBus.player_created.connect(_on_player_created)
 	SignalBus.enemy_created.connect(_on_enemies_created)
@@ -128,3 +143,113 @@ func get_stopwatch():
 	#00 : 00 . 000
 	var format_string = "%02d : %02d . %02d"
 	return format_string % [minutes, sec, msec]
+
+
+func reset_game_settings():
+	client_id = "1"
+	session_id
+	score = 0
+	stopwatch = 0.0
+	game_difficulty = EASY #difficulty level
+	last_screenshot = "res://assets/map/mini_map.png" #last screenshot taken in base64
+	last_screenshot_timestamp = ""
+	players = []
+	enemies = []
+	bullets = []
+	boss = []
+	trivia_result = []
+
+
+#read config file when we start
+func load_config_file():
+	if FileAccess.file_exists("user://rtr_save_game.json"):
+		var save_file = FileAccess.open("user://save_game.json", FileAccess.READ)
+		var json_string = save_file.get_as_text()
+		var json = JSON.new()
+		var parse_result = json.parse(json_string)
+			
+		if parse_result == OK:
+			var data = json.data
+			#var health = data["player"]["health"]
+			past_client_id = data["past_client_id"]
+			past_session_id = data["past_session_id"]
+			
+#write session ids & client ids
+func save_config_file():
+	if FileAccess.file_exists("user://rtr_save_game.json"):
+		var save_dict = {"past_session_id": past_session_id,
+						"past_client_id": past_client_id }
+		var json_string = JSON.stringify(save_dict)
+		var save_file = FileAccess.open("user://save_game.json", FileAccess.WRITE)
+		save_file.store_string(json_string)
+		save_file.close()
+
+#### Generate friendly session id and client id
+var c_nouns = ["cat", "mountain", "forest", "sword", "castle", "dragon", "hero", "wizard", "planet", "robot", "champion", "victory", "sunshine", "treasure", "paradise", 
+	"harmony", "success", "laughter", "dream", "wonder",
+	"hero", "diamond", "garden", "triumph", "joy",
+	"blessing", "miracle", "star", "adventure", "achievement",
+	"friend", "rainbow", "genius", "wisdom", "fortune",
+	"progress", "angel", "melody", "breeze", "flower",
+	"peace", "spark", "reward", "discovery", "delight",
+	"heart", "smile", "freedom", "glory", "magic"]
+	
+var c_adjectives = ["brave", "ancient", "mysterious", "glowing", "dark", "frozen", "magic", "golden", "brilliant", "joyful", "amazing", "wonderful", "excellent", 
+	"beautiful", "vibrant", "radiant", "inspiring", "delightful",
+	"spectacular", "magnificent", "peaceful", "cheerful", "optimistic",
+	"charming", "dazzling", "fabulous", "glorious", "triumphant",
+	"fortunate", "victorious", "enchanting", "generous", "loving",
+	"happy", "uplifting", "thriving", "exquisite", "flawless",
+	"perfect", "marvelous", "gentle", "brave", "energetic",
+	"sparkling", "talented", "successful", "enthusiastic", "heavenly"]
+
+var s_nouns = [
+		"Data", "Network", "System", "Code", "Chip", "Drive", "Console", "Device",
+		"Machine", "Robot", "Interface", "Protocol", "Server", "Cloud", "Pixel",
+		"Byte", "Bit", "Logic", "Circuitry", "Algorithm", "Processor", "Memory",
+		"Database", "Software", "Hardware", "Terminal", "Firewall", "Router",
+		"Gateway", "Transistor", "Module", "Component", "Input", "Output", "Signal",
+		"Vector", "Array", "Matrix", "Register", "Buffer"
+	]
+
+var s_adjectives = [
+		"Retro", "Digital", "Virtual", "Cyber", "Binary", "Analog", "Circuit",
+		"Quantum", "Neural", "Silicon", "Magnetic", "Optical", "Robotic",
+		"Automated", "Integrated", "Wired", "Wireless", "Encoded", "Programmed",
+		"Algorithmic", "Technological", "Electronic", "Mechanical", "Synthetic",
+		"Modular", "Interactive", "Computational", "Peripheral", "Infrastructural",
+		"Operational", "Futuristic", "Legacy", "Obsolete", "Innovative",
+		"Sophisticated", "Primitive", "Complex", "Simple", "Dynamic", "Static"
+	]
+
+func generate_session_id() -> String:
+		var not_ok = true
+		while not_ok: #generate session_ids until finding a new one
+			var new_session_id = generate_random_session_id()
+			if new_session_id not in past_session_id:
+				not_ok = false
+				past_session_id.append(new_session_id)
+				return new_session_id
+		return ""
+
+func generate_random_session_id() -> String:
+		var random_adjective = s_adjectives[randi() % s_adjectives.size()]
+		var random_noun = s_nouns[randi() % s_nouns.size()]
+		var random_number = randi() % 900 + 100
+		return random_adjective + "_" + random_noun + "_" + str(random_number)
+
+func generate_client_id() -> String:
+		var not_ok = true
+		while not_ok: #generate session_ids until finding a new one
+			var new_client_id = generate_random_client_id()
+			if new_client_id not in past_client_id:
+				not_ok = false
+				past_client_id.append(new_client_id)
+				return new_client_id
+		return ""
+
+func generate_random_client_id(): #144,000 possibilities
+		var random_adjective = c_adjectives[randi() % s_adjectives.size()]
+		var random_noun = c_nouns[randi() % s_nouns.size()]
+		var random_number = randi() % 90 + 10
+		return random_adjective + "_" + random_noun + "_" + str(random_number)

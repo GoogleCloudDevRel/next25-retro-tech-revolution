@@ -1,14 +1,14 @@
-[gd_scene load_steps=76 format=3 uid="uid://txomv4j8okk2"]
+[gd_scene load_steps=80 format=3 uid="uid://txomv4j8okk2"]
 
 [ext_resource type="Script" path="res://scripts/game_over.gd" id="1_poa64"]
+[ext_resource type="Texture2D" uid="uid://bw0k6cvjyghc0" path="res://assets/screens/gameover/Screenshot 2025-03-29 at 11.27.01 PM.png" id="2_xj4ww"]
+[ext_resource type="Texture2D" uid="uid://bgi8mtfb5wsnm" path="res://assets/screens/gameover/icons.png" id="3_3prv5"]
 [ext_resource type="PackedScene" uid="uid://ykfi24r6o3m3" path="res://assets/gcp_overlay/gcp_overlay.tscn" id="3_iuf8g"]
-[ext_resource type="Texture2D" uid="uid://dos1fr6i0d6lp" path="res://assets/screens/gameover/game_over.png" id="4_3jmfn"]
 [ext_resource type="Texture2D" uid="uid://be0plh84aolqi" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00024.png" id="4_pr0mq"]
 [ext_resource type="PackedScene" uid="uid://daatymj755m4a" path="res://assets/random_squares.tscn" id="4_sm61w"]
 [ext_resource type="Texture2D" uid="uid://di6ly3elabp5w" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00025.png" id="5_cm87s"]
 [ext_resource type="Texture2D" uid="uid://c5n2xi3sgnbub" path="res://assets/screens/gameover/leaderboard.png" id="5_k3wen"]
 [ext_resource type="Texture2D" uid="uid://dgngyta4lkq6w" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00026.png" id="6_5oowm"]
-[ext_resource type="Texture2D" uid="uid://d27s3j08jab04" path="res://assets/hud/stopwatch.png" id="6_rtm3o"]
 [ext_resource type="Texture2D" uid="uid://c7updjwg6oe6f" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00027.png" id="7_u70vp"]
 [ext_resource type="Texture2D" uid="uid://dprroydq73l7n" path="res://assets/screens/gameover/gemini-summary.png" id="7_x2e0t"]
 [ext_resource type="Texture2D" uid="uid://blcfa6c54f48j" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00028.png" id="8_w3cvw"]
@@ -225,10 +225,19 @@ corner_radius_bottom_left = 13
 [sub_resource type="Theme" id="Theme_qvtvk"]
 Panel/styles/panel = SubResource("StyleBoxFlat_bc2cj")
 
-[sub_resource type="SystemFont" id="SystemFont_u4jvj"]
+[sub_resource type="SystemFont" id="SystemFont_d2gv7"]
 font_names = PackedStringArray("Google Sans")
 font_weight = 800
-subpixel_positioning = 0
+
+[sub_resource type="SystemFont" id="SystemFont_oogqg"]
+font_names = PackedStringArray("Google Sans")
+font_weight = 800
+
+[sub_resource type="FontVariation" id="FontVariation_gts8u"]
+fallbacks = Array[Font]([SubResource("SystemFont_oogqg")])
+base_font = SubResource("SystemFont_d2gv7")
+spacing_glyph = -2
+spacing_space = -6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wpp5w"]
 bg_color = Color(0.1938, 0.57, 0.28785, 0)
@@ -250,11 +259,14 @@ font_names = PackedStringArray("Google Sans")
 font_weight = 900
 subpixel_positioning = 0
 
-[sub_resource type="SystemFont" id="SystemFont_byvpx"]
+[sub_resource type="SystemFont" id="SystemFont_xw3uw"]
 font_names = PackedStringArray("Google Sans")
 font_weight = 800
-font_stretch = 75
-subpixel_positioning = 0
+
+[sub_resource type="FontVariation" id="FontVariation_rg7ng"]
+base_font = SubResource("SystemFont_xw3uw")
+spacing_glyph = -2
+spacing_space = -6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_03xhm"]
 bg_color = Color(0.503709, 0.677025, 0.938365, 0)
@@ -272,11 +284,15 @@ shadow_color = Color(0.854902, 0.635294, 0.0196078, 0.486275)
 [sub_resource type="Theme" id="Theme_wn1yw"]
 Panel/styles/panel = SubResource("StyleBoxFlat_03xhm")
 
-[sub_resource type="SystemFont" id="SystemFont_fki2n"]
+[sub_resource type="SystemFont" id="SystemFont_dkuhu"]
 font_names = PackedStringArray("Google Sans")
 font_weight = 800
-font_stretch = 75
-subpixel_positioning = 0
+font_stretch = 50
+
+[sub_resource type="FontVariation" id="FontVariation_wcfw1"]
+base_font = SubResource("SystemFont_dkuhu")
+spacing_glyph = -4
+spacing_space = -6
 
 [sub_resource type="SystemFont" id="SystemFont_mb474"]
 font_names = PackedStringArray("Google Sans Display")
@@ -347,6 +363,23 @@ subpixel_positioning = 0
 [node name="GameOver" type="Node"]
 script = ExtResource("1_poa64")
 
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+offset_left = -13.0
+offset_top = -12.0
+offset_right = 1922.0
+offset_bottom = 1080.0
+texture = ExtResource("2_xj4ww")
+expand_mode = 1
+
+[node name="icons" type="TextureRect" parent="."]
+offset_left = 520.0
+offset_top = 341.0
+offset_right = 1127.0
+offset_bottom = 393.0
+texture = ExtResource("3_3prv5")
+stretch_mode = 2
+
 [node name="RandomSquares" parent="." instance=ExtResource("4_sm61w")]
 visible = false
 
@@ -367,37 +400,32 @@ theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 100
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(1920, 984)
 layout_mode = 2
-theme_override_constants/separation = 64
+theme_override_constants/separation = 42
 
 [node name="Separator" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
 [node name="GameOver" type="AnimatedSprite2D" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-position = Vector2(859.437, 129.423)
-scale = Vector2(0.365, 0.363)
+position = Vector2(957.29, 137.314)
+scale = Vector2(0.319354, 0.317604)
 sprite_frames = SubResource("SpriteFrames_setkf")
 frame_progress = 0.305945
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = -939
-theme_override_constants/margin_top = 150
-
-[node name="Game Over" type="TextureRect" parent="MarginContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-texture = ExtResource("4_3jmfn")
-stretch_mode = 2
+theme_override_constants/margin_top = 187
 
 [node name="Metrics" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 18
+theme_override_constants/separation = 17
 alignment = 1
 
 [node name="Rank" type="Panel" parent="MarginContainer/VBoxContainer/Metrics"]
-custom_minimum_size = Vector2(276, 90)
+custom_minimum_size = Vector2(242, 90)
 layout_mode = 2
 theme = SubResource("Theme_qvtvk")
 
@@ -406,7 +434,7 @@ layout_mode = 0
 offset_right = 276.0
 offset_bottom = 88.0
 theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 14
+theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 21
 
@@ -415,6 +443,7 @@ layout_mode = 2
 theme_override_constants/separation = 4
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/Metrics/Rank/MarginContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -425,8 +454,7 @@ stretch_mode = 2
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/margin_top = -7
-theme_override_constants/margin_bottom = -8
+theme_override_constants/margin_left = 25
 
 [node name="RankLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/Metrics/Rank/MarginContainer/HBoxContainer/MarginContainer"]
 unique_name_in_owner = true
@@ -435,14 +463,14 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_colors/default_color = Color(0.882353, 0.235294, 0.207843, 1)
-theme_override_fonts/normal_font = SubResource("SystemFont_u4jvj")
+theme_override_fonts/normal_font = SubResource("FontVariation_gts8u")
 theme_override_font_sizes/normal_font_size = 54
 bbcode_enabled = true
-text = "[right]#34[/right]"
+text = "[right]034[/right]"
 fit_content = true
 
 [node name="Score" type="Panel" parent="MarginContainer/VBoxContainer/Metrics"]
-custom_minimum_size = Vector2(264, 90)
+custom_minimum_size = Vector2(236, 100)
 layout_mode = 2
 theme = SubResource("Theme_5stl8")
 
@@ -450,8 +478,8 @@ theme = SubResource("Theme_5stl8")
 layout_mode = 0
 offset_right = 264.0
 offset_bottom = 86.0
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 11
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 8
 
@@ -460,6 +488,7 @@ layout_mode = 2
 theme_override_constants/separation = 10
 
 [node name="starLabel" type="Label" parent="MarginContainer/VBoxContainer/Metrics/Score/MarginContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.196078, 0.568627, 0.294118, 1)
@@ -469,26 +498,26 @@ text = "★"
 vertical_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Metrics/Score/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(150, 54)
+custom_minimum_size = Vector2(200, 54)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/margin_top = -7
+theme_override_constants/margin_left = 51
 
 [node name="ScoreLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/Metrics/Score/MarginContainer/HBoxContainer/MarginContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(60, 30)
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 theme_override_colors/default_color = Color(0.219608, 0.584314, 0.317647, 1)
-theme_override_fonts/normal_font = SubResource("SystemFont_byvpx")
+theme_override_fonts/normal_font = SubResource("FontVariation_rg7ng")
 theme_override_font_sizes/normal_font_size = 54
 bbcode_enabled = true
-text = "000"
+text = "[right]000[/right]"
 scroll_active = false
 autowrap_mode = 0
 
 [node name="Time" type="Panel" parent="MarginContainer/VBoxContainer/Metrics"]
-custom_minimum_size = Vector2(469, 90)
+custom_minimum_size = Vector2(406, 90)
 layout_mode = 2
 theme = SubResource("Theme_wn1yw")
 
@@ -496,50 +525,34 @@ theme = SubResource("Theme_wn1yw")
 layout_mode = 2
 offset_right = 469.0
 offset_bottom = 86.0
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_right = 32
+theme_override_constants/margin_left = 59
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Metrics/Time/MarginContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 14
-theme_override_constants/margin_right = 32
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Metrics/Time/MarginContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Metrics/Time/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 6
 
-[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/Metrics/Time/MarginContainer/MarginContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Metrics/Time/MarginContainer/HBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_top = -16
+theme_override_constants/margin_left = -3
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/Metrics/Time/MarginContainer/MarginContainer/HBoxContainer/MarginContainer2"]
-custom_minimum_size = Vector2(45, 45)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("6_rtm3o")
-stretch_mode = 4
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Metrics/Time/MarginContainer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_top = -7
-
-[node name="StopWatchLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/Metrics/Time/MarginContainer/MarginContainer/HBoxContainer/MarginContainer"]
+[node name="StopWatchLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/Metrics/Time/MarginContainer/HBoxContainer/MarginContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(320, 30)
 layout_mode = 2
 theme_override_colors/default_color = Color(0.854902, 0.635294, 0.0196078, 1)
-theme_override_fonts/normal_font = SubResource("SystemFont_fki2n")
+theme_override_fonts/normal_font = SubResource("FontVariation_wcfw1")
 theme_override_font_sizes/normal_font_size = 54
 bbcode_enabled = true
-text = "[center]00:00.000[/center]"
+text = "[right]00:00.000[/right]"
 fit_content = true
 scroll_active = false
 tab_size = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 47
 
 [node name="QuestionHBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -565,48 +578,43 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/separation = 10
+theme_override_constants/separation = 31
 
-[node name="summary" type="RichTextLabel" parent="MarginContainer/VBoxContainer/VBoxContainer/Info/GameSummary"]
-custom_minimum_size = Vector2(900, 150)
+[node name="Summary" type="RichTextLabel" parent="MarginContainer/VBoxContainer/VBoxContainer/Info/GameSummary"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(600, 150)
 layout_mode = 2
 theme_override_fonts/normal_font = SubResource("SystemFont_mb474")
 theme_override_font_sizes/normal_font_size = 30
-text = "SLOW RUN THIS TIME"
-scroll_following = true
+text = "THIS IS A GAME SUMMARY. LOREM IPSUM DOLOR SIT AMT"
 
 [node name="QRCode" type="TextureRect" parent="MarginContainer/VBoxContainer/VBoxContainer/Info/GameSummary"]
-custom_minimum_size = Vector2(60, 60)
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("56_pbkuf")
-expand_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_top = 110
+size_flags_vertical = 6
+theme_override_constants/margin_top = 84
 
-[node name="Replay" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer"]
+[node name="HUD" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 80
+theme_override_constants/separation = 220
 alignment = 1
 
-[node name="HUD" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/Replay"]
-layout_mode = 2
-theme_override_constants/separation = 80
-alignment = 1
-
-[node name="Start" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/Replay/HUD"]
-custom_minimum_size = Vector2(300, 32)
+[node name="ReplayButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/HUD"]
+custom_minimum_size = Vector2(200, 30)
 layout_mode = 2
 theme = SubResource("Theme_0xfcv")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/Replay/HUD/Start"]
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/HUD/ReplayButton"]
 custom_minimum_size = Vector2(400, 70)
 layout_mode = 2
-offset_left = -49.0
+offset_left = -96.0
 offset_top = -10.0
-offset_right = 351.0
+offset_right = 304.0
 offset_bottom = 60.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -615,6 +623,28 @@ theme_override_fonts/normal_font = SubResource("SystemFont_0pjr2")
 theme_override_font_sizes/normal_font_size = 40
 bbcode_enabled = true
 text = "[center][pulse freq=1.0 color=#ffffff40 ease=-2.0]REPLAY[/pulse][/center]"
+fit_content = true
+
+[node name="ResetButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/HUD"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+size_flags_vertical = 4
+theme = SubResource("Theme_0xfcv")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/HUD/ResetButton"]
+custom_minimum_size = Vector2(400, 70)
+layout_mode = 2
+offset_left = -95.0
+offset_top = -9.0
+offset_right = 305.0
+offset_bottom = 61.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 0.999187)
+theme_override_fonts/normal_font = SubResource("SystemFont_0pjr2")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[center][pulse freq=1.0 color=#ffffff40 ease=-2.0]RESET GAME[/pulse][/center]"
 fit_content = true
 
 [node name="outerboarder2" type="Node2D" parent="."]
@@ -633,10 +663,10 @@ offset_bottom = 713.0
 color = Color(0.0784314, 0.2, 0.12549, 1)
 
 [node name="32px-spacer2" type="ColorRect" parent="outerboarder2"]
-offset_left = 961.0
-offset_top = 966.0
-offset_right = 1446.0
-offset_bottom = 1014.0
+offset_left = 266.0
+offset_top = 498.0
+offset_right = 284.0
+offset_bottom = 546.0
 color = Color(0.0784314, 0.2, 0.12549, 1)
 
 [node name="bottom" type="ColorRect" parent="outerboarder2"]
@@ -686,11 +716,9 @@ color = Color(0.330424, 0.0282391, 0.108228, 1)
 z_index = -1
 clip_contents = true
 offset_left = -4.0
-offset_top = -2.0
+offset_top = -3.0
 offset_right = 3836.0
-offset_bottom = 2158.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_bottom = 2157.0
 scale = Vector2(0.5, 0.5)
 stream = ExtResource("57_uqg6v")
 autoplay = true
