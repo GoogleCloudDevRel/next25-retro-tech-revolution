@@ -80,7 +80,7 @@ func _on_game_screen_state_action(new_state): #OK except boss
 var pause_msg
 			
 func _on_game_paused_action(): #OK
-	print("game paused")
+	#print("game paused")
 	var request_data = {
 			"event_type": "on_game_paused",
 			"session_id": SignalBus.session_id,
@@ -164,7 +164,7 @@ func _on_gemini_difficulty_adjusted_action(new_difficulty:int, reason:String):
 
 func _on_gemini_backstory_requested_action(prompt_text:String):
 	
-	print("sending bs signal")
+	#print("sending bs signal")
 	var request_data = {
 			"event_type": "on_gemini_backstory_requested",
 			"session_id": SignalBus.session_id,

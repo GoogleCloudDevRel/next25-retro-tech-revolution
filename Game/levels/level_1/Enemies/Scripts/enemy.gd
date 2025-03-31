@@ -97,7 +97,7 @@ func SetDirection(new_direction: Vector2) -> bool:
 	return true
 
 func update_animation(state: String) -> void:
-	print(state + "_" + anim_direction())
+	#print(state + "_" + anim_direction())
 	animation_player.play(state + "_" + anim_direction())
 
 func anim_direction() -> String:
@@ -126,7 +126,7 @@ func _on_body_entered(body: Node2D) -> void:
 func on_death() -> void:
 		if !is_dead:
 			is_dead = true
-			print("dying ...")
+			#print("dying ...")
 			SignalBus.player_score_increased.emit(points)
 			SignalBus.enemy_health_depleted.emit(self)	
 			%CollisionShape.call_deferred("set", "disabled", true)

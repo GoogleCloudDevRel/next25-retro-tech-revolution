@@ -12,7 +12,7 @@ var _direction: Vector2
 
 # Called when the node enters the scene tree for the first time.
 func init() -> void:
-	print("wander state init")
+	#print("wander state init")
 	pass
 
 ## What happens when the player enters this State?

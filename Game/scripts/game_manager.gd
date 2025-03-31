@@ -71,7 +71,7 @@ func _on_reset_game():
 	
 
 func _on_replay_game():
-	SignalBus.reset_game_settings()
+	SignalBus.replay_game_settings()
 	_on_change_screen_state(SignalBus.SPLASHSCREEN)
 	pass
 
@@ -137,7 +137,7 @@ func update_score(points: int):
 	SignalBus.score_up.emit(score)
 
 func _on_player_health_depleted(_p:Player) -> void:
-	print("I m dead")
+	#print("I m dead")
 	SignalBus.stop_game_stopwatch.emit()
 	SignalBus.screen_state.emit(SignalBus.GAMEOVER)
 	

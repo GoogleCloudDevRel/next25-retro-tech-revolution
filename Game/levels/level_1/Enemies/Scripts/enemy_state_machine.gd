@@ -41,7 +41,7 @@ func _physics_process(delta):
 		if enemy.health <= 0:
 			SignalBus.enemy_health_depleted.emit(enemy)
 			change_state(states[3])
-			print("dead")
+			#print("dead")
 			enemy.on_death()
 			
 		

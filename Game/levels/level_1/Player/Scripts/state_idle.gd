@@ -44,7 +44,7 @@ func Process(_delta: float) -> State:
 	time_now = Time.get_ticks_msec()
 	idle_time = int( (time_now - time_start) / 1000.0 )
 	
-	print(idle_time)
+	#print(idle_time)
 	#send an event if iddle  more than 5s every 5s
 	if idle_time % 10 == 0 and idle_time != last_call:
 		last_call = idle_time
@@ -56,7 +56,7 @@ func Process(_delta: float) -> State:
 func _on_inactivity_timer_timeout():
 	# This function is called when the timer reaches 5 seconds without being stopped
 	is_idle = true
-	print("Player is idle for 5 seconds!")
+	#print("Player is idle for 5 seconds!")
 	_create_buble()
 	
 func _create_buble():
@@ -97,7 +97,7 @@ func HandleInput(_event: InputEvent) -> State:
 		#var timer = get_tree().create_timer(2.0)
 		#await timer.timeout
 		#weapon_change_enabled = true
-		print("test")
+		#print("test")
 		_cycle_weapon()  # Now calling from the base class
 		# Keep the player in the idle state
 		return null

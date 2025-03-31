@@ -2,8 +2,10 @@ extends Node
 
 #####Global variables
 var standalone_mode = true #expect local calls to apis
-var client_id = "1"
-var session_id
+var client_id = ""
+var session_id= ""
+var has_session_id = false
+var has_client_id = false
 var score = 0
 var stopwatch = 0.0
 enum {EASY, MEDIUM, HARD}
@@ -105,7 +107,12 @@ signal boss_created(b:Boss) #Added on 03/24
 func _ready() -> void:
 	load_config_file()
 	session_id = generate_session_id() 
-	client_id = generate_session_id()
+	client_id = generate_client_id()
+	has_session_id = true
+	has_client_id = true
+	print(session_id+" "+client_id)
+	print("User directory: ", OS.get_user_data_dir())
+	
 	save_config_file()
 	SignalBus.trivia_question_received.connect(_on_trivia_question_received)
 	SignalBus.player_created.connect(_on_player_created)
@@ -117,7 +124,7 @@ func _on_trivia_question_received(q, a):
 	trivia_result.append({'q':q,'a':a})
 
 func _on_player_created(p:Player):
-	print("received player")
+	#print("received player")
 	players.append(p)
 
 func _on_enemies_created(e:Enemy):
@@ -145,25 +152,10 @@ func get_stopwatch():
 	return format_string % [minutes, sec, msec]
 
 
-func reset_game_settings():
-	client_id = "1"
-	session_id
-	score = 0
-	stopwatch = 0.0
-	game_difficulty = EASY #difficulty level
-	last_screenshot = "res://assets/map/mini_map.png" #last screenshot taken in base64
-	last_screenshot_timestamp = ""
-	players = []
-	enemies = []
-	bullets = []
-	boss = []
-	trivia_result = []
-
-
 #read config file when we start
 func load_config_file():
 	if FileAccess.file_exists("user://rtr_save_game.json"):
-		var save_file = FileAccess.open("user://save_game.json", FileAccess.READ)
+		var save_file = FileAccess.open("user://rtr_save_game.json", FileAccess.READ)
 		var json_string = save_file.get_as_text()
 		var json = JSON.new()
 		var parse_result = json.parse(json_string)
@@ -176,13 +168,13 @@ func load_config_file():
 			
 #write session ids & client ids
 func save_config_file():
-	if FileAccess.file_exists("user://rtr_save_game.json"):
-		var save_dict = {"past_session_id": past_session_id,
+	#if FileAccess.file_exists("user://rtr_save_game.json"):
+	var save_dict = {"past_session_id": past_session_id,
 						"past_client_id": past_client_id }
-		var json_string = JSON.stringify(save_dict)
-		var save_file = FileAccess.open("user://save_game.json", FileAccess.WRITE)
-		save_file.store_string(json_string)
-		save_file.close()
+	var json_string = JSON.stringify(save_dict)
+	var save_file = FileAccess.open("user://rtr_save_game.json", FileAccess.WRITE)
+	save_file.store_string(json_string)
+	save_file.close()
 
 #### Generate friendly session id and client id
 var c_nouns = ["cat", "mountain", "forest", "sword", "castle", "dragon", "hero", "wizard", "planet", "robot", "champion", "victory", "sunshine", "treasure", "paradise", 
@@ -222,6 +214,43 @@ var s_adjectives = [
 		"Sophisticated", "Primitive", "Complex", "Simple", "Dynamic", "Static"
 	]
 
+func reset_game_settings():
+	session_id = generate_session_id() 
+	client_id = generate_session_id()
+	has_session_id = true
+	has_client_id = true
+	score = 0
+	stopwatch = 0.0
+	game_difficulty = EASY #difficulty level
+	last_screenshot = "res://assets/map/mini_map.png" #last screenshot taken in base64
+	last_screenshot_timestamp = ""
+	players = []
+	enemies = []
+	bullets = []
+	boss = []
+	trivia_result = []
+	
+#we keep the same client id	
+func replay_game_settings():
+	session_id = generate_session_id() 
+	has_session_id = true
+	score = 0
+	stopwatch = 0.0
+	game_difficulty = EASY #difficulty level
+	last_screenshot = "res://assets/map/mini_map.png" #last screenshot taken in base64
+	last_screenshot_timestamp = ""
+	players = []
+	enemies = []
+	bullets = []
+	boss = []
+	trivia_result = []
+	
+	
+
+
+	
+
+
 func generate_session_id() -> String:
 		var not_ok = true
 		while not_ok: #generate session_ids until finding a new one
@@ -249,7 +278,7 @@ func generate_client_id() -> String:
 		return ""
 
 func generate_random_client_id(): #144,000 possibilities
-		var random_adjective = c_adjectives[randi() % s_adjectives.size()]
-		var random_noun = c_nouns[randi() % s_nouns.size()]
+		var random_adjective = c_adjectives[randi() % c_adjectives.size()]
+		var random_noun = c_nouns[randi() % c_nouns.size()]
 		var random_number = randi() % 90 + 10
 		return random_adjective + "_" + random_noun + "_" + str(random_number)

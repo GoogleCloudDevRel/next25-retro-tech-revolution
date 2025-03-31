@@ -3,6 +3,8 @@ extends Node
 
 const GEMINI_API_KEY =""
 
+@onready var sub_viewport =  $/root/level_1_screen/GameViewport
+
 
 #const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-pro-exp-02-05:generateContent?key=" + GEMINI_API_KEY
 #const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:generateContent?key=" + GEMINI_API_KEY
@@ -21,7 +23,8 @@ var counter_before_gemini_help = 20 #wait 20 bullets before calling gemini for h
 var endpoint = "localhost"
 var port = "5055"
 
-
+#separate thread used by the screenshot system
+var thread: Thread
 
 ###connect on all the messages
 func _ready():
@@ -32,6 +35,7 @@ func _ready():
 	SignalBus.gemini_backstory_image_requested.connect(call_api_bridge_generate_backstory_image)
 	SignalBus.send_screenshot_to_gcs.connect(_on_send_screenshots_to_gcs)
 	SignalBus.screen_state.connect(_on_game_over)
+	
 	#print("---api integration ready---")
 
 #get rank on game over
@@ -71,12 +75,26 @@ func _on_gemini_summary_received(result: int, _response_code: int, _headers: Pac
 		var summary = body.get_string_from_utf8()
 		SignalBus.gemini_summary_received.emit(summary)
 
+
+
 ###send regularly send screenshots of the game to GCS
+#func _on_send_screenshots_to_gcs():
+#	var i = get_screenshot()
+#	thread.start(_on_send_screenshots_to_gcs_thread.bind(i))
+
+
+
+func get_screenshot() -> Image:
+	return get_viewport().get_texture().get_image()
+
 func _on_send_screenshots_to_gcs():
 	SignalBus.last_screenshot_timestamp = Time.get_datetime_string_from_system()
 	#print("Sending Screenshot")
 	if SignalBus.SEND_SCREENSHOTS:
-		var capture = get_viewport().get_texture().get_image()
+		await RenderingServer.frame_post_draw
+		var capture = sub_viewport.get_texture().get_image()
+		
+		#get_viewport().get_texture().get_image()
 		var buffer = capture.save_png_to_buffer()
 		var base64_string = Marshalls.raw_to_base64(buffer)
 		var body = JSON.stringify({
@@ -87,6 +105,7 @@ func _on_send_screenshots_to_gcs():
 		
 		# Make the HTTP request
 		var http_request  = HTTPRequest.new()
+		
 		add_child(http_request)
 		http_request.request_completed.connect(_on_send_screenshots_to_gcs_request_completed.bind(http_request))
 		http_request.request(
@@ -97,7 +116,7 @@ func _on_send_screenshots_to_gcs():
 		)
 		#save to file
 		
-		var filename = "res://screenshots/"+str(SignalBus.session_id)+"screenshot-{0}.png".format({"0":SignalBus.last_screenshot_timestamp})
+		var filename = "user://screenshots/"+str(SignalBus.session_id)+"screenshot-{0}.png".format({"0":SignalBus.last_screenshot_timestamp})
 		capture.save_png(filename)
 		SignalBus.last_screenshot = filename
 		
@@ -105,15 +124,18 @@ func _on_send_screenshots_to_gcs():
 #receive result result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray, _req_node : HTTPRequest = null
 func _on_send_screenshots_to_gcs_request_completed(result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray, _req_node : HTTPRequest = null):
 	if result != HTTPRequest.RESULT_SUCCESS:
-		print("HTTP Request failed with error: ", result)
+		printerr("HTTP Request failed with error: ", result)
 		return
 	
 	if _response_code == 200:
 		var json = JSON.parse_string(body.get_string_from_utf8())
-		print("Upload successful! Response: ", json)
+		#print("Upload successful! Response: ", json)
 	else:
-		print("Upload failed with response code: ", _response_code)
-		print("Response body: ", body.get_string_from_utf8())
+		printerr("Upload failed with response code: ", _response_code)
+		printerr("Response body: ", body.get_string_from_utf8())
+		
+	
+		
 #############################################
 
 ###request support from Gemini sending a screenshot + prompt
@@ -276,16 +298,16 @@ func call_gemini_backstory(prompt:String) -> String:
 #Backstory generated now let s get an image to illustrate
 func _on_call_gemini_backstory_request_completed(result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray, _req_node : HTTPRequest = null):
 	if result != OK:
-		print("Error")
+		printerr("Error receiving gemini backstory")
 	else:
 		var dict_body = JSON.parse_string(body.get_string_from_utf8())
 		if dict_body.has("candidates") and \
-		   dict_body.candidates is Array and \
-		   dict_body.candidates.size() > 0 and \
-		   dict_body.candidates[0].has("content") and \
-		   dict_body.candidates[0].content.has("parts") and \
-		   dict_body.candidates[0].content.parts.size() > 0:
-			print(dict_body.candidates[0].content.parts[0].text)
+			dict_body.candidates is Array and \
+			dict_body.candidates.size() > 0 and \
+			dict_body.candidates[0].has("content") and \
+			dict_body.candidates[0].content.has("parts") and \
+			dict_body.candidates[0].content.parts.size() > 0:
+			#print(dict_body.candidates[0].content.parts[0].text)
 			
 			SignalBus.gemini_backstory_received.emit()
 			SignalBus.gemini_backstory_text = dict_body.candidates[0].content.parts[0].text
@@ -336,7 +358,7 @@ func call_gemini_with_prompt_and_image(base64_image:String, prompt_text: String)
 		http_request.queue_free()  # Clean up on error
 		return
 
-	print("Sending request to Gemini...")
+	#print("Sending request to Gemini...")
 
 #received 
 func _on_request_completed(_result, response_code, _headers, body):
@@ -348,20 +370,20 @@ func _on_request_completed(_result, response_code, _headers, body):
 		if response_json and response_json.has("candidates") and response_json["candidates"].size() > 0:
 			if response_json["candidates"][0].has("content") and response_json["candidates"][0]["content"].has("parts"):
 				var generated_text = response_json["candidates"][0]["content"]["parts"][0]["text"]
-				print(generated_text)
+				#print(generated_text)
 				var parsedJSON = JSON.parse_string(generated_text.replace("```json", "").replace("```", ""))  
 				
 				
 				SignalBus.gemini_help_received.emit(parsedJSON["help"]+" "+parsedJSON["reason"])
 				#set difficulty	
 				if parsedJSON["difficulty_level"] == 2:
-						print("hard")
+						#print("hard")
 						SignalBus.game_difficulty = SignalBus.HARD
 				elif parsedJSON["difficulty_level"] == 1:
-						print("med")
+						#print("med")
 						SignalBus.game_difficulty = SignalBus.MEDIUM
 				else:		
-						print("easy")
+						#print("easy")
 						SignalBus.game_difficulty = SignalBus.EASY
 				
 				SignalBus.gemini_difficulty_adjusted.emit(parsedJSON["difficulty_level"], parsedJSON['reason'])

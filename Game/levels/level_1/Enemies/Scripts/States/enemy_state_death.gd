@@ -18,7 +18,7 @@ func init():
 
 ## What happens when the player enters this State?
 func Enter() -> void:
-	print("death state enter")
+	#print("death state enter")
 	_timer = randf_range(state_duration_min, state_duration_max)
 	enemy.update_animation(anim_name)
 	const SMOKE_SCENE = preload("res://assets/enemies/smoke_explosion/smoke_explosion.tscn")

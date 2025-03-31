@@ -20,11 +20,13 @@ func _ready():
 	#area.body_entered.emit("_on_body_entered")
 
 func _on_body_entered(body):
-	print("Collision detected")
+	#print("Collision detected")
 	# Check if the entering body is your player
-	if body.is_in_group("player"):
-		print("Player entered this Node2D!")
+	#if body.is_in_group("player"):
+		#print("Player entered this Node2D!")
+		#self.visible = false
 	# Do whatever you need her
 	if body.has_method("_is_moving"): #player
-		print("got a blaster")
+		#print("got a blaster")
+		self.visible = false
 		body.activate_weapon(type)

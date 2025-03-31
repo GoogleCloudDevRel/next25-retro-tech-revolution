@@ -81,7 +81,7 @@ func _physics_process(delta: float) -> void:
 			if distance_to_player <= enemy.detection_radius:
 				# Shoot if we can
 				if enemy.can_fire:
-					print("Fire")
+					#print("Fire")
 					# Face the player
 					animation_player.play( "attack_" + new_direction)
 					shoot_at_player(new_direction)

@@ -53,7 +53,7 @@ func _on_rank_received(rank:String):
 	%RankLabel.text = "[right]%03d[/right]" % int(rank)
 
 func _on_gemini_summary_received(summary:String):
-	%Summary.text = summary.to_upper()
+	%Summary.text = "[b]Congratulations[/b], Your id is : [b][color=#34A853]" + SignalBus.client_id + "[/color][/b], and session id : [b][color=#EA4335]" + SignalBus.session_id + "[/color][/b], [p]" + summary.to_upper()
 
 func _process(_delta: float) -> void:
 	var scroll_direction = 0

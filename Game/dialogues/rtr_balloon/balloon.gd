@@ -63,10 +63,10 @@ func scroll_text_from_top_to_bottom():
 	
 	# First, reset to top
 	v_scroll.value = 0
-	print(v_scroll.value)
+	#print(v_scroll.value)
 	# Get the max scroll value
 	var max_scroll = v_scroll.max_value + v_scroll.page + 200
-	print(max_scroll)
+	#print(max_scroll)
 	# Create a tween to animate the scrollbar
 	var tween = create_tween()
 	var duration = 10.0  # seconds to scroll through entire text
@@ -181,10 +181,10 @@ func _on_balloon_gui_input(event: InputEvent) -> void:
 	var rich_text_label = %DialogueLabel
 # For gamepad D-pad input
 	if Input.is_action_pressed("ui_down"):
-		print("down")
+		#print("down")
 		scroll_direction = 1
 	if Input.is_action_pressed("ui_up"):
-		print("up")
+		#print("up")
 		scroll_direction = -1
 	# Apply scrolling
 	if scroll_direction != 0:
@@ -200,7 +200,7 @@ func _on_balloon_gui_input(event: InputEvent) -> void:
 			
 		# Set the scrollbar value (this is equivalent to setting v_scroll)
 		v_scroll_bar.value = new_scroll
-		print(str(v_scroll_bar.value) + " " + str(new_scroll))
+		#print(str(v_scroll_bar.value) + " " + str(new_scroll))
 	
 	
 	# See if we need to skip typing of the dialogue
