@@ -55,10 +55,10 @@ func _ready():
 		var client_peer = ENetMultiplayerPeer.new()
 		client_peer.create_client("192.168.4.85", 7777)
 		multiplayer.multiplayer_peer = client_peer
-		SignalBus.client_id = multiplayer.get_unique_id()
-	else:
-		SignalBus.client_id = Time.get_unix_time_from_system()
-	SignalBus.session_id = str(Time.get_unix_time_from_system())
+		#SignalBus.client_id = multiplayer.get_unique_id()
+	#else:
+		#SignalBus.client_id = Time.get_unix_time_from_system()
+	#SignalBus.session_id = str(Time.get_unix_time_from_system())
 	#launch the SplashScreen at the beginning
 	SignalBus.screen_state.emit(SignalBus.SPLASHSCREEN)
 
@@ -166,7 +166,7 @@ func _on_change_screen_state(new_state) -> void:
 			add_child(current_scene_instance)
 		SignalBus.LEVEL1:
 			current_scene_instance =level1Screen.instantiate()
-			current_scene_instance.z_index = -10
+			#current_scene_instance.z_index = -10
 			add_child(current_scene_instance)
 		SignalBus.GAMEOVER:
 			current_scene_instance = gameoverScreen.instantiate()

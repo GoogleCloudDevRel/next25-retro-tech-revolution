@@ -5,6 +5,8 @@ extends Node
 @export var pulse_speed2: float = 1.0  # Full cycles per second
 @export var min_opacity: float = 0.0  # Minimum opacity
 @export var max_opacity: float = 1.0  # Maximum opacity
+@export var radius : float = 10.0
+
 
 var _waiting: bool = true
 var color1: Color = Color(0.91, 0.26, 0.20, 1)  # Red
@@ -16,8 +18,6 @@ var fixed_block1
 var fixed_block2
 var timer = 0
 var is_visible = true
-
-var radius = 50
 
 
 

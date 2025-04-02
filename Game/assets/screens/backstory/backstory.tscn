@@ -1,24 +1,16 @@
 [gd_scene load_steps=19 format=3 uid="uid://vg8psh0mfjau"]
 
-[ext_resource type="Texture2D" uid="uid://dx3im452arqlw" path="res://assets/screens/questionsscreen/background.png" id="1_gdakd"]
 [ext_resource type="Script" path="res://scripts/backstory_screen.gd" id="1_lsmfe"]
-[ext_resource type="Texture2D" uid="uid://dgpqtls5hdacq" path="res://dialogues/portraits/gemini.png" id="2_so20i"]
+[ext_resource type="PackedScene" uid="uid://ykfi24r6o3m3" path="res://assets/gcp_overlay/gcp_overlay.tscn" id="2_0qxag"]
 [ext_resource type="PackedScene" uid="uid://daatymj755m4a" path="res://assets/random_squares.tscn" id="2_t8yqe"]
 [ext_resource type="Shader" path="res://shaders/border_rect_alpha.gdshader" id="4_alh06"]
+[ext_resource type="PackedScene" uid="uid://q2bsklea4iyx" path="res://dialogues/gemini.tscn" id="4_syfc4"]
 [ext_resource type="Texture2D" uid="uid://rf2nkntwiltm" path="res://backstory-images/debug_image.png" id="5_6ct5w"]
-
-[sub_resource type="SystemFont" id="SystemFont_bgd65"]
-font_names = PackedStringArray("Google Sans")
-subpixel_positioning = 0
+[ext_resource type="VideoStream" path="res://assets/Background.ogv" id="7_0lnyk"]
 
 [sub_resource type="SystemFont" id="SystemFont_qj4hr"]
 font_names = PackedStringArray("Google Sans Display")
 subpixel_positioning = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_voxh7"]
-shader = ExtResource("4_alh06")
-shader_parameter/border_width = 0.021
-shader_parameter/border_softness = 0.332
 
 [sub_resource type="SystemFont" id="SystemFont_m6vam"]
 font_names = PackedStringArray("Google Sans Display")
@@ -110,15 +102,19 @@ font_names = PackedStringArray("Google Sans")
 font_weight = 500
 subpixel_positioning = 0
 
-[node name="BackStory" type="Node"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_voxh7"]
+shader = ExtResource("4_alh06")
+shader_parameter/border_width = 0.008
+shader_parameter/border_softness = 0.231
+
+[node name="BackStory" type="CanvasLayer"]
+layer = -1
 script = ExtResource("1_lsmfe")
 
-[node name="RandomSquares" parent="." instance=ExtResource("2_t8yqe")]
+[node name="gcp_overlay" parent="." instance=ExtResource("2_0qxag")]
 
-[node name="Background" type="TextureRect" parent="."]
-offset_right = 1920.0
-offset_bottom = 1080.0
-texture = ExtResource("1_gdakd")
+[node name="RandomSquares" parent="." instance=ExtResource("2_t8yqe")]
+visible = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(1920, 1080)
@@ -133,7 +129,7 @@ offset_right = 960.0
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 100
+theme_override_constants/separation = 109
 
 [node name="Separator" type="Control" parent="VBoxContainer"]
 layout_mode = 2
@@ -144,27 +140,8 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 10
 
-[node name="GeminiLogo" type="TextureRect" parent="VBoxContainer/Title"]
-visible = false
-custom_minimum_size = Vector2(90, 90)
-layout_mode = 2
-size_flags_horizontal = 3
-texture = ExtResource("2_so20i")
-expand_mode = 2
-
-[node name="title" type="Label" parent="VBoxContainer/Title"]
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0.83, 0.83, 0.83, 0.669)
-theme_override_colors/font_outline_color = Color(0.818, 0.818, 0.818, 0.658)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 10
-theme_override_constants/shadow_outline_size = 13
-theme_override_fonts/font = SubResource("SystemFont_bgd65")
-theme_override_font_sizes/font_size = 54
-text = "✦ BACKSTORY"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Gemini" parent="VBoxContainer/Title" instance=ExtResource("4_syfc4")]
+position = Vector2(-759, 59)
 
 [node name="BackstoryHBox" type="HBoxContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(400, 500)
@@ -172,37 +149,31 @@ layout_mode = 2
 theme_override_constants/separation = 80
 alignment = 1
 
-[node name="BackStoryText" type="RichTextLabel" parent="VBoxContainer/BackstoryHBox"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/BackstoryHBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="BackStoryText" type="RichTextLabel" parent="VBoxContainer/BackstoryHBox/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(1000, 500)
+custom_minimum_size = Vector2(1000, 700)
 layout_mode = 2
 theme_override_fonts/normal_font = SubResource("SystemFont_qj4hr")
 theme_override_font_sizes/normal_font_size = 40
 bbcode_enabled = true
 text = "Okay, listen up, \"Banana-loving Adventurer Noob.\" You're in the Archive, a digital dinosaur graveyard from the 80s/90s. Rogue AI's turned it into a tech-terror zone. Clean the corrupted CRTs and floppies, find the boss. First, hunt down the \"Flux Capacitor Wrench.\" Without it, you, a self-proclaimed \"noob,\" won't last a byte. Go."
 
-[node name="BackStoryImage" type="TextureRect" parent="VBoxContainer/BackstoryHBox"]
-unique_name_in_owner = true
-material = SubResource("ShaderMaterial_voxh7")
-custom_minimum_size = Vector2(600, 90)
-layout_mode = 2
-texture = ExtResource("5_6ct5w")
-expand_mode = 2
-stretch_mode = 2
-flip_h = true
-
-[node name="HUD" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HUD" type="HBoxContainer" parent="VBoxContainer/BackstoryHBox/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 80
 alignment = 1
 
-[node name="Next" type="Button" parent="VBoxContainer/HUD"]
+[node name="Next" type="Button" parent="VBoxContainer/BackstoryHBox/VBoxContainer/HUD"]
 visible = false
 custom_minimum_size = Vector2(500, 100)
 layout_mode = 2
 theme = SubResource("Theme_gxg1n")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/HUD/Next"]
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/BackstoryHBox/VBoxContainer/HUD/Next"]
 custom_minimum_size = Vector2(300, 70)
 layout_mode = 2
 offset_left = 172.0
@@ -216,7 +187,7 @@ theme_override_font_sizes/normal_font_size = 30
 bbcode_enabled = true
 text = "[pulse freq=1.0 color=#ffffff40 ease=-2.0]Go Play ![/pulse]"
 
-[node name="PressXKeyLabel" type="RichTextLabel" parent="VBoxContainer/HUD/Next"]
+[node name="PressXKeyLabel" type="RichTextLabel" parent="VBoxContainer/BackstoryHBox/VBoxContainer/HUD/Next"]
 visible = false
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
@@ -230,7 +201,7 @@ bbcode_enabled = true
 text = "[right]PRESS [color=\"#F4B400\"]A[/color] TO CONTINUE[/right]"
 fit_content = true
 
-[node name="PressXKeyLabel2" type="RichTextLabel" parent="VBoxContainer/HUD"]
+[node name="PressXKeyLabel2" type="RichTextLabel" parent="VBoxContainer/BackstoryHBox/VBoxContainer/HUD"]
 custom_minimum_size = Vector2(400, 24)
 layout_mode = 2
 theme_override_colors/default_color = Color(0.513726, 0.52549, 0.541176, 1)
@@ -239,6 +210,15 @@ theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
 text = "[right]PRESS [color=\"#F4B400\"]A[/color] TO CONTINUE[/right]"
 fit_content = true
+
+[node name="BackStoryImage" type="TextureRect" parent="VBoxContainer/BackstoryHBox"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_voxh7")
+custom_minimum_size = Vector2(436, 800)
+layout_mode = 2
+texture = ExtResource("5_6ct5w")
+stretch_mode = 5
+flip_h = true
 
 [node name="outerboarder" type="Node2D" parent="."]
 visible = false
@@ -286,9 +266,9 @@ offset_bottom = 1080.0
 color = Color(0.330424, 0.0282391, 0.108228, 1)
 
 [node name="center-topbottom2" type="ColorRect" parent="outerboarder"]
-offset_left = 475.0
+offset_left = 201.0
 offset_top = 1.0
-offset_right = 476.0
+offset_right = 202.0
 offset_bottom = 1081.0
 color = Color(0.330424, 0.0282391, 0.108228, 1)
 
@@ -305,4 +285,16 @@ offset_right = 1920.0
 offset_bottom = 541.0
 color = Color(0.330424, 0.0282391, 0.108228, 1)
 
-[connection signal="pressed" from="VBoxContainer/HUD/Next" to="." method="_on_next_pressed"]
+[node name="BackgroundVideo" type="VideoStreamPlayer" parent="."]
+z_index = -1
+clip_contents = true
+offset_left = -4.0
+offset_top = -2.0
+offset_right = 3836.0
+offset_bottom = 2158.0
+scale = Vector2(0.5, 0.5)
+stream = ExtResource("7_0lnyk")
+autoplay = true
+loop = true
+
+[connection signal="pressed" from="VBoxContainer/BackstoryHBox/VBoxContainer/HUD/Next" to="." method="_on_next_pressed"]

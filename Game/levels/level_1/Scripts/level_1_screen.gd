@@ -1,4 +1,4 @@
-extends Node2D
+extends CanvasLayer
 
 #game viewport
 @onready var viewport_display = $GameView/ViewportDisplay
@@ -11,6 +11,7 @@ var timer = null
 #gemini dialog
 const dialog_template = preload("res://dialogues/gemini_help.dialogue")
 var is_displaying_dialog = false
+var dialogballoon
 
 #add overlays
 @onready var hud_score_time = preload("res://assets/hud/hud_score_time.tscn")
@@ -83,6 +84,9 @@ func _on_show_congratulations() -> void:
 	
 #after displaying congratulations go to gameover
 func _on_show_gameover() -> void:
+	var balloon_node = get_node_or_null("/root/Game/ExampleBalloon")
+	if balloon_node:
+		balloon_node.queue_free()
 	SignalBus.screen_state.emit(SignalBus.GAMEOVER)
 
 func _input(event: InputEvent) -> void:
@@ -130,7 +134,7 @@ func _physics_process(_delta: float) -> void:
 func _on_gemini_help(msg) -> void:
 	if(!is_displaying_dialog):
 		SignalBus.gemini_help = msg.to_upper()
-		DialogueManager.show_dialogue_balloon(dialog_template, "start")
+		dialogballoon = DialogueManager.show_dialogue_balloon(dialog_template, "start")
 		is_displaying_dialog = true
 		DialogueManager.dialogue_ended.connect(_on_dialog_finished) 
 

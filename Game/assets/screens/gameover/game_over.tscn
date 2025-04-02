@@ -228,10 +228,12 @@ Panel/styles/panel = SubResource("StyleBoxFlat_bc2cj")
 [sub_resource type="SystemFont" id="SystemFont_d2gv7"]
 font_names = PackedStringArray("Google Sans")
 font_weight = 800
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_oogqg"]
 font_names = PackedStringArray("Google Sans")
 font_weight = 800
+subpixel_positioning = 0
 
 [sub_resource type="FontVariation" id="FontVariation_gts8u"]
 fallbacks = Array[Font]([SubResource("SystemFont_oogqg")])
@@ -262,6 +264,7 @@ subpixel_positioning = 0
 [sub_resource type="SystemFont" id="SystemFont_xw3uw"]
 font_names = PackedStringArray("Google Sans")
 font_weight = 800
+subpixel_positioning = 0
 
 [sub_resource type="FontVariation" id="FontVariation_rg7ng"]
 base_font = SubResource("SystemFont_xw3uw")
@@ -288,6 +291,7 @@ Panel/styles/panel = SubResource("StyleBoxFlat_03xhm")
 font_names = PackedStringArray("Google Sans")
 font_weight = 800
 font_stretch = 50
+subpixel_positioning = 0
 
 [sub_resource type="FontVariation" id="FontVariation_wcfw1"]
 base_font = SubResource("SystemFont_dkuhu")
@@ -360,7 +364,8 @@ font_names = PackedStringArray("Google Sans Display")
 font_weight = 900
 subpixel_positioning = 0
 
-[node name="GameOver" type="Node"]
+[node name="GameOver" type="CanvasLayer"]
+layer = -1
 script = ExtResource("1_poa64")
 
 [node name="TextureRect" type="TextureRect" parent="."]
@@ -587,7 +592,6 @@ layout_mode = 2
 theme_override_fonts/normal_font = SubResource("SystemFont_mb474")
 theme_override_font_sizes/normal_font_size = 30
 bbcode_enabled = true
-text = "THIS IS A GAME SUMMARY. [p] LOREM IPSUM DOLOR SIT AMT"
 
 [node name="QRCode" type="TextureRect" parent="MarginContainer/VBoxContainer/VBoxContainer/Info/GameSummary"]
 custom_minimum_size = Vector2(80, 80)
@@ -724,3 +728,6 @@ scale = Vector2(0.5, 0.5)
 stream = ExtResource("57_uqg6v")
 autoplay = true
 loop = true
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/HUD/ReplayButton" to="." method="_on_replay_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/HUD/ResetButton" to="." method="_on_reset_pressed"]

@@ -1,4 +1,4 @@
-extends Node
+extends CanvasLayer
 
 @onready var stopwatch_label = %StopWatchLabel
 @onready var score_label = %ScoreLabel
@@ -7,22 +7,32 @@ extends Node
 @onready var button1 = $MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/HUD/ReplayButton
 @onready var button2 = $MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/HUD/ResetButton
 
+var buttons = []
+var current_button_index = 0
+
 var is_summary_received = false
 var is_scrolling = false
 
 func _ready():
+	var balloon_node = get_node_or_null("/root/Game/ExampleBalloon")
+	if balloon_node:
+		balloon_node.queue_free()
+		
+	buttons = [button1, button2]
 	
-	button1.grab_focus()
+	buttons[0].grab_focus()
 	
 	button1.focus_neighbor_bottom = button2.get_path()
 	button2.focus_neighbor_top = button1.get_path()
 	
-	button1.pressed.connect(_on_replay_pressed)
-	button2.pressed.connect(_on_reset_pressed)
+	#button1.pressed.connect(_on_replay_pressed)
+	#button2.pressed.connect(_on_reset_pressed)
 	
 	game_over.play("default")
 	score_label.text = "[right]%03d[/right]" % SignalBus.score
 	%RankLabel.text = "[right]%03d[/right]" % int(0)
+	%Summary.text = "Congratulations, Your id is : [font_size=30][b][color=#34A853]" + str(SignalBus.client_id) + "[/color][/b], and session id : [font_size=30][b][color=#EA4335]" + str(SignalBus.session_id) + "[/color][/b], [p]"
+	
 	update_stopwatch()
 	SignalBus.session_rank_received.connect(_on_rank_received)
 	SignalBus.gemini_summary_received.connect(_on_gemini_summary_received)
@@ -53,9 +63,31 @@ func _on_rank_received(rank:String):
 	%RankLabel.text = "[right]%03d[/right]" % int(rank)
 
 func _on_gemini_summary_received(summary:String):
-	%Summary.text = "[b]Congratulations[/b], Your id is : [b][color=#34A853]" + SignalBus.client_id + "[/color][/b], and session id : [b][color=#EA4335]" + SignalBus.session_id + "[/color][/b], [p]" + summary.to_upper()
+	%Summary.text += summary.to_upper()
+
+
+func _on_button_pressed(button_index):
+	if button_index == 0:
+		_on_replay_pressed()
+	else:
+		_on_reset_pressed()
+
 
 func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("attack"):
+		_on_button_pressed(current_button_index)
+		
+	if Input.is_action_just_pressed("ui_right"):
+		# Move to next button
+		current_button_index = min(current_button_index + 1, buttons.size() - 1)
+		buttons[current_button_index].grab_focus()
+	elif Input.is_action_just_pressed("ui_left"):
+		# Move to previous button
+		current_button_index = max(current_button_index - 1, 0)
+		buttons[current_button_index].grab_focus()	
+	
+	
+	
 	var scroll_direction = 0
 	var scroll_speed = 20
 	var rich_text_label = %Summary

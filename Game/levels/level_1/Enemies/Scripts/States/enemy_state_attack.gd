@@ -75,7 +75,10 @@ func _physics_process(delta: float) -> void:
 			var new_direction = get_4way_direction(direction_to_player)
 			
 			enemy.sprite.scale.x = -1 if new_direction == "left" else 1
-			var new_animation_direction = "side" if new_direction == "left" or new_direction == "right" else new_direction
+			var new_animation_direction  = new_direction
+			if new_direction == "left" or new_direction == "right":
+				new_animation_direction = "side"
+			#var new_animation_direction = "side" if new_direction == "left" or new_direction == "right" else new_direction
 			animation_player.play( "attack_" + new_animation_direction)
 			
 			if distance_to_player <= enemy.detection_radius:
@@ -83,7 +86,7 @@ func _physics_process(delta: float) -> void:
 				if enemy.can_fire:
 					#print("Fire")
 					# Face the player
-					animation_player.play( "attack_" + new_direction)
+					#animation_player.play( "attack_" + new_direction)
 					shoot_at_player(new_direction)
 					enemy.can_fire = false
 					enemy.timer.start()

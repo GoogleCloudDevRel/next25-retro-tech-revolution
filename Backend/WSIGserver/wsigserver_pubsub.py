@@ -69,11 +69,10 @@ def get_publisher_client():
 #bigquery get summary
 def get_gemini_summary(session_id):
 	query ="""SELECT summary_text 
-	FROM data-cloud-interactive-demo.retro_tech_revolution.gemini_summary
+	FROM `data-cloud-interactive-demo.retro_tech_revolution.game_play_summaries`
 	WHERE session_id= '"""+session_id+"""'
 	LIMIT 1
 	"""
-
 
 	client = bigquery.Client()
 	i = 0
@@ -82,8 +81,9 @@ def get_gemini_summary(session_id):
 		results = query_job.result()
 		for row in results:
 			return str(row['summary_text']) #expect one record only
+		time.sleep(2 * i)
 		i += 1
-	return "Gemini is on vacation"
+	return "Gemini is gone on vacation! Come back later"
 
 
 
@@ -144,6 +144,7 @@ def get_rank(session_id):
 		results = query_job.result()
 		for row in results:
 			return str(row['player_rank']) #expect one record only
+		time.sleep(2 * i)
 		i += 1
 	return "0"
 
@@ -294,7 +295,7 @@ def get_rank_from_bq():
 			session_id  = data.get('session_id')
 			return get_rank(session_id)
 
-@app.route('/get_gemini_summary', method=['POST'])
+@app.route('/get_gemini_summary', methods=['POST'])
 def get_summary_from_bq():
 			data = request.get_json()
 			session_id  = data.get('session_id')

@@ -1,24 +1,37 @@
-[gd_scene load_steps=6 format=3 uid="uid://c8crmjsg0br8d"]
+[gd_scene load_steps=7 format=3 uid="uid://c8crmjsg0br8d"]
 
 [ext_resource type="Shader" path="res://shaders/scanline_v2gdshader.gdshader" id="1_jh1b8"]
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="2_sabek"]
 [ext_resource type="FontFile" uid="uid://bx342ftu5vnhe" path="res://fonts/DelaGothicOne-Regular.ttf" id="3_aksgs"]
 [ext_resource type="Script" path="res://scripts/server.gd" id="4_iwxs6"]
 
+[sub_resource type="Environment" id="Environment_b4s52"]
+background_mode = 3
+background_canvas_max_layer = -1
+glow_enabled = true
+glow_intensity = 1.38
+glow_strength = 0.93
+glow_bloom = 0.16
+glow_blend_mode = 1
+glow_hdr_threshold = 0.14
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lgvmp"]
 shader = ExtResource("1_jh1b8")
-shader_parameter/scan_line_count = 480.0
-shader_parameter/scan_line_intensity = 0.3
-shader_parameter/noise_intensity = 0.05
+shader_parameter/scan_line_count = 289.641
+shader_parameter/scan_line_intensity = 0.527
+shader_parameter/noise_intensity = 0.032
 shader_parameter/curvature = 0.0
 shader_parameter/vignette_intensity = 0.4
-shader_parameter/brightness = 1.4
-shader_parameter/flicker_intensity = 0.145
-shader_parameter/rgb_shift = 0.5
+shader_parameter/brightness = 1.616
+shader_parameter/flicker_intensity = 0.285
+shader_parameter/rgb_shift = 0.68
 
 [node name="Game" type="Node2D"]
 top_level = true
 y_sort_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_b4s52")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 20

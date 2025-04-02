@@ -1,4 +1,4 @@
-extends Node
+extends CanvasLayer
 
 #@onready var backgroundStoryText = $VBoxContainer/BackstoryHBox/BackStoryBackStory
 #@onready var backgroundStoryImage= $VBoxContainer/BackstoryHBox/BackStoryImage

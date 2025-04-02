@@ -76,7 +76,7 @@ font_names = PackedStringArray("Google Sans")
 font_weight = 500
 
 [node name="ExampleBalloon" type="CanvasLayer"]
-layer = 100
+layer = -1
 script = ExtResource("1_36de5")
 
 [node name="ColorRect" type="ColorRect" parent="."]

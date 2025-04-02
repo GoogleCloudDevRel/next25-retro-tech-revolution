@@ -112,8 +112,16 @@ func _ready() -> void:
 	has_client_id = true
 	print(session_id+" "+client_id)
 	print("User directory: ", OS.get_user_data_dir())
-	
 	save_config_file()
+	
+	if trivia_result.size() > 0:
+		if trivia_result[2]['a'] == "BRING IT ON, I LOVE SUPER HARD GAMES!":
+			game_difficulty = HARD
+		elif trivia_result[2]['a'] ==  "I'M MODERATELY INTO GAMES":
+			game_difficulty = MEDIUM
+		else:
+			game_difficulty = EASY
+	
 	SignalBus.trivia_question_received.connect(_on_trivia_question_received)
 	SignalBus.player_created.connect(_on_player_created)
 	SignalBus.enemy_created.connect(_on_enemies_created)

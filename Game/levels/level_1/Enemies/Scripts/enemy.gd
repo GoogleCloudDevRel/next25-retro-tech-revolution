@@ -13,7 +13,7 @@ var hit_count = 0
 @export var can_fire: bool = false
 @export var detection_radius: float = 100.0
 @export var timer: Timer
-
+@export var is_activated: bool = false
 ####Added enemies base mgt ######
 
 #@onready var players = get_parent().players

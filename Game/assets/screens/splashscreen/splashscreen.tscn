@@ -161,18 +161,18 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -79.5
+offset_left = -46.5
 offset_top = 281.0
-offset_right = -79.5
+offset_right = -46.5
 offset_bottom = 281.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="StartScreenCanvas/HUD/Panel"]
 layout_mode = 0
-offset_left = -66.0
+offset_left = -7.0
 offset_top = 234.0
-offset_right = 232.0
+offset_right = 291.0
 offset_bottom = 312.0
 
 [node name="HostGame" type="Button" parent="StartScreenCanvas/HUD/Panel/VBoxContainer"]
@@ -196,6 +196,8 @@ text = "Join as new player"
 [node name="Start" type="Button" parent="StartScreenCanvas/HUD/Panel/VBoxContainer"]
 custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
 theme = SubResource("Theme_advgx")
 text = "START"
 
@@ -267,12 +269,12 @@ color = Color(0.0784314, 0.2, 0.12549, 1)
 offset_left = 960.0
 offset_right = 961.0
 offset_bottom = 1080.0
-color = Color(0.330424, 0.0282391, 0.108228, 1)
+color = Color(0.531028, 0.438083, 0.103701, 1)
 
 [node name="center-topbottom2" type="ColorRect" parent="outerboarder"]
-offset_left = 475.0
+offset_left = 201.0
 offset_top = 1.0
-offset_right = 476.0
+offset_right = 202.0
 offset_bottom = 1081.0
 color = Color(0.330424, 0.0282391, 0.108228, 1)
 

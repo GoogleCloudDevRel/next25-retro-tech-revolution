@@ -115,20 +115,14 @@ Button/styles/disabled = SubResource("StyleBoxFlat_fkey6")
 Button/styles/normal = SubResource("StyleBoxFlat_xond7")
 Button/styles/pressed = SubResource("StyleBoxFlat_8x2s4")
 
-[node name="QuestionsScreen" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="QuestionsScreen" type="CanvasLayer"]
+layer = -1
 script = ExtResource("1_r2mss")
 
 [node name="gcp_overlay" parent="." instance=ExtResource("2_mtuyq")]
 
 [node name="Background" type="TextureRect" parent="."]
 visible = false
-layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 texture = ExtResource("1_g3e5r")
@@ -137,7 +131,6 @@ texture = ExtResource("1_g3e5r")
 visible = false
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -241,7 +234,6 @@ text = "JUST SURPRISE ME"
 [node name="BackgroundVideo" type="VideoStreamPlayer" parent="."]
 z_index = -1
 clip_contents = true
-layout_mode = 2
 offset_left = -4.0
 offset_top = -2.0
 offset_right = 3836.0

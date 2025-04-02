@@ -62,21 +62,21 @@ func take_damage(player_damage):
 func _on_game_difficulty_changed(new_level, reason):
 	if SignalBus.game_difficulty == SignalBus.EASY:
 		points = 40
-		health = 100.0
+		health = 70.0
 		detection_radius = 200.0
 		max_bullet = 2
 		damage_points = 1
 		speed = 5
 	elif SignalBus.game_difficulty == SignalBus.MEDIUM:
-		points = 70
+		points = 80
 		health = 150.0
 		detection_radius = 300.0
 		max_bullet = 3
 		damage_points = 2
 		speed = 20
 	else:
-		points = 70
-		health = 300.0
+		points = 150
+		health = 200.0
 		detection_radius = 300.0
 		max_bullet = 5
 		fire_rate = 2.0

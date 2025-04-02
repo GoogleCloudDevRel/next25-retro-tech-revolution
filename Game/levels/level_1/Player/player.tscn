@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://dkddtwn5gkisp"]
+[gd_scene load_steps=60 format=3 uid="uid://dkddtwn5gkisp"]
 
 [ext_resource type="Script" path="res://levels/level_1/Player/Scripts/player.gd" id="1_dhwja"]
 [ext_resource type="Texture2D" uid="uid://dojw02iv386ie" path="res://levels/level_1/Player/Sprites/RetroPlayerSprite.png" id="1_i1wrl"]
@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://c1cr2wayj7p71" path="res://levels/level_1/Player/Scripts/bubble.tscn" id="16_jbhtv"]
 [ext_resource type="Shader" path="res://shaders/chromakey.gdshader" id="17_su58f"]
 [ext_resource type="VideoStream" path="res://levels/level_1/Player/Assets/swirl.ogv" id="18_6w8mc"]
+[ext_resource type="Texture2D" uid="uid://61spli2ohccc" path="res://levels/level_1/Player/Assets/Gemini.png" id="19_al0dy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fbcb4"]
 shader = ExtResource("3_1ynf5")
@@ -716,6 +717,13 @@ offset_right = 1424.34
 offset_bottom = 812.605
 scale = Vector2(0.5, 0.5)
 stream = ExtResource("18_6w8mc")
+
+[node name="Gemini" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+position = Vector2(12.0522, -51.4473)
+scale = Vector2(0.374456, 0.374456)
+texture = ExtResource("19_al0dy")
 
 [connection signal="timeout" from="TimerHit" to="." method="_on_reset_getting_hit"]
 [connection signal="timeout" from="inactivityTimer" to="StateMachine/Idle" method="_on_inactivity_timer_timeout"]

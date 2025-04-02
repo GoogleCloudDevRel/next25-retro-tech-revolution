@@ -1,9 +1,8 @@
 extends Node
 
 
-const GEMINI_API_KEY =""
+const GEMINI_API_KEY ="AIzaSyD8PFFcrv4tReGje4qwjtqcOd-7LDMCHbc"
 
-@onready var sub_viewport =  $/root/level_1_screen/GameViewport
 
 
 #const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-pro-exp-02-05:generateContent?key=" + GEMINI_API_KEY
@@ -56,7 +55,7 @@ func _on_game_over(state):
 		#retrieve gemini summary
 		var http_request2  = HTTPRequest.new()
 		add_child(http_request2)
-		http_request2.request_completed.connect(_on_gemini_summary_received.bind(http_request))
+		http_request2.request_completed.connect(_on_gemini_summary_received.bind(http_request2))
 		var connection2 ="http://"+endpoint+":"+port+"/get_gemini_summary"
 		http_request2.request(connection2, headers, HTTPClient.METHOD_POST, body) 
 
@@ -91,8 +90,13 @@ func _on_send_screenshots_to_gcs():
 	SignalBus.last_screenshot_timestamp = Time.get_datetime_string_from_system()
 	#print("Sending Screenshot")
 	if SignalBus.SEND_SCREENSHOTS:
+		await get_tree().process_frame
 		await RenderingServer.frame_post_draw
-		var capture = sub_viewport.get_texture().get_image()
+		#var sub_viewport =  $/root/Game/GameManager/level_1_screen/GameView/ViewportDisplay2
+		#var capture = sub_viewport.get_texture().get_image()
+		var capture = get_viewport().get_texture().get_image()
+		capture.resize(640, 360, Image.INTERPOLATE_BILINEAR) #reduce the size
+		
 		
 		#get_viewport().get_texture().get_image()
 		var buffer = capture.save_png_to_buffer()
@@ -114,9 +118,16 @@ func _on_send_screenshots_to_gcs():
 			HTTPClient.METHOD_POST,
 			body
 		)
-		#save to file
 		
-		var filename = "user://screenshots/"+str(SignalBus.session_id)+"screenshot-{0}.png".format({"0":SignalBus.last_screenshot_timestamp})
+		
+			#save to file
+		var  directory_name = "screenshots"
+		if !DirAccess.dir_exists_absolute("user://" + directory_name):
+			var error = DirAccess.make_dir_recursive_absolute("user://" + directory_name)
+			if error != OK:
+				printerr("Failed to create directory. Error code: ", error)
+		
+		var filename = "user://"+directory_name+"/"+str(SignalBus.session_id)+"screenshot-{0}.png".format({"0":SignalBus.last_screenshot_timestamp})
 		capture.save_png(filename)
 		SignalBus.last_screenshot = filename
 		

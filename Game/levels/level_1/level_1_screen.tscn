@@ -212,10 +212,12 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="level_1_screen" type="Node2D"]
+[node name="level_1_screen" type="CanvasLayer"]
+layer = 5
 script = ExtResource("1_x41gi")
 
 [node name="GameView" type="CanvasLayer" parent="."]
+layer = 4
 follow_viewport_enabled = true
 
 [node name="ViewportDisplay" type="TextureRect" parent="GameView"]
@@ -282,7 +284,6 @@ size_2d_override_stretch = true
 [node name="level_0" parent="Test" instance=ExtResource("2_jdjf6")]
 
 [node name="hud_weapons" parent="." instance=ExtResource("3_0yc1k")]
-position = Vector2(1518, 881)
 
 [node name="outerboarder2" type="Node2D" parent="."]
 visible = false

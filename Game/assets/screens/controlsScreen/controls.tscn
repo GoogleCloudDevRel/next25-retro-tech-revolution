@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/controls_screen.gd" id="1_dvn23"]
 [ext_resource type="PackedScene" uid="uid://daatymj755m4a" path="res://assets/random_squares.tscn" id="2_b1q8q"]
-[ext_resource type="Texture2D" uid="uid://daapbfosnxnwf" path="res://assets/screens/controlsScreen/controller.png" id="2_r1eg8"]
+[ext_resource type="Texture2D" uid="uid://ch7vgfca74b26" path="res://assets/screens/controlsScreen/controller_320.png" id="3_p0w5c"]
 [ext_resource type="Texture2D" uid="uid://dokg7y7bc3k1i" path="res://assets/screens/controlsScreen/Vector 536.png" id="4_sxqrw"]
 [ext_resource type="Texture2D" uid="uid://c38luix6xwbea" path="res://assets/screens/controlsScreen/Vector 537.png" id="5_y8kl4"]
 [ext_resource type="Texture2D" uid="uid://d1olp65i3uqtp" path="res://assets/screens/controlsScreen/USE THE TOOL.png" id="6_hw1yn"]
@@ -121,11 +121,16 @@ bbcode_enabled = true
 text = "[center]GAME CONTROLS[/center]"
 fit_content = true
 
-[node name="Background" type="TextureRect" parent="MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 310
+
+[node name="Background" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(1348, 800)
 layout_mode = 2
 size_flags_horizontal = 4
-texture = ExtResource("2_r1eg8")
-stretch_mode = 2
+texture = ExtResource("3_p0w5c")
+expand_mode = 1
 
 [node name="PressXKeyLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 24)
@@ -138,8 +143,10 @@ text = "[center]PRESS [color=\"#F4B400\"]A[/color] TO CONTINUE[/center]"
 fit_content = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="MarginContainer"]
+visible = false
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/CanvasLayer"]
+visible = false
 offset_left = 1158.0
 offset_top = 331.0
 offset_right = 1662.0
@@ -148,6 +155,7 @@ rotation = 0.445668
 texture = ExtResource("4_sxqrw")
 
 [node name="TextureRect4" type="TextureRect" parent="MarginContainer/CanvasLayer"]
+visible = false
 offset_left = 1043.0
 offset_top = 245.0
 offset_right = 1594.0
@@ -155,6 +163,7 @@ offset_bottom = 537.0
 texture = ExtResource("5_y8kl4")
 
 [node name="TextureRect3" type="TextureRect" parent="MarginContainer/CanvasLayer"]
+visible = false
 offset_left = 1152.0
 offset_top = 337.0
 offset_right = 1656.0
@@ -163,30 +172,37 @@ scale = Vector2(0.837986, 0.922302)
 texture = ExtResource("4_sxqrw")
 
 [node name="UseTheTool" type="Sprite2D" parent="MarginContainer/CanvasLayer"]
+visible = false
 position = Vector2(1549, 602)
 texture = ExtResource("6_hw1yn")
 
 [node name="NextTool" type="Sprite2D" parent="MarginContainer/CanvasLayer"]
+visible = false
 position = Vector2(1559, 446)
 texture = ExtResource("7_6w002")
 
 [node name="PauseGame" type="Sprite2D" parent="MarginContainer/CanvasLayer"]
+visible = false
 position = Vector2(1056, 211)
 texture = ExtResource("8_y7v3h")
 
 [node name="CallForGeminiAssistance" type="Sprite2D" parent="MarginContainer/CanvasLayer"]
+visible = false
 position = Vector2(1666, 358)
 texture = ExtResource("9_pxm22")
 
 [node name="CharacterControls" type="Sprite2D" parent="MarginContainer/CanvasLayer"]
+visible = false
 position = Vector2(821, 770)
 texture = ExtResource("10_gkkv0")
 
 [node name="Vector538" type="Sprite2D" parent="MarginContainer/CanvasLayer"]
+visible = false
 position = Vector2(821, 656)
 texture = ExtResource("11_rr720")
 
 [node name="Vector542" type="Sprite2D" parent="MarginContainer/CanvasLayer"]
+visible = false
 position = Vector2(1057, 299)
 texture = ExtResource("12_jbqjc")
 
@@ -199,8 +215,6 @@ offset_left = -4.0
 offset_top = -2.0
 offset_right = 3836.0
 offset_bottom = 2158.0
-grow_horizontal = 2
-grow_vertical = 2
 scale = Vector2(0.5, 0.5)
 stream = ExtResource("14_dnrqm")
 autoplay = true

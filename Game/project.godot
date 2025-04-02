@@ -250,3 +250,4 @@ locale/translations_pot_files=PackedStringArray("res://dialogues/dialogue.dialog
 
 textures/vram_compression/import_etc2_astc=true
 environment/defaults/default_clear_color=Color(0.110824, 0.0629118, 0.114721, 1)
+viewport/hdr_2d=true

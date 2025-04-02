@@ -31,13 +31,25 @@ var counter = 0
 @onready var timerHit =  $TimerHit
 
 
+##Gemini
+@export var gemini_rotation_speed: float = 8.0 
+@export var gemini_rotation_direction: int = 1
+
+var is_waiting_gemini = true
+
 func _ready():
 		PlayerManager.player = self
 		state_machine.Initialize(self)
 		SignalBus.player_created.emit(self)
+		SignalBus.gemini_help_requested.connect(_on_help_requested)
+		SignalBus.gemini_help_received.connect(_on_help_received)
 		pass
 
 func _process(_delta):
+	
+	if(is_waiting_gemini):
+		%Gemini.rotate(gemini_rotation_speed * gemini_rotation_direction * _delta)
+	
 	direction.x = Input.get_action_strength("right") - Input.get_action_strength("left")
 	direction.y = Input.get_action_strength("down") - Input.get_action_strength("up")
 	#print("-->"+str(direction.x))
@@ -162,3 +174,11 @@ func _is_moving() -> void:
 		if left_stick_x != 0 or left_stick_y != 0:
 			SignalBus.player_moving.emit(self, left_stick_x, left_stick_y)
 			print("Left stick position: ", Vector2(left_stick_x, left_stick_y))
+			
+func _on_help_requested():
+	%Gemini.visible = true
+	is_waiting_gemini = true
+
+func _on_help_received(t):	
+	%Gemini.visible = false
+	is_waiting_gemini = false
