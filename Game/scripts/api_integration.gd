@@ -1,7 +1,7 @@
 extends Node
 
 
-const GEMINI_API_KEY ="AIzaSyD8PFFcrv4tReGje4qwjtqcOd-7LDMCHbc"
+const GEMINI_API_KEY =""
 
 
 
