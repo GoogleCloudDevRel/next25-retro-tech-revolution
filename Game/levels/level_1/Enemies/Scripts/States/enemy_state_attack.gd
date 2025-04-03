@@ -41,7 +41,7 @@ func Enter() -> void:
 	
 	##walk to the player if we are still far
 	var distance = SignalBus.players[0].global_transform.origin.distance_to(enemy.global_position)
-	if distance  > 20:
+	if distance  > 20 and !enemy.is_inactive:
 		var _direction = get_4d(enemy.global_position.direction_to(SignalBus.players[0].global_transform.origin))
 		enemy.velocity = _direction * wander_speed * 2
 	
@@ -65,9 +65,8 @@ func _physics_process(delta: float) -> void:
 	#print("attack mode")
 	player = find_closest_player(get_parent().get_parent().get_parent().players)
 	
-	if player != null and !enemy.is_dead:
+	if player != null and !enemy.is_dead  and !enemy.is_inactive:
 		var distance_to_player = enemy.global_position.distance_to(player.global_position)
-		
 		
 		if distance_to_player < enemy.detection_radius:
 			var direction_to_player = player.global_position - enemy.global_position
@@ -90,7 +89,7 @@ func _physics_process(delta: float) -> void:
 					shoot_at_player(new_direction)
 					enemy.can_fire = false
 					enemy.timer.start()
-	enemy.move_and_slide()
+		enemy.move_and_slide()
 
 
 func find_closest_player(players):

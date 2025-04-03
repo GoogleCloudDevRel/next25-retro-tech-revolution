@@ -1,7 +1,7 @@
 extends Node
 
 
-const GEMINI_API_KEY =""
+var GEMINI_API_KEY
 
 
 
@@ -9,10 +9,10 @@ const GEMINI_API_KEY =""
 #const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:generateContent?key=" + GEMINI_API_KEY
 
 #const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key" + GEMINI_API_KEY
-const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + GEMINI_API_KEY
+var GEMINI_URL
 #const GEMINI_PRO_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro-exp-03-25:generateContent?key=" + GEMINI_API_KEY
 
-const GEMINI_PRO_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-pro-exp-02-05:generateContent?key=" + GEMINI_API_KEY
+var GEMINI_PRO_URL
 const IMAGEN3_URL ="https://us-central1-aiplatform.googleapis.com/v1/projects/data-cloud-interactive-demo/locations/us-central1/publishers/google/models/imagen-3.0-generate-002:predict"
 
 var gcp_token = ""
@@ -27,15 +27,29 @@ var thread: Thread
 
 ###connect on all the messages
 func _ready():
+	#GEMINI_API_KEY = SignalBus.gemini_api_key
+	#GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + GEMINI_API_KEY
+	#GEMINI_PRO_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-pro-exp-02-05:generateContent?key=" + GEMINI_API_KEY
 	##connect with bus
 	#SignalBus.bullet_created.connect(_on_add_bullet_action)
+	_on_api_key(SignalBus.gemini_api_key)
+	
 	SignalBus.gemini_help_requested.connect(_on_need_gemini_help)
 	SignalBus.gemini_backstory_requested.connect(_on_get_gemini_backstory)
 	SignalBus.gemini_backstory_image_requested.connect(call_api_bridge_generate_backstory_image)
 	SignalBus.send_screenshot_to_gcs.connect(_on_send_screenshots_to_gcs)
 	SignalBus.screen_state.connect(_on_game_over)
+	SignalBus.gemini_api_key_received.connect(_on_api_key)
 	
 	#print("---api integration ready---")
+
+func _on_api_key(key):
+	GEMINI_API_KEY = key
+	GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + GEMINI_API_KEY
+	GEMINI_PRO_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-pro-exp-02-05:generateContent?key=" + GEMINI_API_KEY
+	
+
+
 
 #get rank on game over
 func _on_game_over(state):

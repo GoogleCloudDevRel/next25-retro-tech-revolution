@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=4 uid="uid://cd25yxxiep0a5"]
+[gd_scene load_steps=41 format=4 uid="uid://cd25yxxiep0a5"]
 
 [ext_resource type="PackedScene" uid="uid://bhp5u1h7cjapg" path="res://levels/level_template.tscn" id="1_tfj88"]
 [ext_resource type="Script" path="res://levels/level_1/Scripts/level_1.gd" id="2_do01g"]
@@ -8,11 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://b5wdrjqq6e1l7" path="res://levels/level_1/Tile Maps/Sprites/RetroTileAtlas.png" id="10_prp6q"]
 [ext_resource type="Texture2D" uid="uid://bojl7g2v4vc1d" path="res://levels/level_1/Player/Assets/light.png" id="11_o3jg1"]
 [ext_resource type="Texture2D" uid="uid://cdiju6jvcf63c" path="res://levels/level_1/Tile Maps/Sprites/ObjectSprites.png" id="12_65p5b"]
-[ext_resource type="PackedScene" uid="uid://bmsxnlm6nj6io" path="res://levels/level_1/Enemies/Boss/boss.tscn" id="13_s0h25"]
 [ext_resource type="Shader" path="res://shaders/glow_effect_4_1.gdshader" id="14_dtr8g"]
-[ext_resource type="PackedScene" uid="uid://ds04xmoxhl0uo" path="res://levels/level_1/Enemies/Printer/printer.tscn" id="14_uwd2d"]
 [ext_resource type="PackedScene" uid="uid://b5rb6g447q5wi" path="res://levels/level_1/Enemies/CRT/crt.tscn" id="15_41fxk"]
-[ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/boss.gd" id="15_d1pis"]
 [ext_resource type="PackedScene" uid="uid://ckh3ulwanctr0" path="res://levels/level_1/Player/ui_weapon.tscn" id="16_wtgk4"]
 [ext_resource type="PackedScene" uid="uid://d0p6wso088i1o" path="res://levels/level_1/Player/ui_weapon1.tscn" id="17_w3g7w"]
 
@@ -443,92 +440,12 @@ offset_top = 262.0
 offset_right = 799.0
 offset_bottom = 312.0
 
-[node name="UI_W2" parent="." index="23" instance=ExtResource("16_wtgk4")]
-position = Vector2(2112, 23)
+[node name="UI_W1" parent="." index="23" instance=ExtResource("17_w3g7w")]
+position = Vector2(775, 282)
 
-[node name="UI_W1" parent="." index="24" instance=ExtResource("17_w3g7w")]
-position = Vector2(772, 262)
+[node name="UI_W2" parent="." index="24" instance=ExtResource("16_wtgk4")]
+position = Vector2(2191, -333)
 
 [node name="CRT_prime" parent="." index="25" instance=ExtResource("15_41fxk")]
 position = Vector2(259, 38)
-
-[node name="Printer12" parent="." index="26" instance=ExtResource("14_uwd2d")]
-position = Vector2(1342, 1)
-
-[node name="Boss2" parent="." index="27" instance=ExtResource("13_s0h25")]
-position = Vector2(1842, -1408)
-
-[node name="Printer" parent="." index="28" instance=ExtResource("14_uwd2d")]
-position = Vector2(1546, -1308)
-
-[node name="Printer2" parent="." index="29" instance=ExtResource("14_uwd2d")]
-position = Vector2(1593, -1188)
-
-[node name="Printer10" parent="." index="30" instance=ExtResource("14_uwd2d")]
-position = Vector2(1443, -1513)
-
-[node name="Printer11" parent="." index="31" instance=ExtResource("14_uwd2d")]
-position = Vector2(2235, -1440)
-
-[node name="Printer3" parent="." index="32" instance=ExtResource("14_uwd2d")]
-position = Vector2(250, 200)
-
-[node name="Printer4" parent="." index="33" instance=ExtResource("14_uwd2d")]
-position = Vector2(662, -342)
-
-[node name="Printer5" parent="." index="34" instance=ExtResource("14_uwd2d")]
-position = Vector2(1244, -528)
-
-[node name="Printer6" parent="." index="35" instance=ExtResource("14_uwd2d")]
-position = Vector2(1083, 24)
-
-[node name="Printer7" parent="." index="36" instance=ExtResource("14_uwd2d")]
-position = Vector2(595, 14)
-
-[node name="Printer8" parent="." index="37" instance=ExtResource("14_uwd2d")]
-position = Vector2(1371, 449)
-
-[node name="Printer9" parent="." index="38" instance=ExtResource("14_uwd2d")]
-position = Vector2(2125, 161)
-
-[node name="CRT" parent="." index="39" instance=ExtResource("15_41fxk")]
-position = Vector2(14, 21)
-
-[node name="CRT3" parent="." index="40" instance=ExtResource("15_41fxk")]
-position = Vector2(883, 180)
-
-[node name="CRT6" parent="." index="41" instance=ExtResource("15_41fxk")]
-position = Vector2(881, 433)
-
-[node name="CRT7" parent="." index="42" instance=ExtResource("15_41fxk")]
-position = Vector2(1428, -375)
-
-[node name="CRT9" parent="." index="43" instance=ExtResource("15_41fxk")]
-position = Vector2(1918, 324)
-
-[node name="CRT10" parent="." index="44" instance=ExtResource("15_41fxk")]
-position = Vector2(2128, -491)
-
-[node name="CRT11" parent="." index="45" instance=ExtResource("15_41fxk")]
-position = Vector2(1768, -875)
-
-[node name="CRT2" parent="." index="46" instance=ExtResource("15_41fxk")]
-position = Vector2(805, -574)
-
-[node name="CRT4" parent="." index="47" instance=ExtResource("15_41fxk")]
-position = Vector2(2013, -1432)
-
-[node name="CRT5" parent="." index="48" instance=ExtResource("15_41fxk")]
-position = Vector2(2037, -1279)
-
-[node name="CRT12" parent="." index="49" instance=ExtResource("15_41fxk")]
-position = Vector2(1865, -1100)
-
-[node name="CRT13" parent="." index="50" instance=ExtResource("15_41fxk")]
-position = Vector2(2268, -1239)
-script = ExtResource("15_d1pis")
-floppy_speed = 300.0
-fire_rate = 1.0
-
-[node name="CRT8" parent="." index="51" instance=ExtResource("15_41fxk")]
-position = Vector2(160, -350)
+activation_level = 2

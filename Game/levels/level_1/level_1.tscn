@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=4 uid="uid://cfpw5m78e7xeu"]
+[gd_scene load_steps=41 format=4 uid="uid://cfpw5m78e7xeu"]
 
 [ext_resource type="Script" path="res://levels/level_1/Scripts/level_1.gd" id="1_cbe52"]
 [ext_resource type="Shader" path="res://levels/level_1/level_1.gdshader" id="1_hn8oo"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://ds04xmoxhl0uo" path="res://levels/level_1/Enemies/Printer/printer.tscn" id="8_5x828"]
 [ext_resource type="PackedScene" uid="uid://ckh3ulwanctr0" path="res://levels/level_1/Player/ui_weapon.tscn" id="9_7h78p"]
 [ext_resource type="PackedScene" uid="uid://d0p6wso088i1o" path="res://levels/level_1/Player/ui_weapon1.tscn" id="10_4sqsa"]
+[ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/boss.gd" id="13_7w5vp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ex4dh"]
 shader = ExtResource("1_hn8oo")
@@ -523,3 +524,160 @@ position = Vector2(2112, 23)
 
 [node name="UI_W1" parent="." instance=ExtResource("10_4sqsa")]
 position = Vector2(775, 282)
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Printer12" parent="Node2D" instance=ExtResource("8_5x828")]
+process_mode = 4
+position = Vector2(1342, 1)
+activation_level = 1
+
+[node name="Boss2" parent="Node2D" instance=ExtResource("7_btswa")]
+process_mode = 4
+position = Vector2(1842, -1408)
+
+[node name="Printer" parent="Node2D" instance=ExtResource("8_5x828")]
+process_mode = 4
+position = Vector2(1546, -1308)
+activation_level = 1
+
+[node name="Printer2" parent="Node2D" instance=ExtResource("8_5x828")]
+process_mode = 4
+position = Vector2(1593, -1188)
+
+[node name="Printer10" parent="Node2D" instance=ExtResource("8_5x828")]
+process_mode = 4
+position = Vector2(1443, -1513)
+activation_level = 1
+
+[node name="Printer11" parent="Node2D" instance=ExtResource("8_5x828")]
+process_mode = 4
+position = Vector2(2235, -1440)
+activation_level = 2
+
+[node name="Printer3" parent="Node2D" instance=ExtResource("8_5x828")]
+process_mode = 4
+position = Vector2(250, 200)
+activation_level = 2
+
+[node name="Printer4" parent="Node2D" instance=ExtResource("8_5x828")]
+process_mode = 4
+position = Vector2(662, -342)
+
+[node name="Printer5" parent="Node2D" instance=ExtResource("8_5x828")]
+process_mode = 4
+position = Vector2(1244, -528)
+
+[node name="Printer6" parent="Node2D" instance=ExtResource("8_5x828")]
+process_mode = 4
+position = Vector2(1083, 24)
+
+[node name="Printer7" parent="Node2D" instance=ExtResource("8_5x828")]
+process_mode = 4
+position = Vector2(595, 14)
+activation_level = 1
+
+[node name="Printer8" parent="Node2D" instance=ExtResource("8_5x828")]
+process_mode = 4
+position = Vector2(1371, 449)
+activation_level = 1
+
+[node name="Printer9" parent="Node2D" instance=ExtResource("8_5x828")]
+process_mode = 4
+position = Vector2(2125, 161)
+activation_level = 1
+
+[node name="Printer13" parent="Node2D" instance=ExtResource("8_5x828")]
+process_mode = 4
+position = Vector2(2126, -235)
+activation_level = 2
+
+[node name="Printer14" parent="Node2D" instance=ExtResource("8_5x828")]
+process_mode = 4
+position = Vector2(1685, 383)
+activation_level = 2
+
+[node name="CRT" parent="Node2D" instance=ExtResource("5_f4ora")]
+process_mode = 4
+position = Vector2(14, 21)
+activation_level = 2
+
+[node name="CRT3" parent="Node2D" instance=ExtResource("5_f4ora")]
+process_mode = 4
+position = Vector2(883, 180)
+activation_level = 1
+
+[node name="CRT6" parent="Node2D" instance=ExtResource("5_f4ora")]
+process_mode = 4
+position = Vector2(881, 433)
+
+[node name="CRT7" parent="Node2D" instance=ExtResource("5_f4ora")]
+process_mode = 4
+position = Vector2(1428, -375)
+
+[node name="CRT9" parent="Node2D" instance=ExtResource("5_f4ora")]
+process_mode = 4
+position = Vector2(1918, 324)
+
+[node name="CRT10" parent="Node2D" instance=ExtResource("5_f4ora")]
+process_mode = 4
+position = Vector2(2128, -491)
+activation_level = 1
+
+[node name="CRT11" parent="Node2D" instance=ExtResource("5_f4ora")]
+process_mode = 4
+position = Vector2(1768, -875)
+
+[node name="CRT2" parent="Node2D" instance=ExtResource("5_f4ora")]
+process_mode = 4
+position = Vector2(805, -574)
+
+[node name="CRT16" parent="Node2D" instance=ExtResource("5_f4ora")]
+process_mode = 4
+position = Vector2(1227, -813)
+
+[node name="CRT17" parent="Node2D" instance=ExtResource("5_f4ora")]
+process_mode = 4
+position = Vector2(1876, 36)
+activation_level = 1
+
+[node name="CRT18" parent="Node2D" instance=ExtResource("5_f4ora")]
+process_mode = 4
+position = Vector2(563, 376)
+activation_level = 1
+
+[node name="CRT4" parent="Node2D" instance=ExtResource("5_f4ora")]
+process_mode = 4
+position = Vector2(2013, -1432)
+
+[node name="CRT15" parent="Node2D" instance=ExtResource("5_f4ora")]
+process_mode = 4
+position = Vector2(1545, -497)
+
+[node name="CRT5" parent="Node2D" instance=ExtResource("5_f4ora")]
+process_mode = 4
+position = Vector2(1763, -307)
+
+[node name="CRT12" parent="Node2D" instance=ExtResource("5_f4ora")]
+process_mode = 4
+position = Vector2(1865, -1100)
+
+[node name="CRT13" parent="Node2D" instance=ExtResource("5_f4ora")]
+process_mode = 4
+position = Vector2(2268, -1239)
+script = ExtResource("13_7w5vp")
+floppy_speed = 300.0
+fire_rate = 1.0
+activation_level = 2
+
+[node name="CRT14" parent="Node2D" instance=ExtResource("5_f4ora")]
+process_mode = 4
+position = Vector2(1763, -652)
+script = ExtResource("13_7w5vp")
+floppy_speed = 300.0
+fire_rate = 1.0
+activation_level = 2
+
+[node name="CRT8" parent="Node2D" instance=ExtResource("5_f4ora")]
+process_mode = 4
+position = Vector2(160, -350)

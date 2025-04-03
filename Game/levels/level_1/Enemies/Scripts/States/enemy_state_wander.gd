@@ -26,7 +26,7 @@ func Enter() -> void:
 	
 	#orient toward the user if within a certain distance
 	var distance = SignalBus.players[0].global_transform.origin.distance_to(enemy.global_position)
-	if distance  < enemy.detection_radius:
+	if distance  < enemy.detection_radius and !enemy.is_inactive:
 		_direction = get_4d(enemy.global_position.direction_to(SignalBus.players[0].global_transform.origin))
 	enemy.velocity = _direction * wander_speed
 	

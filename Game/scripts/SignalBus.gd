@@ -1,6 +1,7 @@
 extends Node
 
 #####Global variables
+var gemini_api_key
 var standalone_mode = true #expect local calls to apis
 var client_id = ""
 var session_id= ""
@@ -9,7 +10,7 @@ var has_client_id = false
 var score = 0
 var stopwatch = 0.0
 enum {EASY, MEDIUM, HARD}
-var game_difficulty = HARD #difficulty level
+var game_difficulty = EASY #difficulty level
 var last_screenshot = "res://assets/map/mini_map.png" #last screenshot taken in base64
 var last_screenshot_timestamp = ""
 const SEND_SCREENSHOTS = true 
@@ -69,7 +70,7 @@ signal gemini_help_requested() #for triggering the call in the game
 signal gemini_backstory_requested() #for triggering the call in the game
 signal gemini_backstory_image_requested() #internal only
 signal gemini_summary_received(summary:String)
-
+signal gemini_api_key_received(_on_api_key:String)
 
 #both internal & analytics
 signal gemini_difficulty_adjusted(level:int, reason:String)
@@ -170,14 +171,16 @@ func load_config_file():
 			
 		if parse_result == OK:
 			var data = json.data
-			#var health = data["player"]["health"]
 			past_client_id = data["past_client_id"]
 			past_session_id = data["past_session_id"]
+			gemini_api_key = data["gemini"]
+			SignalBus.gemini_api_key_received.emit(gemini_api_key)
 			
 #write session ids & client ids
 func save_config_file():
 	#if FileAccess.file_exists("user://rtr_save_game.json"):
-	var save_dict = {"past_session_id": past_session_id,
+	var save_dict = {"gemini": gemini_api_key,
+						"past_session_id": past_session_id,
 						"past_client_id": past_client_id }
 	var json_string = JSON.stringify(save_dict)
 	var save_file = FileAccess.open("user://rtr_save_game.json", FileAccess.WRITE)

@@ -28,8 +28,8 @@ func _physics_process(delta):
 	if !enemy.is_dead:
 		if player != null:
 			var distance_to_player = enemy.global_position.distance_to(player.global_position)
-			if distance_to_player < enemy.detection_radius:
-				change_state(states[2])
+			if distance_to_player < enemy.detection_radius and !enemy.is_inactive:
+				change_state(states[2]) #wandering
 				var overlapping_enemies = player.hurtbox.get_overlapping_bodies()
 				if overlapping_enemies.size() > 0:
 					for i in overlapping_enemies.size():
@@ -37,10 +37,12 @@ func _physics_process(delta):
 							SignalBus.player_taking_damage.emit(player, enemy)
 							player.is_getting_hit(get_parent().damage_points)
 							is_overlapping = true
+		if enemy.is_inactive:
+			change_state(states[4]) #inactive
 		#dead
 		if enemy.health <= 0:
 			SignalBus.enemy_health_depleted.emit(enemy)
-			change_state(states[3])
+			change_state(states[3]) #dead
 			#print("dead")
 			enemy.on_death()
 			

@@ -55,7 +55,7 @@
 [ext_resource type="Texture2D" uid="uid://bk8iwtawfnfjp" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00069.png" id="49_gx310"]
 [ext_resource type="Texture2D" uid="uid://ckf0tmb7ybloh" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00070.png" id="50_b5bxi"]
 [ext_resource type="Texture2D" uid="uid://lafva1js1spt" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00071.png" id="51_2hxhb"]
-[ext_resource type="Texture2D" uid="uid://h03trrc7ox0w" path="res://assets/screens/gameover/QR.png" id="56_pbkuf"]
+[ext_resource type="Texture2D" uid="uid://b8pabu7qj5gfo" path="res://assets/screens/gameover/qr-code.png" id="56_mb560"]
 [ext_resource type="VideoStream" path="res://assets/Background.ogv" id="57_uqg6v"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_setkf"]
@@ -594,15 +594,16 @@ theme_override_font_sizes/normal_font_size = 30
 bbcode_enabled = true
 
 [node name="QRCode" type="TextureRect" parent="MarginContainer/VBoxContainer/VBoxContainer/Info/GameSummary"]
-custom_minimum_size = Vector2(80, 80)
+custom_minimum_size = Vector2(290, 290)
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("56_pbkuf")
+texture = ExtResource("56_mb560")
+expand_mode = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
-theme_override_constants/margin_top = 84
+theme_override_constants/margin_top = 48
 
 [node name="HUD" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2

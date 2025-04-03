@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://b5rb6g447q5wi"]
+[gd_scene load_steps=37 format=3 uid="uid://b5rb6g447q5wi"]
 
 [ext_resource type="Texture2D" uid="uid://bv0csemkndvxa" path="res://levels/level_1/Player/Assets/Shadow.png" id="1_g5i3i"]
 [ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/enemy.gd" id="1_w1cg1"]
@@ -10,6 +10,10 @@
 [ext_resource type="Texture2D" uid="uid://bojl7g2v4vc1d" path="res://levels/level_1/Player/Assets/light.png" id="7_gh184"]
 [ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_attack.gd" id="8_2erj4"]
 [ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_death.gd" id="9_macdp"]
+[ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_inactive.gd" id="10_doy2m"]
+[ext_resource type="Texture2D" uid="uid://bsy2drm8f5lns" path="res://levels/level_1/Player/Assets/iddle_state.png" id="12_1v8bc"]
+[ext_resource type="VideoStream" path="res://levels/level_1/Enemies/sparks.ogv" id="13_idgtq"]
+[ext_resource type="Shader" path="res://shaders/chromakey.gdshader" id="13_rmlrh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6afld"]
 shader = ExtResource("3_88tna")
@@ -295,6 +299,13 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_adgln"]
+shader = ExtResource("13_rmlrh")
+shader_parameter/chroma_key_color = Color(0, 0, 0, 1)
+shader_parameter/fade_factor = 0.255
+shader_parameter/range = 0.263
+shader_parameter/fuzziness = 0.26
+
 [node name="CRT" type="CharacterBody2D"]
 collision_layer = 258
 collision_mask = 287
@@ -353,6 +364,9 @@ next_state = NodePath("../Idle")
 [node name="Death" type="Node" parent="EnemyStateMachine"]
 script = ExtResource("9_macdp")
 
+[node name="Inactive" type="Node" parent="EnemyStateMachine"]
+script = ExtResource("10_doy2m")
+
 [node name="PointLight2D" type="PointLight2D" parent="."]
 visible = false
 color = Color(0.742769, 0.137847, 0.248643, 1)
@@ -374,3 +388,26 @@ theme_override_font_sizes/font_size = 15
 theme_override_styles/fill = SubResource("StyleBoxFlat_dmoab")
 value = 100.0
 rounded = true
+
+[node name="iddle_state" type="Sprite2D" parent="."]
+position = Vector2(-1.43051e-06, 0)
+scale = Vector2(0.0490849, 0.0556016)
+texture = ExtResource("12_1v8bc")
+centered = false
+offset = Vector2(-142.61, -125.896)
+hframes = 3
+vframes = 4
+
+[node name="Sparks" type="VideoStreamPlayer" parent="."]
+unique_name_in_owner = true
+visible = false
+material = SubResource("ShaderMaterial_adgln")
+clip_contents = true
+custom_minimum_size = Vector2(70, 70)
+offset_left = -58.0
+offset_top = -29.0
+offset_right = 70.0
+offset_bottom = 51.0
+stream = ExtResource("13_idgtq")
+autoplay = true
+loop = true

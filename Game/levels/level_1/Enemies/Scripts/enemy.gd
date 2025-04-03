@@ -13,7 +13,10 @@ var hit_count = 0
 @export var can_fire: bool = false
 @export var detection_radius: float = 100.0
 @export var timer: Timer
-@export var is_activated: bool = false
+@export_enum("Easy", "Medium", "Hard") var activation_level = 0
+
+var level_idx = {"Easy":0, "Medium":1, "Hard":3}
+@export var is_inactive = true
 ####Added enemies base mgt ######
 
 #@onready var players = get_parent().players
@@ -40,7 +43,7 @@ func _ready() -> void:
 	state_machine.initialize( self )
 	##player = SignalBus.player[0]
 	call_deferred("setup")
-	
+			
 	if SignalBus.game_difficulty == SignalBus.EASY:
 		points = 5
 		health = 70.0
@@ -59,16 +62,28 @@ func _ready() -> void:
 		detection_radius = 300.0
 		damage_points = 2
 		speed = 50
-	
-	
-	
+	SignalBus.gemini_difficulty_adjusted.connect(_on_level_changed)
+	_on_level_changed(SignalBus.game_difficulty, "")
+
 func setup():
 	SignalBus.enemy_created.emit(self)
 
+func _on_level_changed(level, reason):
+		if level >= activation_level:
+			#is inactive
+			is_inactive = false
+			%Sparks.visible = false
+		else:
+			#is active	
+			is_inactive = true
+			%Sparks.visible = true
 
-
+		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	
+	
+	
 	#target_player = find_closest_player()
 	#if target_player != null:
 	#	SetDirection(target_player.global_position)
@@ -108,18 +123,23 @@ func anim_direction() -> String:
 	else:
 		return "side"
 
+	
+		
+
+
 func take_damage(player_damage):
-	#add health counter
-	health -= player_damage
-	hit_count += 1
-	$HealthBar.value = health
-	$Sprite2D/healthDepletion.play("enemyHit")
-	SignalBus.enemy_taking_damage.emit(self, player_damage)
+	if !is_inactive:
+		#add health counter
+		health -= player_damage
+		hit_count += 1
+		$HealthBar.value = health
+		$Sprite2D/healthDepletion.play("enemyHit")
+		SignalBus.enemy_taking_damage.emit(self, player_damage)
 	
 
 func _on_body_entered(body: Node2D) -> void:
 	queue_free()
-	if body.has_method("_is_moving"):
+	if body.has_method("_is_moving") and !is_inactive:
 		body.is_getting_hit(damage_points)
 
 		

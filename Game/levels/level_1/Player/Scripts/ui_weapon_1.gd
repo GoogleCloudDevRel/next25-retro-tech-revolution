@@ -14,3 +14,4 @@ func _on_body_entered(body):
 	if body.has_method("_is_moving"): #player
 		#print("got a blaster")
 		body.activate_weapon(type)
+		visible = false
