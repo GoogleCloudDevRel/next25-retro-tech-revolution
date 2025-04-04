@@ -1,8 +1,9 @@
-[gd_scene load_steps=57 format=3 uid="uid://bpbmk7rt2sikx"]
+[gd_scene load_steps=58 format=3 uid="uid://bpbmk7rt2sikx"]
 
 [ext_resource type="Script" path="res://levels/level_1/Scripts/level_1_screen.gd" id="1_x41gi"]
 [ext_resource type="PackedScene" uid="uid://cd25yxxiep0a5" path="res://levels/level_0_5/level_0_5.tscn" id="2_jdjf6"]
 [ext_resource type="PackedScene" uid="uid://c3i2ddpnr2yju" path="res://assets/hud/hud_weapons.tscn" id="3_0yc1k"]
+[ext_resource type="Script" path="res://levels/level_1/minimap_circle.gd" id="4_jdl0b"]
 [ext_resource type="Script" path="res://levels/level_1/Scripts/level_1_minimap.gd" id="4_miiqm"]
 [ext_resource type="Texture2D" uid="uid://cgwo84ayjbsch" path="res://levels/level_1/minimap/mini_map.png" id="5_12itk"]
 [ext_resource type="Texture2D" uid="uid://ck4o01mugi2ug" path="res://assets/screens/congratulations/assets/Congratulations_00000.png" id="6_ug6es"]
@@ -270,6 +271,7 @@ offset_right = 658.827
 offset_bottom = 114.578
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("5_12itk")
+script = ExtResource("4_jdl0b")
 
 [node name="DistanceCircle" type="Line2D" parent="minimap"]
 

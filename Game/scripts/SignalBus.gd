@@ -39,8 +39,10 @@ signal end_game()
 signal pause_game()
 signal unpause_game()
 
+#we reset / replay game event then when rest is done  go to restart
 signal reset_game()
 signal replay_game()
+signal restart_game()
 
 
 signal stop_game_stopwatch() #new 3/24
@@ -127,6 +129,10 @@ func _ready() -> void:
 	SignalBus.player_created.connect(_on_player_created)
 	SignalBus.enemy_created.connect(_on_enemies_created)
 	SignalBus.boss_created.connect(_on_boss_created)
+	
+	#restart game
+	SignalBus.reset_game.connect(reset_game_settings)
+	SignalBus.reset_game.connect(replay_game_settings)
 	
 #store it for gemini
 func _on_trivia_question_received(q, a):
@@ -240,6 +246,7 @@ func reset_game_settings():
 	bullets = []
 	boss = []
 	trivia_result = []
+	SignalBus.restart_game.emit()
 	
 #we keep the same client id	
 func replay_game_settings():
@@ -255,6 +262,7 @@ func replay_game_settings():
 	bullets = []
 	boss = []
 	trivia_result = []
+	SignalBus.restart_game.emit()
 	
 	
 

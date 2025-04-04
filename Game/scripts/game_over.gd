@@ -40,13 +40,12 @@ func _ready():
 func _on_replay_pressed():
 	print("Button 1 pressed")
 	#keep the client_id
-	SignalBus.reset_game_settings()
+	#SignalBus.reset_game_settings()
 	SignalBus.replay_game.emit()
 
 func _on_reset_pressed():
 	#reset both session_id & client_id
 	print("Button 2 pressed")
-	
 	SignalBus.reset_game.emit()
 
 func update_stopwatch():

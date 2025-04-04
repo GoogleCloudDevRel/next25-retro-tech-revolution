@@ -13,8 +13,8 @@ var weapons = [
 
 ####added to player
 var strength = 50
-var speed = 800
-var health = 100.0
+@export var speed = 500
+@export var health = 100.0
 const DAMAGE_RATE = 10.0
 var friction = 0.18
 var hit_count = 0

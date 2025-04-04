@@ -48,36 +48,21 @@ func _ready():
 	SignalBus.player_created.connect(_on_add_player)
 	SignalBus.enemy_created.connect(_on_add_enemy)
 	SignalBus.player_health_depleted.connect(_on_player_health_depleted)
-	SignalBus.reset_game.connect(_on_reset_game)
+	SignalBus.restart_game.connect(_on_restart_game)
 	
 	#Connect to game server
 	if SignalBus.standalone_mode:
 		var client_peer = ENetMultiplayerPeer.new()
 		client_peer.create_client("192.168.4.85", 7777)
 		multiplayer.multiplayer_peer = client_peer
-		#SignalBus.client_id = multiplayer.get_unique_id()
-	#else:
-		#SignalBus.client_id = Time.get_unix_time_from_system()
-	#SignalBus.session_id = str(Time.get_unix_time_from_system())
-	#launch the SplashScreen at the beginning
 	SignalBus.screen_state.emit(SignalBus.SPLASHSCREEN)
 
 
-func _on_reset_game():
-	#reset everything
-	SignalBus.reset_game_settings()
+#transition back to the splashscreen after performing a reset
+func _on_restart_game():
 	_on_change_screen_state(SignalBus.SPLASHSCREEN)
 	pass
 	
-
-func _on_replay_game():
-	SignalBus.replay_game_settings()
-	_on_change_screen_state(SignalBus.SPLASHSCREEN)
-	pass
-
-
-
-
 #Level 1 loader
 func load_level1():
 	#level loading

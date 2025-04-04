@@ -28,6 +28,9 @@ var world_height: float = 2352  # 688 - (-1664) = 2352
 
 var visibility_radius:float = 350.0
 ########
+var circle_position = Vector2(-357,47)
+
+
 
 
 # Array to store enemy marker nodes
@@ -61,9 +64,18 @@ func _on_player_created(p):
 func _on_enemy_created(e):
 	enemies.append(e)
 	#register_enemies()
+
+
+func _draw():
+	var map_scale = Vector2(mini_map_size.x/ world_width, mini_map_size.y/world_height) 
+	var map_radius = visibility_radius * 0.21 #* map_scale.x
+	$Background.on_draw_circle(circle_position, map_radius)
+	#draw_arc(circle_position, map_radius, 0, TAU, 32, Color.RED, 2.0) #ratio is 6
+	print(circle_position)
 	
 func _process(delta):
 	update_mini_map()
+	queue_redraw()
 	
 func register_enemies():
 	# Clear existing markers
@@ -91,12 +103,12 @@ func register_enemies():
 func update_mini_map():
 	#difficulty
 	if SignalBus.game_difficulty == SignalBus.EASY:
-		visibility_radius = 2000.0
+		visibility_radius = 500.0
 	elif SignalBus.game_difficulty == SignalBus.MEDIUM:
 		visibility_radius = 350.0
 	else:
 		visibility_radius = 200.0
-		
+	
 	
 	
 	for n in $Background.get_children():
@@ -106,7 +118,7 @@ func update_mini_map():
 
 	
 	
-	draw_distance_circle(visibility_radius)
+	#draw_distance_circle(visibility_radius)
 	if player != null: 
 		draw_on_mini_map(player, "player")
 	if boss != null: 
@@ -125,40 +137,20 @@ func distance_to_player(entity: Node2D) -> float:
 		return player.global_position.distance_to(entity.global_position)
 	return 0.0
 
-func draw_distance_circle(radius: float):
-	var circle 
-	if not $DistanceCircle:
-		circle = Line2D.new()
-		circle.name = "DistanceCircle"
-		circle.width = 1.0
-		circle.default_color = Color(1, 1, 1, 0.3)
-		$Background.add_child(circle)
-	else:
-		circle = $DistanceCircle
-	# Clear previous points
-	circle.clear_points()
-	
-	# Calculate map radius
-	var map_radius = radius / (world_width / mini_map_width)# Using X scale for simplicity
-	
-	# Draw circle with 32 segments
-	var segments = 32
-	var player_map_pos = world_to_map(player.global_position)
-	circle.position = player_map_pos
-	for i in range(segments + 1):
-		var angle = 2 * PI * i / segments
-		var x = player_map_pos.x + cos(angle) * map_radius
-		var y = player_map_pos.y + sin(angle) * map_radius
-		circle.add_point(Vector2(x, y))
 
 func draw_on_mini_map(elt, type):
-			if type=="player" or (type=="item" and (SignalBus.game_difficulty == SignalBus.EASY or SignalBus.game_difficulty == SignalBus.MEDIUM)) or ((type == "boss" or type == "enemy") and distance_to_player(elt) < visibility_radius):
+			if type=="player" or (type=="item" and (SignalBus.game_difficulty == SignalBus.EASY or SignalBus.game_difficulty == SignalBus.MEDIUM)) or ((type == "boss" or type == "enemy") and distance_to_player(elt) <= visibility_radius):
 				var new_marker = TextureRect.new()
 				new_marker.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 				var pointer_size = 35
 				match type:
 					"player":
 						new_marker.texture = load("res://assets/map/player.png")
+						#draw_arc(world_to_map(elt.global_position), 350, 0, TAU, 32, Color.RED, 2.0)
+						circle_position = world_to_map(elt.global_position)
+						#draw_distance_circle(350, circle_position)
+						
+						
 						#$MapBackground.material.set_shader_parameter("player_position",Vector2(map_position_x, map_position_y))
 					"enemy":
 						new_marker.texture = load("res://assets/map/enemies.png")
@@ -166,11 +158,12 @@ func draw_on_mini_map(elt, type):
 						new_marker.texture = load("res://assets/map/item.png")
 					"boss":
 						new_marker.texture = load("res://assets/map/boss.png")
-				
 				new_marker.pivot_offset = Vector2(pointer_size/2, pointer_size/2)
 				new_marker.size = Vector2(pointer_size, pointer_size)
 				$Background.add_child(new_marker)
 				new_marker.position = world_to_map(elt.global_position)
+				#print(new_marker.global_position)
+				
 			
 	
 
@@ -244,7 +237,7 @@ func world_to_map(world_pos: Vector2) -> Vector2:
 	
 	# Optional: Clamp to mini map boundaries
 	map_x = clamp(map_x, 0, mini_map_width)
-	map_y = clamp(map_y, 0, mini_map_height)
+	map_y = clamp(map_y, 0, mini_map_height) 
 	return Vector2(map_x, map_y)
 
 
@@ -296,7 +289,7 @@ func update_mini_map_v2():
 			enemy_markers.erase(marker)
 
 # Optional function to draw world bounds on minimap
-func _draw():
+func _draw_old():
 	if show_bounds:
 		var map_scale = calculate_map_scale()
 		var map_center = mini_map_size / 2

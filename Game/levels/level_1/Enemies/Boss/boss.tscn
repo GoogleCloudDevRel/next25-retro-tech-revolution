@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bmsxnlm6nj6io"]
+[gd_scene load_steps=34 format=3 uid="uid://bmsxnlm6nj6io"]
 
 [ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/boss.gd" id="1_1crnf"]
 [ext_resource type="Texture2D" uid="uid://c2ni6ok3a3iqp" path="res://levels/level_1/Enemies/Boss/BossSprites.png" id="1_lcj2n"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_wander.gd" id="6_l431d"]
 [ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_attack.gd" id="7_4vhy7"]
 [ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_death.gd" id="8_187ld"]
+[ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_inactive.gd" id="11_2hs4b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uebxg"]
 shader = ExtResource("3_lesnw")
@@ -406,6 +407,9 @@ next_state = NodePath("../Idle")
 
 [node name="Death" type="Node" parent="EnemyStateMachine"]
 script = ExtResource("8_187ld")
+
+[node name="Inactive" type="Node" parent="EnemyStateMachine"]
+script = ExtResource("11_2hs4b")
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 offset_left = 59.0
