@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://f0n0vydjafpc"]
+[gd_scene load_steps=16 format=3 uid="uid://f0n0vydjafpc"]
 
 [ext_resource type="Script" path="res://assets/screens/splashscreen/splashscreen.gd" id="1_0ojax"]
 [ext_resource type="Texture2D" uid="uid://blqd6tvosa684" path="res://assets/screens/splashscreen/Screenshot 2025-03-08 at 2.58.51 PM.png" id="1_r8qcn"]
 [ext_resource type="Script" path="res://assets/screens/splashscreen/SplashScreenButton.gd" id="2_1fptx"]
 [ext_resource type="VideoStream" path="res://assets/screens/splashscreen/Intro_part2_327.ogv" id="2_x4kks"]
 [ext_resource type="VideoStream" path="res://assets/screens/splashscreen/Intro_part1_327.ogv" id="5_fsrwk"]
+[ext_resource type="AudioStream" uid="uid://8fcypfx8uttj" path="res://assets/screens/splashscreen/intro - Neon Echoes.ogg" id="6_jahie"]
 
 [sub_resource type="SystemFont" id="SystemFont_73tva"]
 font_names = PackedStringArray("Google Sans")
@@ -290,5 +291,10 @@ offset_top = 540.0
 offset_right = 1920.0
 offset_bottom = 541.0
 color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_jahie")
+autoplay = true
+parameters/looping = true
 
 [connection signal="finished" from="StartScreenCanvas/InitialVideo" to="." method="_on_initial_video_finished"]

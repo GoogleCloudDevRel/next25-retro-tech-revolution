@@ -123,7 +123,8 @@ func anim_direction() -> String:
 	else:
 		return "side"
 
-	
+
+
 		
 
 

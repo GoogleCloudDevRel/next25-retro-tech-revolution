@@ -140,7 +140,7 @@ func _on_gemini_help(msg) -> void:
 
 #enable calling gemini
 func _on_dialog_finished(t):
-	print("dialog is closed")
+	#print("dialog is closed")
 	is_displaying_dialog = false
 	$GeminiTimer.wait_time = 15
 	$GeminiTimer.start()

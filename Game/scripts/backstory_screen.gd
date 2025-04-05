@@ -91,10 +91,10 @@ func _on_image_received(base64_image):
 		var image_bytes = Marshalls.base64_to_raw(base64_image)
 		#print("Decoded bytes length: " + str(image_bytes.size()))
 		
-		var save_file = FileAccess.open("res://backstory-images/debug_image" +str(Time.get_unix_time_from_system()), FileAccess.WRITE)
+		#var save_file = FileAccess.open("user://backstory-images/debug_image" +str(Time.get_unix_time_from_system()), FileAccess.WRITE)
 		#file.open("user://debug_image.png", File.WRITE)
-		save_file.store_buffer(image_bytes)
-		save_file.close()
+		#save_file.store_buffer(image_bytes)
+		#save_file.close()
 		
 		# Create an Image and load it from the byte data.
 		var image = Image.new()

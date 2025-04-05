@@ -34,6 +34,7 @@ func _physics_process(delta):
 				if overlapping_enemies.size() > 0:
 					for i in overlapping_enemies.size():
 						if overlapping_enemies[i].get_instance_id() == enemy.get_instance_id():
+							change_state(states[0])
 							SignalBus.player_taking_damage.emit(player, enemy)
 							player.is_getting_hit(get_parent().damage_points)
 							is_overlapping = true
@@ -43,7 +44,6 @@ func _physics_process(delta):
 		if enemy.health <= 0:
 			SignalBus.enemy_health_depleted.emit(enemy)
 			change_state(states[3]) #dead
-			#print("dead")
 			enemy.on_death()
 			
 		

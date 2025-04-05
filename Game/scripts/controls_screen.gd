@@ -63,7 +63,6 @@ func _process(_delta: float) -> void:
 		fixed_block1.color = Color(color1.r, color1.g, color1.b, current_opacity)
 		fixed_block2.color = Color(color1.r, color1.g, color1.b, current_opacity2)
 	
-	await get_tree().create_timer(10.0).timeout  # Wait time for cooldown
 	if Input.is_action_just_pressed("attack") && !_waiting:
 		SignalBus.screen_state.emit(SignalBus.BACKSTORY)
 

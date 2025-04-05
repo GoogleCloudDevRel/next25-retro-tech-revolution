@@ -25,13 +25,13 @@ func _ready():
 	update_weapon_display()
 
 func _on_weapon_activated(weapon_name, weapon_idx):
-	print("weapon activated in hud" + str(weapon_idx))
+	#print("weapon activated in hud" + str(weapon_idx))
 	weapons[weapon_idx]['disabled'] = false
 	current_weapon_index = weapon_idx
 	update_weapon_display()
 
 func _on_weapon_changed(weapon_name, weapon_idx):
-	print("weapon changed in hud" + str(weapon_idx))
+	#print("weapon changed in hud" + str(weapon_idx))
 	current_weapon_index =  weapon_idx
 	update_weapon_display()
 
@@ -97,7 +97,7 @@ func update_weapon_display():
 				weapon_rects[i].texture = weapons[i]["texture_unselected"]
 				weapon_rects[i].custom_minimum_size = unselected_size
 	
-	print("Switched to " + weapons[current_weapon_index]["name"])
+	#print("Switched to " + weapons[current_weapon_index]["name"])
 
 # Function to set weapon visibility
 func set_weapon_visibility(index, is_visible):

@@ -37,7 +37,7 @@ void fragment() {
         vec2 uv = SCREEN_UV;
 
 		vec2 st = uv;
-	    st = scale( st, vec2( 1.08 ) );
+	    st = scale( st, vec2( 1.00 ) );
 
 	    vec2 curvedUV = mix( st, outlineCurve(st), warpAmount );
 

@@ -71,7 +71,7 @@ func _draw():
 	var map_radius = visibility_radius * 0.21 #* map_scale.x
 	$Background.on_draw_circle(circle_position, map_radius)
 	#draw_arc(circle_position, map_radius, 0, TAU, 32, Color.RED, 2.0) #ratio is 6
-	print(circle_position)
+	#print(circle_position)
 	
 func _process(delta):
 	update_mini_map()

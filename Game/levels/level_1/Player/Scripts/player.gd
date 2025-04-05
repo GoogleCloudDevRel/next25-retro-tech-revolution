@@ -3,6 +3,7 @@ var cardinal_direction: Vector2 = Vector2.DOWN
 var direction: Vector2 = Vector2.ZERO
 
 
+
 var current_weapon: String = "unarmed" # Default weapon state
 #managed the weapons retrieved by the player
 var weapons = [
@@ -13,8 +14,8 @@ var weapons = [
 
 ####added to player
 var strength = 50
-@export var speed = 500
-@export var health = 100.0
+@export var speed = 250
+@export var health = 200.0
 const DAMAGE_RATE = 10.0
 var friction = 0.18
 var hit_count = 0
@@ -104,7 +105,7 @@ func _find_weapon_index(weapon_name):
 #activate a weapon
 func activate_weapon(weapon_name:String):
 	var weapon_idx =_find_weapon_index(weapon_name)
-	print(weapon_name+" "+str(weapon_idx))
+	#print(weapon_name+" "+str(weapon_idx))
 	if weapons[weapon_idx]['disabled']:
 		weapons[weapon_idx]['disabled'] = false
 		$swirlPlay.modulate.a = 0
@@ -173,7 +174,7 @@ func _is_moving() -> void:
 		# Use the values (for example, to move a character)
 		if left_stick_x != 0 or left_stick_y != 0:
 			SignalBus.player_moving.emit(self, left_stick_x, left_stick_y)
-			print("Left stick position: ", Vector2(left_stick_x, left_stick_y))
+			#print("Left stick position: ", Vector2(left_stick_x, left_stick_y))
 			
 func _on_help_requested():
 	%Gemini.visible = true

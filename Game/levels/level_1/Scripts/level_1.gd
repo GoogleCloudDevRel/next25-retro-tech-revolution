@@ -30,18 +30,32 @@ const MAX_NUMBER_ENEMIES = 4
 
 func _ready():
 	
-	if SignalBus.game_difficulty == SignalBus.HARD:
-		#change the weapon s position
-		$UI_W1.global_position.x = 2128
-		$UI_W1.global_position.y = 544
-	
-	
+
+
 	
 	players.append(%player)
 	SignalBus.player_created.emit(%player)
 	SignalBus.bullet_created.connect(_on_new_bullet)
 	SignalBus.floppy_created.connect(_on_new_floppy)
 	generateEnemies()
+
+func _process(delta: float) -> void:
+	pass	
+
+
+func on_difficulty_adjusted(new_level, reason):
+	if new_level == SignalBus.HARD:
+		#change the weapon s position
+		$UI_W1.global_position.x = 2128
+		$UI_W1.global_position.y = 544
+		$UI_W2.global_position.x = 1750
+		$UI_W2.global_position.y = -150
+	elif new_level == SignalBus.MEDIUM:
+		#change the weapon s position
+		$UI_W1.global_position.x = 800
+		$UI_W1.global_position.y = -750
+		$UI_W2.global_position.x = 2100
+		$UI_W2.global_position.y = -750
 
 #func _input(event: InputEvent) -> void:
 #	%player
@@ -62,7 +76,7 @@ func _on_new_floppy(b:Projectiles, origine_position):
 			randf_range(-30, 30),
 			randf_range(-30, 30)
 		)
-	print(direction_to_player)
+	#print(direction_to_player)
 	add_child(b)
 	bullets.append(b)
 	b.global_position = origine_position + variation

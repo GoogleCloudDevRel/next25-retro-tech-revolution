@@ -240,9 +240,9 @@ func _on_get_gemini_backstory():
 	
 	#Ask for an image
 	var prompt_img = "Illustrate the following story using a 16 bits retro style design with neon glows using google color palette:\n"
-	prompt_img += " You have been tasked to clean a datacenter that have been overtaken by the 80s and 90s old technologies like matrix printers & CRTs and flying floppy disks.\n"
-	prompt_img += "Make sure to have a "+SignalBus.trivia_result[0]['a']+"\n"
-			
+	prompt_img += " You have been tasked to clean a datacenter that have been overtaken by old technologies from the 80s and 90s like matrix printers & CRTs and fyling floppy disks.\n"
+	prompt_img += "Make sure to incorporate in your image elements that remind of a: "+SignalBus.trivia_result[0]['a']+"\n"
+	prompt_img += " and an overall vibe: "+SignalBus.trivia_result[1]['a']+"\n"	
 	call_api_bridge_generate_backstory_image(prompt_img)
 	
 	#ask for a compelling story

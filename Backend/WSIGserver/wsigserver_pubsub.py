@@ -18,6 +18,7 @@ from PIL import Image as PIL_Image
 from PIL import ImageOps as PIL_ImageOps
 import vertexai
 from vertexai.preview.vision_models import ImageGenerationModel
+from google.api_core.exceptions import InvalidArgument
 
 
 #bigquery
@@ -33,6 +34,12 @@ from google.cloud import bigquery
 #pip install google-cloud-storage
 
 
+##imagen & bigquery
+max_imagen_retries = 3
+max_bigquery_retries = 6
+backoff_factor=2
+
+
 topic_id = 'game_signals'
 project_id = 'data-cloud-interactive-demo'
 SERVICE_ACCOUNT_FILE = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
@@ -44,6 +51,10 @@ generation_model_fast = "imagen-3.0-fast-generate-001"
 #GCS 
 SCREENSHOT_BUCKET = "rtr_screenshots"
 BACKSTORY_BUCKET="rtr_backstories"
+
+
+
+###########################Pub/Sub###################
 
 
 def get_publisher_client():
@@ -64,7 +75,26 @@ def get_publisher_client():
 	return pubsub_v1.PublisherClient(credentials=credentials, batch_settings=batch_settings)
 
 
+# generate messages
+def publishMessage(publisher_client, content):
+	try:
+		# Get the topic encoding type.
+		topic_path = publisher_client.topic_path(project_id, topic_id)
 
+		#topic = publisher_client.get_topic(request={"topic": topic_path})
+		message_data = json.dumps(content).encode("utf-8") 
+		future = publisher_client.publish(topic_path,data=message_data)
+		print(f"Published message ID: {future.result()}")
+		return future.result()
+	except NotFound:
+		print(f"{topic_id} not found.")
+
+#####pub/sub
+publisher_client = get_publisher_client()
+
+
+
+###########################BigQuery###################
 
 #bigquery get summary
 def get_gemini_summary(session_id):
@@ -75,14 +105,15 @@ def get_gemini_summary(session_id):
 	"""
 
 	client = bigquery.Client()
-	i = 0
-	while i < 6:
+	attempt = 0
+	while attempt < max_bigquery_retries:
 		query_job = client.query(query)
 		results = query_job.result()
 		for row in results:
 			return str(row['summary_text']) #expect one record only
-		time.sleep(2 * i)
-		i += 1
+		attempt +=1
+		sleep_time = backoff_factor ** attempt
+		time.sleep(sleep_time)
 	return "Gemini is gone on vacation! Come back later"
 
 
@@ -150,24 +181,9 @@ def get_rank(session_id):
 
 
 
-get_rank("1742969751.0117499")
+#get_rank("1742969751.0117499"
 
-# generate messages
-def publishMessage(publisher_client, content):
-	try:
-		# Get the topic encoding type.
-		topic_path = publisher_client.topic_path(project_id, topic_id)
-
-		#topic = publisher_client.get_topic(request={"topic": topic_path})
-		message_data = json.dumps(content).encode("utf-8") 
-		future = publisher_client.publish(topic_path,data=message_data)
-		print(f"Published message ID: {future.result()}")
-		return future.result()
-	except NotFound:
-		print(f"{topic_id} not found.")
-
-#####pub/sub
-publisher_client = get_publisher_client()
+###########################Gemini & Imagen3 ###################
 
 
 #keep the aspect ratio but reduce image to 
@@ -209,32 +225,56 @@ def generate_backstory_image(prompt, session_id):
 
 	vertexai.init(project=project_id, location="us-central1")
 	model = ImageGenerationModel.from_pretrained("imagen-3.0-fast-generate-001")
-	images = model.generate_images(
-    	prompt=prompt,
-    	# Optional parameters
-    	number_of_images=1,
-    	language="en",
-    	# You can't use a seed value and watermark at the same time.
-    	# add_watermark=False,
-    	# seed=100,
-    	aspect_ratio="9:16",
-    	#output_mime_type="image/png",
-    	safety_filter_level="block_few",
-    	person_generation="dont_allow"
-
-	)
-	print("got results")
-	#images[0].save("../../retroAttack/Game/backstory-images/image.png")
 	
-	resized_image, resized_bytes = resize_image_maintain_aspect(images[0]._image_bytes, 600, 800)
 
-	base64_bytes = base64.b64encode(resized_bytes)
-	base64_encoded = base64_bytes.decode('utf-8')
+	attempt = 0
+	while attempt < max_imagen_retries:
+		#try:
+			images = model.generate_images(
+				prompt=prompt,
+				# Optional parameters
+				number_of_images=1,
+				language="en",
+				# You can't use a seed value and watermark at the same time.
+				# add_watermark=False,
+				#seed=42,
+				aspect_ratio="9:16",
+				#output_mime_type="image/png",
+				safety_filter_level="block_few",
+				person_generation="dont_allow"
+			)
+			print("Received imagen backstory")
+			resized_image, resized_bytes = resize_image_maintain_aspect(images[0]._image_bytes, 600, 800)
+
+			base64_bytes = base64.b64encode(resized_bytes)
+			base64_encoded = base64_bytes.decode('utf-8')
 	
-	print(f"Base64 encoded image: {base64_encoded[:100]}...")
-	upload_backstory_to_gcs(base64_encoded, session_id)
+			print(f"Base64 encoded image: {base64_encoded[:100]}...")
+	
+			## upload to GCS
+			upload_backstory_to_gcs(base64_encoded, session_id)
 
-	return base64_encoded
+			return base64_encoded
+			"""
+		except InvalidArgument as e:
+			attempt += 1
+			if "sensitive content" in str(e).lower() or "invalidArgument" in str(e):
+				#Log the error
+				print(f"Attempt {attempt}: Content filtering triggered. Adjusting prompt...")
+				if attempt == max_retries:
+					print("Max attemps")
+					raise Exception("Maximum retries reached. Unable to generate image with current prompt.")
+					return "" #return an empty image (use default one)
+				
+				sleep_time = backoff_factor ** attempt
+				time.sleep(sleep_time)
+		"""
+
+	
+
+
+
+###########################GCS###########################
 
 
 #upload screenshots image to GCP
@@ -249,7 +289,6 @@ def upload_screenshot_to_gcs(base64_image, session_id, timestamp_seconds):
 	blob.upload_from_string(image_data, content_type="image/png")
 
 
-
 #upload backstory to GCP
 def upload_backstory_to_gcs(base64_image, session_id):
 	image_data = base64.b64decode(base64_image)
@@ -260,7 +299,8 @@ def upload_backstory_to_gcs(base64_image, session_id):
 	blob = bucket.blob(destination_blob_name)
 	blob.upload_from_string(image_data, content_type="image/png")
 
-####Flask
+
+###########################WSIG Flask Server###########################G
 app = Flask(__name__)
 @app.route('/backendcomm', methods=['POST'])
 def publish_messages():
@@ -335,12 +375,6 @@ def publish_screenshot():
 #		# Close the publisher client if it exists
 #		g.publisher.close()
 
-
 if __name__ == '__main__':
-	app.run(host='0.0.0.0', port=5055, debug=False)
-"""
-curl --header 'Content-Type: application/json' \
-	--request POST \
-	--data '{"topic":"retro-attack"}' \
-	http://localhost:5000/backendcomm
-"""
+	app.run(host='127.0.0.1', port=5055, debug=False)
+	#app.run(host='0.0.0.0', port=5055, debug=False)

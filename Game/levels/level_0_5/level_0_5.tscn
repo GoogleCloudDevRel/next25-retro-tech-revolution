@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=4 uid="uid://cd25yxxiep0a5"]
+[gd_scene load_steps=43 format=4 uid="uid://cd25yxxiep0a5"]
 
 [ext_resource type="PackedScene" uid="uid://bhp5u1h7cjapg" path="res://levels/level_template.tscn" id="1_tfj88"]
 [ext_resource type="Script" path="res://levels/level_1/Scripts/level_1.gd" id="2_do01g"]
@@ -12,7 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://bmsxnlm6nj6io" path="res://levels/level_1/Enemies/Boss/boss.tscn" id="14_0i8a7"]
 [ext_resource type="Shader" path="res://shaders/glow_effect_4_1.gdshader" id="14_dtr8g"]
 [ext_resource type="PackedScene" uid="uid://b5rb6g447q5wi" path="res://levels/level_1/Enemies/CRT/crt.tscn" id="15_41fxk"]
-[ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/boss.gd" id="15_swigp"]
 [ext_resource type="PackedScene" uid="uid://ckh3ulwanctr0" path="res://levels/level_1/Player/ui_weapon.tscn" id="16_wtgk4"]
 [ext_resource type="PackedScene" uid="uid://d0p6wso088i1o" path="res://levels/level_1/Player/ui_weapon1.tscn" id="17_w3g7w"]
 
@@ -457,135 +456,159 @@ activation_level = 2
 position = Vector2(1342, 1)
 activation_level = 1
 
-[node name="Boss2" parent="." index="27" instance=ExtResource("14_0i8a7")]
+[node name="Printer15" parent="." index="27" instance=ExtResource("13_platv")]
+position = Vector2(1153, 222)
+activation_level = 1
+
+[node name="Printer16" parent="." index="28" instance=ExtResource("13_platv")]
+position = Vector2(1477, 213)
+activation_level = 1
+
+[node name="Boss2" parent="." index="29" instance=ExtResource("14_0i8a7")]
 position = Vector2(1842, -1408)
 
-[node name="Printer" parent="." index="28" instance=ExtResource("13_platv")]
+[node name="Printer" parent="." index="30" instance=ExtResource("13_platv")]
 position = Vector2(1546, -1308)
 activation_level = 1
 
-[node name="Printer2" parent="." index="29" instance=ExtResource("13_platv")]
+[node name="Printer2" parent="." index="31" instance=ExtResource("13_platv")]
 position = Vector2(1593, -1188)
 is_inactive = false
 
-[node name="Printer10" parent="." index="30" instance=ExtResource("13_platv")]
+[node name="Printer10" parent="." index="32" instance=ExtResource("13_platv")]
 position = Vector2(1443, -1513)
 activation_level = 1
 
-[node name="Printer11" parent="." index="31" instance=ExtResource("13_platv")]
+[node name="Printer11" parent="." index="33" instance=ExtResource("13_platv")]
 position = Vector2(2235, -1440)
 activation_level = 2
 
-[node name="Printer3" parent="." index="32" instance=ExtResource("13_platv")]
+[node name="Printer3" parent="." index="34" instance=ExtResource("13_platv")]
 position = Vector2(250, 200)
 activation_level = 2
 
-[node name="Printer4" parent="." index="33" instance=ExtResource("13_platv")]
+[node name="Printer4" parent="." index="35" instance=ExtResource("13_platv")]
 position = Vector2(662, -342)
 is_inactive = false
 
-[node name="Printer5" parent="." index="34" instance=ExtResource("13_platv")]
+[node name="Printer5" parent="." index="36" instance=ExtResource("13_platv")]
 position = Vector2(1244, -528)
 is_inactive = false
 
-[node name="Printer6" parent="." index="35" instance=ExtResource("13_platv")]
+[node name="Printer6" parent="." index="37" instance=ExtResource("13_platv")]
 position = Vector2(1083, 24)
 is_inactive = false
 
-[node name="Printer7" parent="." index="36" instance=ExtResource("13_platv")]
+[node name="Printer7" parent="." index="38" instance=ExtResource("13_platv")]
 position = Vector2(595, 14)
 activation_level = 1
 
-[node name="Printer8" parent="." index="37" instance=ExtResource("13_platv")]
+[node name="Printer8" parent="." index="39" instance=ExtResource("13_platv")]
 position = Vector2(1371, 449)
 activation_level = 1
 
-[node name="Printer9" parent="." index="38" instance=ExtResource("13_platv")]
-position = Vector2(2125, 161)
+[node name="Printer9" parent="." index="40" instance=ExtResource("13_platv")]
+position = Vector2(2197, 207)
 activation_level = 1
 
-[node name="Printer13" parent="." index="39" instance=ExtResource("13_platv")]
-position = Vector2(2126, -235)
-activation_level = 2
+[node name="Printer13" parent="." index="41" instance=ExtResource("13_platv")]
+position = Vector2(2123, -152)
+is_inactive = false
 
-[node name="Printer14" parent="." index="40" instance=ExtResource("13_platv")]
+[node name="Printer14" parent="." index="42" instance=ExtResource("13_platv")]
 position = Vector2(1685, 383)
 activation_level = 2
 
-[node name="CRT" parent="." index="41" instance=ExtResource("15_41fxk")]
+[node name="CRT" parent="." index="43" instance=ExtResource("15_41fxk")]
 position = Vector2(14, 21)
 activation_level = 2
 
-[node name="CRT3" parent="." index="42" instance=ExtResource("15_41fxk")]
+[node name="CRT3" parent="." index="44" instance=ExtResource("15_41fxk")]
 position = Vector2(883, 180)
 activation_level = 1
 
-[node name="CRT6" parent="." index="43" instance=ExtResource("15_41fxk")]
+[node name="CRT6" parent="." index="45" instance=ExtResource("15_41fxk")]
 position = Vector2(881, 433)
 is_inactive = false
 
-[node name="CRT7" parent="." index="44" instance=ExtResource("15_41fxk")]
+[node name="CRT7" parent="." index="46" instance=ExtResource("15_41fxk")]
 position = Vector2(1428, -375)
 is_inactive = false
 
-[node name="CRT9" parent="." index="45" instance=ExtResource("15_41fxk")]
+[node name="CRT9" parent="." index="47" instance=ExtResource("15_41fxk")]
 position = Vector2(1918, 324)
 is_inactive = false
 
-[node name="CRT10" parent="." index="46" instance=ExtResource("15_41fxk")]
+[node name="CRT10" parent="." index="48" instance=ExtResource("15_41fxk")]
 position = Vector2(2128, -491)
 activation_level = 1
 
-[node name="CRT11" parent="." index="47" instance=ExtResource("15_41fxk")]
+[node name="CRT11" parent="." index="49" instance=ExtResource("15_41fxk")]
 position = Vector2(1768, -875)
 is_inactive = false
 
-[node name="CRT2" parent="." index="48" instance=ExtResource("15_41fxk")]
+[node name="CRT2" parent="." index="50" instance=ExtResource("15_41fxk")]
 position = Vector2(805, -574)
 is_inactive = false
 
-[node name="CRT16" parent="." index="49" instance=ExtResource("15_41fxk")]
+[node name="CRT16" parent="." index="51" instance=ExtResource("15_41fxk")]
 position = Vector2(1227, -813)
 is_inactive = false
 
-[node name="CRT17" parent="." index="50" instance=ExtResource("15_41fxk")]
+[node name="CRT17" parent="." index="52" instance=ExtResource("15_41fxk")]
 position = Vector2(1876, 36)
 activation_level = 1
 
-[node name="CRT18" parent="." index="51" instance=ExtResource("15_41fxk")]
+[node name="CRT18" parent="." index="53" instance=ExtResource("15_41fxk")]
 position = Vector2(563, 376)
-activation_level = 1
+is_inactive = false
 
-[node name="CRT4" parent="." index="52" instance=ExtResource("15_41fxk")]
+[node name="CRT4" parent="." index="54" instance=ExtResource("15_41fxk")]
 position = Vector2(2013, -1432)
 is_inactive = false
 
-[node name="CRT15" parent="." index="53" instance=ExtResource("15_41fxk")]
+[node name="CRT15" parent="." index="55" instance=ExtResource("15_41fxk")]
 position = Vector2(1545, -497)
 is_inactive = false
 
-[node name="CRT5" parent="." index="54" instance=ExtResource("15_41fxk")]
+[node name="CRT5" parent="." index="56" instance=ExtResource("15_41fxk")]
 position = Vector2(1763, -307)
 is_inactive = false
 
-[node name="CRT12" parent="." index="55" instance=ExtResource("15_41fxk")]
+[node name="CRT12" parent="." index="57" instance=ExtResource("15_41fxk")]
 position = Vector2(1865, -1100)
 is_inactive = false
 
-[node name="CRT13" parent="." index="56" instance=ExtResource("15_41fxk")]
+[node name="CRT13" parent="." index="58" instance=ExtResource("15_41fxk")]
 position = Vector2(2268, -1239)
-script = ExtResource("15_swigp")
-floppy_speed = 300.0
-fire_rate = 1.0
-activation_level = 2
 
-[node name="CRT14" parent="." index="57" instance=ExtResource("15_41fxk")]
+[node name="CRT14" parent="." index="59" instance=ExtResource("15_41fxk")]
 position = Vector2(1763, -652)
-script = ExtResource("15_swigp")
-floppy_speed = 300.0
-fire_rate = 1.0
-activation_level = 2
 
-[node name="CRT8" parent="." index="58" instance=ExtResource("15_41fxk")]
-position = Vector2(160, -350)
+[node name="CRT8" parent="." index="60" instance=ExtResource("15_41fxk")]
+position = Vector2(159, -217)
+is_inactive = false
+
+[node name="CRT19" parent="." index="61" instance=ExtResource("15_41fxk")]
+position = Vector2(74, 381)
+is_inactive = false
+
+[node name="CRT20" parent="." index="62" instance=ExtResource("15_41fxk")]
+position = Vector2(357, -453)
+is_inactive = false
+
+[node name="CRT21" parent="." index="63" instance=ExtResource("15_41fxk")]
+position = Vector2(1087, -331)
+is_inactive = false
+
+[node name="CRT22" parent="." index="64" instance=ExtResource("15_41fxk")]
+position = Vector2(1532, -896)
+is_inactive = false
+
+[node name="CRT23" parent="." index="65" instance=ExtResource("15_41fxk")]
+position = Vector2(2120, 559)
+is_inactive = false
+
+[node name="CRT24" parent="." index="66" instance=ExtResource("15_41fxk")]
+position = Vector2(1745, 530)
 is_inactive = false

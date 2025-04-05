@@ -1,7 +1,7 @@
 extends Node
 
 var score = 0
-
+@onready var bgmusic = $bgmusic
 #stop watch 
 var time = 0.0
 var time_paused = true
@@ -140,6 +140,7 @@ func _on_change_screen_state(new_state) -> void:
 			current_scene_instance = splashScreen.instantiate()
 			add_child(current_scene_instance)
 		SignalBus.QUESTIONS:
+			$bgmusic.play()
 			current_scene_instance = questionsScreen.instantiate()
 			add_child(current_scene_instance)
 		SignalBus.CONTROLS:
@@ -150,6 +151,7 @@ func _on_change_screen_state(new_state) -> void:
 			current_scene_instance = backstoryScreen.instantiate()
 			add_child(current_scene_instance)
 		SignalBus.LEVEL1:
+			$bgmusic.stop()
 			current_scene_instance =level1Screen.instantiate()
 			#current_scene_instance.z_index = -10
 			add_child(current_scene_instance)

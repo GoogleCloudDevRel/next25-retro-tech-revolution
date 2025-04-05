@@ -117,26 +117,30 @@ func _ready() -> void:
 	print("User directory: ", OS.get_user_data_dir())
 	save_config_file()
 	
-	if trivia_result.size() > 0:
+	
+	
+	SignalBus.trivia_question_received.connect(_on_trivia_question_received)
+	SignalBus.player_created.connect(_on_player_created)
+	SignalBus.enemy_created.connect(_on_enemies_created)
+	SignalBus.boss_created.connect(_on_boss_created)
+	SignalBus.screen_state.connect(_on_got_questions)
+	
+	#restart game
+	SignalBus.reset_game.connect(reset_game_settings)
+	SignalBus.replay_game.connect(replay_game_settings)
+
+#store it for gemini
+func _on_trivia_question_received(q, a):
+	trivia_result.append({'q':q,'a':a})
+
+func _on_got_questions(current_state):
+	if current_state == CONTROLS and trivia_result.size() > 2:
 		if trivia_result[2]['a'] == "BRING IT ON, I LOVE SUPER HARD GAMES!":
 			game_difficulty = HARD
 		elif trivia_result[2]['a'] ==  "I'M MODERATELY INTO GAMES":
 			game_difficulty = MEDIUM
 		else:
 			game_difficulty = EASY
-	
-	SignalBus.trivia_question_received.connect(_on_trivia_question_received)
-	SignalBus.player_created.connect(_on_player_created)
-	SignalBus.enemy_created.connect(_on_enemies_created)
-	SignalBus.boss_created.connect(_on_boss_created)
-	
-	#restart game
-	SignalBus.reset_game.connect(reset_game_settings)
-	SignalBus.reset_game.connect(replay_game_settings)
-	
-#store it for gemini
-func _on_trivia_question_received(q, a):
-	trivia_result.append({'q':q,'a':a})
 
 func _on_player_created(p:Player):
 	#print("received player")
@@ -254,7 +258,6 @@ func replay_game_settings():
 	has_session_id = true
 	score = 0
 	stopwatch = 0.0
-	game_difficulty = EASY #difficulty level
 	last_screenshot = "res://assets/map/mini_map.png" #last screenshot taken in base64
 	last_screenshot_timestamp = ""
 	players = []
