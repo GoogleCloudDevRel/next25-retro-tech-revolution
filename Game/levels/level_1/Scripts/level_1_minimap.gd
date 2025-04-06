@@ -4,8 +4,10 @@ extends Control
 @export var player: Node2D  # Your player node
 @export var mini_map_size: Vector2 = Vector2(331.5, 279)  # Size of your mini map UI element
 @export var view_radius: float = 500.0  # How much world space to show (radius from player)
-@export var enemy_icon: Texture2D  # Texture for enemy markers
-@export var player_icon: Texture2D  # Texture for player marker
+@export var enemy_icon: Texture2D  = preload("res://assets/minimap/marker_enemy.png") # Texture for enemy markers
+@export var player_icon: Texture2D = preload("res://assets/minimap/marker_player.png")# Texture for player marker
+@export var boss_icon: Texture2D = preload("res://assets/minimap/marker_boss.png")
+@export var item_icon: Texture2D = preload("res://assets/minimap/marker_item.png")
 @export var view_offset: Vector2 = Vector2(100, 380)  # Offset the center of the map from the player
 
 # Optional - to control which areas to show
@@ -41,8 +43,10 @@ var boss
 func _ready():
 	# Set up the mini map size
 	$Background.size = mini_map_size
-	player_icon =  preload("res://assets/map/player.png")
-	enemy_icon  = preload("res://assets/map/enemies.png")
+	player_icon =  preload("res://assets/minimap/marker_player.png")
+	enemy_icon  = preload("res://assets/minimap/marker_enemy.png")
+	boss_icon  = preload("res://assets/minimap/marker_boss.png")
+	item_icon  = preload("res://assets/minimap/marker_item.png")
 	SignalBus.weapon_created.connect(_on_weapon_created)
 	SignalBus.player_created.connect(_on_player_created)
 	SignalBus.enemy_created.connect(_on_enemy_created)
@@ -132,14 +136,14 @@ func draw_on_mini_map(elt, type):
 				var pointer_size = 15
 				match type:
 					"player":
-						new_marker.texture = load("res://assets/minimap/marker_player.png")
+						new_marker.texture = player_icon
 						circle_position = world_to_map(elt.global_position)
 					"enemy":
-						new_marker.texture = load("res://assets/minimap/marker_enemy.png")
+						new_marker.texture = enemy_icon
 					"item":
-						new_marker.texture = load("res://assets/minimap/marker_item.png")
+						new_marker.texture = item_icon
 					"boss":
-						new_marker.texture = load("res://assets/minimap/marker_boss.png")
+						new_marker.texture = boss_icon
 				new_marker.pivot_offset = Vector2(pointer_size/2, pointer_size/2)
 				new_marker.size = Vector2(pointer_size, pointer_size)
 				$Background.add_child(new_marker)

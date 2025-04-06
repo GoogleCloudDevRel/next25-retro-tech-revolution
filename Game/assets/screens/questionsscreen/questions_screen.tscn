@@ -6,8 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://ykfi24r6o3m3" path="res://assets/gcp_overlay/gcp_overlay.tscn" id="2_mtuyq"]
 [ext_resource type="Texture2D" uid="uid://dgpqtls5hdacq" path="res://dialogues/portraits/gemini.png" id="2_wptdb"]
 [ext_resource type="PackedScene" uid="uid://daatymj755m4a" path="res://assets/random_squares.tscn" id="3_rjtc6"]
-[ext_resource type="Texture2D" uid="uid://djvy8jy8moa67" path="res://assets/screens/questionsscreen/colored_borders_v2.png" id="4_ukhml"]
-[ext_resource type="Texture2D" uid="uid://mauplyf7caiq" path="res://assets/screens/questionsscreen/blue-boders.png" id="6_3tofy"]
+[ext_resource type="Texture2D" uid="uid://c0dtg1s7ceeg5" path="res://assets/screens/questionsscreen/colored_borders_v3.png" id="6_pijee"]
+[ext_resource type="Texture2D" uid="uid://csct1pwmb6ei7" path="res://assets/screens/questionsscreen/blue_borders_v3.png" id="7_j7i7g"]
 
 [sub_resource type="SystemFont" id="SystemFont_ketkh"]
 font_names = PackedStringArray("Google Sans")
@@ -40,7 +40,7 @@ content_margin_left = 24.0
 content_margin_top = 24.0
 content_margin_right = 24.0
 content_margin_bottom = 24.0
-texture = ExtResource("4_ukhml")
+texture = ExtResource("6_pijee")
 expand_margin_left = 3.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2ggw3"]
@@ -48,7 +48,7 @@ content_margin_left = 24.0
 content_margin_top = 24.0
 content_margin_right = 24.0
 content_margin_bottom = 24.0
-texture = ExtResource("6_3tofy")
+texture = ExtResource("7_j7i7g")
 
 [sub_resource type="Theme" id="Theme_1dd5c"]
 Button/colors/font_color = Color(0.258824, 0.521569, 0.956863, 1)

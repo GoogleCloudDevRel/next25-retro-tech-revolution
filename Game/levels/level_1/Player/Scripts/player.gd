@@ -2,7 +2,7 @@ class_name Player extends CharacterBody2D
 var cardinal_direction: Vector2 = Vector2.DOWN
 var direction: Vector2 = Vector2.ZERO
 
-
+#varbgmusic = 
 
 var current_weapon: String = "unarmed" # Default weapon state
 #managed the weapons retrieved by the player
@@ -108,18 +108,19 @@ func activate_weapon(weapon_name:String):
 	#print(weapon_name+" "+str(weapon_idx))
 	if weapons[weapon_idx]['disabled']:
 		weapons[weapon_idx]['disabled'] = false
-		$swirlPlay.modulate.a = 0
+		#$swirlPlay.modulate.a = 0
 		$swirlPlay.play()
-		var tween = create_tween()
-		tween.tween_property($swirlPlay, "modulate:a", 0.8, 2.0)
+		#var tween = create_tween()
+		#tween.tween_property($swirlPlay, "modulate:a", 0.8, 2.0)
 		current_weapon = weapon_name
 		SignalBus.weapon_activated.emit(weapon_name, weapon_idx)
 
 #ease out the video
 func _on_video_finished():
+	pass
 	# Create a new tween for the fade-out effect
-	var tween = create_tween()
-	tween.tween_property($swirlPlay, "modulate:a", 0.0, 2.0)		
+	#var tween = create_tween()
+	#tween.tween_property($swirlPlay, "modulate:a", 0.0, 2.0)		
 
 
 

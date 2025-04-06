@@ -73,7 +73,7 @@ func scroll_text_from_top_to_bottom():
 	#print("-->" + str(max_scroll))
 	# Create a tween to animate the scrollbar
 	var tween = create_tween()
-	var duration = 12.0  # seconds to scroll through entire text
+	var duration = 20.0  # seconds to scroll through entire text
 
 	# Animate the scrollbar value from 0 to max
 	tween.tween_property(v_scroll, "value", max_scroll, duration)

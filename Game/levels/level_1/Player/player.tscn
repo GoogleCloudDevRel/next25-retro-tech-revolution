@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://d3xsaug1by40g" path="res://shaders/LightSprite.png" id="15_mt3th"]
 [ext_resource type="PackedScene" uid="uid://c1cr2wayj7p71" path="res://levels/level_1/Player/Scripts/bubble.tscn" id="16_jbhtv"]
 [ext_resource type="Shader" path="res://shaders/chromakey.gdshader" id="17_su58f"]
-[ext_resource type="VideoStream" path="res://levels/level_1/Player/Assets/swirl.ogv" id="18_6w8mc"]
+[ext_resource type="VideoStream" path="res://levels/level_1/Player/Assets/swirl_v2.ogv" id="18_j1a6a"]
 [ext_resource type="Texture2D" uid="uid://61spli2ohccc" path="res://levels/level_1/Player/Assets/Gemini.png" id="19_al0dy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fbcb4"]
@@ -717,7 +717,7 @@ offset_top = -275.395
 offset_right = 1424.34
 offset_bottom = 812.605
 scale = Vector2(0.5, 0.5)
-stream = ExtResource("18_6w8mc")
+stream = ExtResource("18_j1a6a")
 
 [node name="Gemini" type="Sprite2D" parent="."]
 unique_name_in_owner = true

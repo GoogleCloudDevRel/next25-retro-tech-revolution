@@ -31,7 +31,7 @@ func _ready() -> void:
 	#Q1
 	trivia.append({
 	"q" : "✦ WHAT'S YOUR FAVORITE FRUIT?",
-	"a" : ["🍊 ORANGE", "🍓 STRAWBERRY", "🍌 BANANA", "🍉 WATERMELON"]
+	"a" : ["🍊\nORANGE", "🍓\nSTRAWBERRY", "🍌\nBANANA", "🍉\nWATERMELON"]
 	})
 	#Q2
 	trivia.append({
