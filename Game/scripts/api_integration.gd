@@ -191,12 +191,12 @@ func _on_need_gemini_help():
 		prompt_text += "Give instructions to the player on how to get to the large room located on the top right where the final boss is located.\n"
 		prompt_text += "explain that to defeat the final boss you should use the gauntlet 2000 to create a barrier and therefore avoid being hit by floppy disks.\n"
 		prompt_text += "3.5 floppy disks are faster but inflict less damage, larger 5.25 are slower but inflict more damage"
-		prompt_text += "moving around would give him enough time to use the blaster  cleaner 80 to shoot at the boss. The boss has 200 of health."
+		prompt_text += "moving around would give him enough time to use the blaster  cleaner 80 to shoot at the boss. The boss has 200 of health and can be identified by a blue square"
 		
 	elif has_blaster:
 		#user has the blaster only
 		prompt_text += "The player already has the blaster cleaner 80 but will need to protect himself more if he wants to defeat the final boss.\n"
-		prompt_text += "Recommend to the player to go fetch the weapon on the very far right represented by a yellow triangle. \n"
+		prompt_text += "Recommend to the player to go fetch the weapon on the very far right represented by a yellow square. \n"
 	elif has_gauntlet:
 		#user has the gauntlet
 		prompt_text += "The player already has the gauntlet 2000 a power protective tool against various tech notably floppy disks.\n"
@@ -204,7 +204,7 @@ func _on_need_gemini_help():
 	else:
 		#user has no weapon
 		prompt_text += "The player does not currently have any tools to defend itself or get rid of the old techs \n"
-		prompt_text += "Recommend to the player to go fetch the weapon closest to where the player started the level which is where the blaster cleaner 80 is located, on the map represented by a yellow triangle. \n"
+		prompt_text += "Recommend to the player to go fetch the weapon closest to where the player started the level which is where the blaster cleaner 80 is located, on the map represented by a yellow square. \n"
 	
 	prompt_text += "Based on the screenshot of the game, the mini map in the screenshot and the information you have, give short and concise instructions to the user so that they know what to do"
 		
