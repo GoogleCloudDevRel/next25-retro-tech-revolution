@@ -29,11 +29,11 @@ shader_parameter/rgb_shift = 0.68
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_14611"]
 shader = ExtResource("2_hs8ac")
-shader_parameter/lineIntensity = 0.4
-shader_parameter/lineThickness = 1.0
+shader_parameter/lineIntensity = 0.3
+shader_parameter/lineThickness = 1.9
 shader_parameter/linePower = 2.0
 shader_parameter/warpAmount = null
-shader_parameter/lineSpeed = 0.7
+shader_parameter/lineSpeed = 0.9
 
 [sub_resource type="SystemFont" id="SystemFont_04jrl"]
 font_names = PackedStringArray("Google Sans")
@@ -62,7 +62,7 @@ size_flags_horizontal = 4
 mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+[node name="Scanlines_v2" type="ColorRect" parent="CanvasLayer"]
 material = SubResource("ShaderMaterial_14611")
 custom_minimum_size = Vector2(1920, 1080)
 offset_right = 40.0

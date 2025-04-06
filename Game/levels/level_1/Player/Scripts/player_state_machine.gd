@@ -14,7 +14,6 @@ func _process(delta):
 	ChangeState( current_state.Process( delta ) )
 	pass
 	
-	
 func _physics_process(delta):
 	ChangeState(current_state.Physics(delta))
 	pass

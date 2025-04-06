@@ -466,6 +466,10 @@ activation_level = 1
 
 [node name="Boss2" parent="." index="29" instance=ExtResource("14_0i8a7")]
 position = Vector2(1842, -1408)
+can_fire = true
+detection_radius = 200.0
+is_inactive = false
+max_bullet = 2
 
 [node name="Printer" parent="." index="30" instance=ExtResource("13_platv")]
 position = Vector2(1546, -1308)

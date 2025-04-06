@@ -13,7 +13,7 @@ func init() -> void:
 
 ## What happens when the player enters this State?
 func Enter() -> void:
-	print("entering inactive states")
+	#print("entering inactive states")
 	enemy.velocity = Vector2.ZERO
 	#_timer = randf_range(state_duration_min, state_duration_max)
 	enemy.update_animation(anim_name)
@@ -23,7 +23,7 @@ func Enter() -> void:
 
 ## What happens when the player exits this State?
 func Exit() -> void:
-	print("leaving inactive state")
+	#print("leaving inactive state")
 	#enemy.show_inactivity(false)
 	#print("idle state exit")
 	pass

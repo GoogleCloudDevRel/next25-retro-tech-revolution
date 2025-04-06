@@ -77,7 +77,7 @@ Settings/Show_Tooltips=true
 config/name="Retro Tech Revolution"
 run/main_scene="res://RetroTechRevolution.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
-boot_splash/image="res://assets/screens/splashscreen/loading-screen.png"
+boot_splash/image="res://assets/screens/splashscreen/wallpaper.png"
 config/icon="res://assets/screens/splashscreen/splashscreen.png"
 
 [autoload]

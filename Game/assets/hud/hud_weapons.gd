@@ -134,5 +134,5 @@ func add_new_weapon(weapon_name, selected_texture_path, unselected_texture_path,
 	weapon_container.add_child(new_rect)
 	weapon_rects.append(new_rect)
 	
-	print("Added new weapon: " + weapon_name)
+	#print("Added new weapon: " + weapon_name)
 	update_weapon_display()

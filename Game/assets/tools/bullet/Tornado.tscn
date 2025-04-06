@@ -1,9 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://ddpsokxuhc11a"]
+[gd_scene load_steps=4 format=3 uid="uid://ddpsokxuhc11a"]
 
 [ext_resource type="Script" path="res://scripts/tornado.gd" id="1_v1qy1"]
-[ext_resource type="Texture2D" uid="uid://dwetiyvkvhqtm" path="res://assets/tools/bullet/google_bigquery_logo.png" id="2_21uwg"]
-[ext_resource type="Texture2D" uid="uid://d3xsaug1by40g" path="res://shaders/LightSprite.png" id="3_662lr"]
-[ext_resource type="PackedScene" uid="uid://csqidgubdv7ck" path="res://levels/level_1/Player/ui_projectile1.tscn" id="4_kjxxv"]
 [ext_resource type="PackedScene" uid="uid://bsev0gq74h7wt" path="res://levels/level_1/Player/ui_projectile2.tscn" id="5_rr04i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cp4y1"]
@@ -16,20 +13,8 @@ collision_layer = 8
 collision_mask = 3
 script = ExtResource("1_v1qy1")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(1.00001, 3.8147e-06)
-scale = Vector2(0.0527343, 0.0527343)
-texture = ExtResource("2_21uwg")
-
-[node name="PointLight2D" type="PointLight2D" parent="Sprite2D"]
-texture = ExtResource("3_662lr")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_cp4y1")
-
-[node name="UI_P1" parent="." instance=ExtResource("4_kjxxv")]
-visible = false
 
 [node name="UI_P2" parent="." instance=ExtResource("5_rr04i")]
 

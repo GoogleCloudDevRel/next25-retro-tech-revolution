@@ -1,4 +1,4 @@
-extends Node
+extends CanvasLayer
 
 @export var blink_speed:float = 2.0  # Blinks per second
 @export var pulse_speed: float = 2.0  # Full cycles per second

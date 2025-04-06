@@ -2,7 +2,7 @@ extends Node
 
 
 var GEMINI_API_KEY
-var GEMINI_PRO_URL
+var GEMINI_PRO_URL: Array[String] = []
 var GEMINI_URL
 var gcp_token = ""
 
@@ -22,17 +22,14 @@ var counter_before_gemini_help = 20 #wait 20 bullets before calling gemini for h
 
 var endpoint = "localhost"
 var port = "5055"
-
+var is_gemini_error = false
+var current_gemini_model = 0
 #separate thread used by the screenshot system
 var thread: Thread
 
 ###connect on all the messages
 func _ready():
-	#GEMINI_API_KEY = SignalBus.gemini_api_key
-	#GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + GEMINI_API_KEY
-	#GEMINI_PRO_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-pro-exp-02-05:generateContent?key=" + GEMINI_API_KEY
 	##connect with bus
-	#SignalBus.bullet_created.connect(_on_add_bullet_action)
 	_on_api_key(SignalBus.gemini_api_key)
 	
 	SignalBus.gemini_help_requested.connect(_on_need_gemini_help)
@@ -46,11 +43,12 @@ func _ready():
 
 func _on_api_key(key):
 	GEMINI_API_KEY = key
+	#backstory
 	GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + GEMINI_API_KEY
-	GEMINI_PRO_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-pro-exp-02-05:generateContent?key=" + GEMINI_API_KEY
 	
-
-
+	#Help
+	GEMINI_PRO_URL.append("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-pro-exp-02-05:generateContent?key=" + GEMINI_API_KEY)
+	GEMINI_PRO_URL.append("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + GEMINI_API_KEY)
 
 #get rank on game over
 func _on_game_over(state):
@@ -177,7 +175,7 @@ func _on_need_gemini_help():
 	
 	###############Player stats
 	prompt_text += "Player has been playing for "+SignalBus.get_stopwatch()+"\n" 
-	prompt_text += "Player health level is "+str(SignalBus.players[0].health)+" out of 100 \n"
+	prompt_text += "Player health level is "+str(SignalBus.players[0].health)+" out of 200 \n"
 	prompt_text += "Player has been hit "+str(SignalBus.players[0].hit_count)+" times.\n" 
 	prompt_text += "Player score is "+str(SignalBus.score)+".\n"
 	prompt_text += "Player current difficulty level is "+str(SignalBus.game_difficulty)+"\n"
@@ -378,9 +376,13 @@ func call_gemini_with_prompt_and_image(base64_image:String, prompt_text: String)
 		]
 
 	# 5. Make the request.
-	var error = http_request.request(GEMINI_PRO_URL, headers, HTTPClient.METHOD_POST, json_string)
+	
+	if is_gemini_error: #switch between models if we have some errors
+		current_gemini_model = 1 - current_gemini_model
+	
+	var error = http_request.request(GEMINI_PRO_URL[current_gemini_model], headers, HTTPClient.METHOD_POST, json_string)
 	if error != OK:
-		printerr("HTTP request failed: ", error)
+		printerr("Gemini help: HTTP request failed: ", error)
 		http_request.queue_free()  # Clean up on error
 		return
 
@@ -398,28 +400,41 @@ func _on_request_completed(_result, response_code, _headers, body):
 				var generated_text = response_json["candidates"][0]["content"]["parts"][0]["text"]
 				#print(generated_text)
 				var parsedJSON = JSON.parse_string(generated_text.replace("```json", "").replace("```", ""))  
-				
-				
-				SignalBus.gemini_help_received.emit(parsedJSON["help"]+" "+parsedJSON["reason"])
-				#set difficulty	
-				if parsedJSON["difficulty_level"] == 2:
-						#print("hard")
-						SignalBus.game_difficulty = SignalBus.HARD
-				elif parsedJSON["difficulty_level"] == 1:
-						#print("med")
-						SignalBus.game_difficulty = SignalBus.MEDIUM
-				else:		
-						#print("easy")
-						SignalBus.game_difficulty = SignalBus.EASY
-				
-				SignalBus.gemini_difficulty_adjusted.emit(parsedJSON["difficulty_level"], parsedJSON['reason'])
+				if parsedJSON.has("help"):
+					var  r = ""
+					if parsedJSON.has("reason"):
+						r = parsedJSON.has("reason")
+					SignalBus.gemini_help_received.emit(parsedJSON["help"]+" "+str(r))
+					
+					if parsedJSON.has("difficulty_level"):
+						#set difficulty	
+						if parsedJSON["difficulty_level"] == 2:
+								#print("hard")
+								SignalBus.game_difficulty = SignalBus.HARD
+						elif parsedJSON["difficulty_level"] == 1:
+								#print("med")
+								SignalBus.game_difficulty = SignalBus.MEDIUM
+						else:		
+								#print("easy")
+								SignalBus.game_difficulty = SignalBus.EASY
+						SignalBus.gemini_difficulty_adjusted.emit(parsedJSON["difficulty_level"], parsedJSON['reason'])
+						is_gemini_error = false
+					else:
+						is_gemini_error = true
+						printerr("Gemini help:  Missing difficulty level):", response_json)
+				else:
+						is_gemini_error = true
+						printerr("Gemini help: Missing help & reason ):", response_json)
+						
 			else:
-				printerr("Unexpected response format (no content/parts):", response_json)
+				is_gemini_error = true
+				printerr("Gemini help: Unexpected response format (no content/parts):", response_json)
 		else: 
-			printerr("Unexpected response format (no candidates):", response_json)
+			is_gemini_error = true
+			printerr("Gemini help: Unexpected response format (no candidates):", response_json)
 
 	else:
-		printerr("Gemini ask for help HTTP request failed with code ", response_code)
+		printerr("Gemini help: HTTP request failed with code ", response_code)
 		printerr("Response body:\n", body.get_string_from_utf8())  # Print the raw response for debugging.
 
 ####### generate story background image with imagen3
