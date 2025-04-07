@@ -53,7 +53,7 @@ func _on_game_screen_state_action(new_state): #OK except boss
 	}
 	match new_state:
 		SignalBus.SPLASHSCREEN:
-			request_data['event_type'] = "on_splashscreen_entered" #NG
+			request_data['event_type'] = "on_splashscreen_entered"
 		SignalBus.QUESTIONS:
 			request_data['event_type'] = "on_questions_screen_entered" #OK
 		SignalBus.CONTROLS:
@@ -85,7 +85,7 @@ func _on_game_paused_action(): #OK
 			"event_type": "on_game_paused",
 			"session_id": SignalBus.session_id,
 			"client_id": SignalBus.client_id,
-			"timestamp": Time.get_unix_time_from_system(),
+			"ts": Time.get_unix_time_from_system(),
 			"score": SignalBus.score, #score
 			"stopwatch": SignalBus.stopwatch#ms
 			
@@ -170,7 +170,7 @@ func _on_gemini_backstory_requested_action(prompt_text:String):
 			"session_id": SignalBus.session_id,
 			"client_id": SignalBus.client_id,
 			"ts": Time.get_unix_time_from_system(),
-			"prompt": prompt_text
+			"prompt_text": prompt_text
 	}
 	var json_string = JSON.stringify(request_data)
 	_call_rpc_backend(json_string)
@@ -336,8 +336,8 @@ func _on_weapon_changed_action(weapon_name:String, weapon_idx:int): #TODO
 			"session_id": SignalBus.session_id,
 			"client_id": SignalBus.client_id,
 			"ts": Time.get_unix_time_from_system(),
-			"new_weapon": weapon_name,
-			"new_weapon_idx":  weapon_idx
+			"selected_weapon": weapon_name,
+			"selected_weapon_idx":  weapon_idx
 	}
 	var json_string = JSON.stringify(request_data)
 	_call_rpc_backend(json_string)		

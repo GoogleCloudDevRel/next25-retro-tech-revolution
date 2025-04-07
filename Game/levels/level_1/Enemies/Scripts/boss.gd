@@ -8,7 +8,7 @@ class_name Boss extends Enemy
 func _ready() -> void:
 	id = get_instance_id()
 	state_machine.initialize( self )
-	
+	type = "boss"
 	SignalBus.gemini_difficulty_adjusted.connect(_on_game_difficulty_changed)
 	_on_game_difficulty_changed(SignalBus.game_difficulty, "Init")
 	can_fire = true
