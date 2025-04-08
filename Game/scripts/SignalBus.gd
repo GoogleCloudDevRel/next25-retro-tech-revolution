@@ -10,6 +10,7 @@ var has_client_id = false
 var score = 0
 var stopwatch = 0.0
 enum {EASY, MEDIUM, HARD}
+var prev_game_difficulty = EASY
 var game_difficulty = EASY #difficulty level
 var last_screenshot = "res://assets/map/mini_map.png" #last screenshot taken in base64
 var last_screenshot_timestamp = ""

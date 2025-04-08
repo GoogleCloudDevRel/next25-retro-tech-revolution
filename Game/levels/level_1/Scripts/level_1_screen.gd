@@ -4,6 +4,11 @@ extends CanvasLayer
 @onready var viewport_display = $GameView/ViewportDisplay
 @onready var game_viewport = $GameViewport
 
+@export var difficulty_down: Texture2D  = preload("res://levels/level_1/assets/difficulty_down.png")
+@export var difficulty_up: Texture2D  = preload("res://levels/level_1/assets/difficulty_up.png")
+@export var difficulty_unchanged: Texture2D  = preload("res://levels/level_1/assets/difficulty_unchanged.png")
+
+@export var scan_duration = 5.0
 
 #screenshot trigger
 var timer = null
@@ -20,6 +25,7 @@ var dialogballoon
 func _ready():
 	SignalBus.gemini_help_received.connect(_on_gemini_help)
 	SignalBus.show_congratulations.connect(_on_show_congratulations)
+	SignalBus.gemini_difficulty_adjusted.connect(_on_level_changed)
 	#stopwarch & score loading
 	var hud_st =  hud_score_time.instantiate()
 	add_child(hud_st)
@@ -27,7 +33,7 @@ func _ready():
 	#add gcp logo overlay
 	var gcp_overlay =  gcp_overlay_scene.instantiate()
 	add_child(gcp_overlay)
-	
+	_on_level_changed(0, "")
 	####START game view port
 	#game_viewport.size = Vector2i(640, 360)
 	#game_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
@@ -48,9 +54,55 @@ func _ready():
 	timer.start()
 	SignalBus.send_screenshot_to_gcs.emit()
 	
+func _on_level_changed(level:int, reason:String):
+	if SignalBus.prev_game_difficulty == level:
+			#show unchanged
+			$level_adujsted_msg.texture = difficulty_unchanged
+	elif SignalBus.prev_game_difficulty > level:
+			#show down
+			$level_adujsted_msg.texture = difficulty_down	
+	else:
+			#show up	
+			$level_adujsted_msg.texture = difficulty_up
+	$level_adujsted_msg.visible = true
+	$level_adujsted_msg/display_level_change_timer.start()
 	
+
+func create_scan_animation():
+	# Create animation player if it doesn't exist
+	var anim_player = $AnimationPlayer if has_node("AnimationPlayer") else AnimationPlayer.new()
+	if not has_node("AnimationPlayer"):
+		add_child(anim_player)
 	
+	# Create the animation
+	var animation = Animation.new()
+	var track_index = animation.add_track(Animation.TYPE_VALUE)
 	
+	# Set track properties
+	animation.track_set_path(track_index, "level_adjusted:material:shader_parameter/scan_line_position")
+	
+	# Add key frames for the animation
+	animation.track_insert_key(track_index, 0.0, 0.0)  # Start at the top (0.0)
+	animation.track_insert_key(track_index, scan_duration, 1.0)  # End at the bottom (1.0)
+	
+	# Set animation length
+	animation.length = scan_duration
+	
+	# Add the animation to the animation player
+	anim_player
+	anim_player.set_current_animation("scan_effect", animation)
+	
+	# Set to loop
+	anim_player.playback_process_mode = AnimationPlayer.ANIMATION_PROCESS_PHYSICS
+	anim_player.autoplay = "scan_effect"
+	anim_player.playback_default_blend_time = 0
+	
+	# Play the animation
+	anim_player.play("scan_effect")
+
+	
+func _on_hide_level_changed():
+		$level_adujsted_msg.visible = false	
 	
 	# Set the viewport texture to our display node
 	#viewport_display.texture = game_viewport.get_texture()

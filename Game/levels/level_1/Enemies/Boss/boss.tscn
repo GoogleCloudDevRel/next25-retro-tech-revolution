@@ -428,3 +428,6 @@ rounded = true
 unique_name_in_owner = true
 position = Vector2(-2.38419e-07, 94)
 rotation = -0.0213142
+
+[node name="attackRecoveryTimer" type="Timer" parent="."]
+one_shot = true

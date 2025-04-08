@@ -378,6 +378,7 @@ texture = ExtResource("7_gh184")
 texture_scale = 0.8
 
 [node name="HealthBar" type="ProgressBar" parent="."]
+modulate = Color(0.180005, 0.180005, 0.180005, 1)
 offset_left = 22.0
 offset_top = -8.0
 offset_right = 90.0
@@ -411,3 +412,9 @@ offset_bottom = 51.0
 stream = ExtResource("13_idgtq")
 autoplay = true
 loop = true
+
+[node name="attackRecoveryTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="attackRecoveryTimer" to="." method="_on_attack_recovery_timer_timeout"]

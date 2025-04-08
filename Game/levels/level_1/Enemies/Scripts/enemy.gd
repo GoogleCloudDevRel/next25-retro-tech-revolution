@@ -8,12 +8,14 @@ var speed = 300
 var points = 5 
 var type = "enemy"
 var hit_count = 0
+var is_waiting_to_hit = false #waiting timer to hit again player
 @export  var is_dead = false
 @export  var id = 0
 @export var can_fire: bool = false
 @export var detection_radius: float = 100.0
 @export var timer: Timer
 @export_enum("Easy", "Medium", "Hard") var activation_level = 0
+
 
 var level_idx = {"Easy":0, "Medium":1, "Hard":3}
 @export var is_inactive = true
@@ -43,7 +45,7 @@ func _ready() -> void:
 	state_machine.initialize( self )
 	##player = SignalBus.player[0]
 	call_deferred("setup")
-			
+
 	if SignalBus.game_difficulty == SignalBus.EASY:
 		points = 5
 		health = 70.0
@@ -73,12 +75,13 @@ func _on_level_changed(level, reason):
 			#is inactive
 			is_inactive = false
 			%Sparks.visible = false
+			$HealthBar.modulate = Color("FFFFFF")
+			
 		else:
 			#is active	
 			is_inactive = true
 			%Sparks.visible = true
-
-		
+			$HealthBar.modulate = Color("2e2e2e")
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	
@@ -123,10 +126,25 @@ func anim_direction() -> String:
 	else:
 		return "side"
 
+#just attacked player (deactivate)
+func on_attacked_player():
+	is_waiting_to_hit = true
+	is_inactive = true
+	$attackRecoveryTimer.start()
+	$HealthBar.modulate = Color("2e2e2e")
+	
 
-
-		
-
+#can attack again
+func _on_attack_recovery_timer_timeout() -> void:
+	is_waiting_to_hit = false
+	if SignalBus.game_difficulty >= activation_level:
+			#is inactive
+			is_inactive = false
+			$HealthBar.modulate = Color("FFFFFF")
+	else:
+			#is active	
+			is_inactive = true
+			$HealthBar.modulate = Color("2e2e2e")
 
 func take_damage(player_damage):
 	if !is_inactive:

@@ -450,169 +450,548 @@ position = Vector2(2191, -333)
 
 [node name="CRT_prime" parent="." index="25" instance=ExtResource("15_41fxk")]
 position = Vector2(259, 38)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
 activation_level = 2
+is_inactive = true
+hp = 3
+max_bullet = 0
 
 [node name="Printer12" parent="." index="26" instance=ExtResource("13_platv")]
 position = Vector2(1342, 1)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
 activation_level = 1
+is_inactive = true
+hp = 3
+max_bullet = 0
 
 [node name="Printer15" parent="." index="27" instance=ExtResource("13_platv")]
 position = Vector2(1153, 222)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
 activation_level = 1
+is_inactive = true
+hp = 3
+max_bullet = 0
 
 [node name="Printer16" parent="." index="28" instance=ExtResource("13_platv")]
 position = Vector2(1477, 213)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
 activation_level = 1
+is_inactive = true
+hp = 3
+max_bullet = 0
 
 [node name="Boss2" parent="." index="29" instance=ExtResource("14_0i8a7")]
 position = Vector2(1842, -1408)
+floppy_speed = 300.0
+fire_rate = 1.0
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
 can_fire = true
 detection_radius = 200.0
+activation_level = 0
 is_inactive = false
+hp = 3
 max_bullet = 2
 
 [node name="Printer" parent="." index="30" instance=ExtResource("13_platv")]
 position = Vector2(1546, -1308)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
 activation_level = 1
+is_inactive = true
+hp = 3
+max_bullet = 0
 
 [node name="Printer2" parent="." index="31" instance=ExtResource("13_platv")]
 position = Vector2(1593, -1188)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
 is_inactive = false
+hp = 3
+max_bullet = 0
 
 [node name="Printer10" parent="." index="32" instance=ExtResource("13_platv")]
 position = Vector2(1443, -1513)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
 activation_level = 1
+is_inactive = true
+hp = 3
+max_bullet = 0
 
 [node name="Printer11" parent="." index="33" instance=ExtResource("13_platv")]
 position = Vector2(2235, -1440)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
 activation_level = 2
+is_inactive = true
+hp = 3
+max_bullet = 0
 
 [node name="Printer3" parent="." index="34" instance=ExtResource("13_platv")]
 position = Vector2(250, 200)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
 activation_level = 2
+is_inactive = true
+hp = 3
+max_bullet = 0
 
 [node name="Printer4" parent="." index="35" instance=ExtResource("13_platv")]
 position = Vector2(662, -342)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
 is_inactive = false
+hp = 3
+max_bullet = 0
 
 [node name="Printer5" parent="." index="36" instance=ExtResource("13_platv")]
 position = Vector2(1244, -528)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
 is_inactive = false
+hp = 3
+max_bullet = 0
 
 [node name="Printer6" parent="." index="37" instance=ExtResource("13_platv")]
 position = Vector2(1083, 24)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
 is_inactive = false
+hp = 3
+max_bullet = 0
 
 [node name="Printer7" parent="." index="38" instance=ExtResource("13_platv")]
 position = Vector2(595, 14)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
 activation_level = 1
+is_inactive = true
+hp = 3
+max_bullet = 0
 
 [node name="Printer8" parent="." index="39" instance=ExtResource("13_platv")]
 position = Vector2(1371, 449)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
 activation_level = 1
+is_inactive = true
+hp = 3
+max_bullet = 0
 
 [node name="Printer9" parent="." index="40" instance=ExtResource("13_platv")]
 position = Vector2(2197, 207)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
 activation_level = 1
+is_inactive = true
+hp = 3
+max_bullet = 0
 
 [node name="Printer13" parent="." index="41" instance=ExtResource("13_platv")]
 position = Vector2(2123, -152)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
 is_inactive = false
+hp = 3
+max_bullet = 0
 
 [node name="Printer14" parent="." index="42" instance=ExtResource("13_platv")]
 position = Vector2(1685, 383)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
 activation_level = 2
+is_inactive = true
+hp = 3
+max_bullet = 0
 
 [node name="CRT" parent="." index="43" instance=ExtResource("15_41fxk")]
 position = Vector2(14, 21)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
 activation_level = 2
+is_inactive = true
+hp = 3
+max_bullet = 0
 
 [node name="CRT3" parent="." index="44" instance=ExtResource("15_41fxk")]
 position = Vector2(883, 180)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
 activation_level = 1
+is_inactive = true
+hp = 3
+max_bullet = 0
 
 [node name="CRT6" parent="." index="45" instance=ExtResource("15_41fxk")]
 position = Vector2(881, 433)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
 is_inactive = false
+hp = 3
+max_bullet = 0
 
 [node name="CRT7" parent="." index="46" instance=ExtResource("15_41fxk")]
 position = Vector2(1428, -375)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
 is_inactive = false
+hp = 3
+max_bullet = 0
 
 [node name="CRT9" parent="." index="47" instance=ExtResource("15_41fxk")]
 position = Vector2(1918, 324)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
 is_inactive = false
+hp = 3
+max_bullet = 0
 
 [node name="CRT10" parent="." index="48" instance=ExtResource("15_41fxk")]
 position = Vector2(2128, -491)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
 activation_level = 1
+is_inactive = true
+hp = 3
+max_bullet = 0
 
 [node name="CRT11" parent="." index="49" instance=ExtResource("15_41fxk")]
 position = Vector2(1768, -875)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
 is_inactive = false
+hp = 3
+max_bullet = 0
 
 [node name="CRT2" parent="." index="50" instance=ExtResource("15_41fxk")]
 position = Vector2(805, -574)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
 is_inactive = false
+hp = 3
+max_bullet = 0
 
 [node name="CRT16" parent="." index="51" instance=ExtResource("15_41fxk")]
 position = Vector2(1227, -813)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
 is_inactive = false
+hp = 3
+max_bullet = 0
 
 [node name="CRT17" parent="." index="52" instance=ExtResource("15_41fxk")]
 position = Vector2(1876, 36)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
 activation_level = 1
+is_inactive = true
+hp = 3
+max_bullet = 0
 
 [node name="CRT18" parent="." index="53" instance=ExtResource("15_41fxk")]
 position = Vector2(563, 376)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
 is_inactive = false
+hp = 3
+max_bullet = 0
 
 [node name="CRT4" parent="." index="54" instance=ExtResource("15_41fxk")]
 position = Vector2(2013, -1432)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
 is_inactive = false
+hp = 3
+max_bullet = 0
 
 [node name="CRT15" parent="." index="55" instance=ExtResource("15_41fxk")]
 position = Vector2(1545, -497)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
 is_inactive = false
+hp = 3
+max_bullet = 0
 
 [node name="CRT5" parent="." index="56" instance=ExtResource("15_41fxk")]
 position = Vector2(1763, -307)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
 is_inactive = false
+hp = 3
+max_bullet = 0
 
 [node name="CRT12" parent="." index="57" instance=ExtResource("15_41fxk")]
 position = Vector2(1865, -1100)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
 is_inactive = false
+hp = 3
+max_bullet = 0
 
 [node name="CRT13" parent="." index="58" instance=ExtResource("15_41fxk")]
 position = Vector2(2268, -1239)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
+is_inactive = true
+hp = 3
+max_bullet = 0
 
 [node name="CRT14" parent="." index="59" instance=ExtResource("15_41fxk")]
 position = Vector2(1763, -652)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
+is_inactive = true
+hp = 3
+max_bullet = 0
 
 [node name="CRT8" parent="." index="60" instance=ExtResource("15_41fxk")]
 position = Vector2(159, -217)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
 is_inactive = false
+hp = 3
+max_bullet = 0
 
 [node name="CRT19" parent="." index="61" instance=ExtResource("15_41fxk")]
 position = Vector2(74, 381)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
 is_inactive = false
+hp = 3
+max_bullet = 0
 
 [node name="CRT20" parent="." index="62" instance=ExtResource("15_41fxk")]
 position = Vector2(357, -453)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
 is_inactive = false
+hp = 3
+max_bullet = 0
 
 [node name="CRT21" parent="." index="63" instance=ExtResource("15_41fxk")]
 position = Vector2(1087, -331)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
 is_inactive = false
+hp = 3
+max_bullet = 0
 
 [node name="CRT22" parent="." index="64" instance=ExtResource("15_41fxk")]
 position = Vector2(1532, -896)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
 is_inactive = false
+hp = 3
+max_bullet = 0
 
 [node name="CRT23" parent="." index="65" instance=ExtResource("15_41fxk")]
 position = Vector2(2120, 559)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
 is_inactive = false
+hp = 3
+max_bullet = 0
 
 [node name="CRT24" parent="." index="66" instance=ExtResource("15_41fxk")]
 position = Vector2(1745, 530)
+health = 100.0
+damage_points = 1
+is_dead = false
+id = 0
+can_fire = false
+detection_radius = 100.0
+activation_level = 0
 is_inactive = false
+hp = 3
+max_bullet = 0

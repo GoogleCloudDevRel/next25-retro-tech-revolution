@@ -6,6 +6,9 @@ var current_state: EnemyState
 var enemy: Enemy
 var player: Player
 
+
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_DISABLED
@@ -33,11 +36,14 @@ func _physics_process(delta):
 				var overlapping_enemies = player.hurtbox.get_overlapping_bodies()
 				if overlapping_enemies.size() > 0:
 					for i in overlapping_enemies.size():
-						if overlapping_enemies[i].get_instance_id() == enemy.get_instance_id():
+						if overlapping_enemies[i].get_instance_id() == enemy.get_instance_id() and !enemy.is_waiting_to_hit:
+							enemy.on_attacked_player()
 							change_state(states[0])
 							SignalBus.player_taking_damage.emit(player, enemy)
 							player.is_getting_hit(get_parent().damage_points)
 							is_overlapping = true
+						else:
+							change_state(states[0])
 		if enemy.is_inactive:
 			change_state(states[4]) #inactive
 		#dead

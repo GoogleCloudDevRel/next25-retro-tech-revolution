@@ -122,9 +122,6 @@ func _on_video_finished():
 	#var tween = create_tween()
 	#tween.tween_property($swirlPlay, "modulate:a", 0.0, 2.0)		
 
-
-
-
 func UpdateAnimation(state: String) -> void:
 	animation_player.play(state + "_" + AnimDirection())
 

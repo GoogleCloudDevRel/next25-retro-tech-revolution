@@ -407,7 +407,8 @@ func _on_request_completed(_result, response_code, _headers, body):
 					SignalBus.gemini_help_received.emit(parsedJSON["help"]+" "+str(r))
 					
 					if parsedJSON.has("difficulty_level"):
-						#set difficulty	
+						#set difficulty
+						SignalBus.prev_game_difficulty = SignalBus.game_difficulty	
 						if parsedJSON["difficulty_level"] == 2:
 								#print("hard")
 								SignalBus.game_difficulty = SignalBus.HARD

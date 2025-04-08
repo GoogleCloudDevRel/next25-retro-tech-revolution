@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://bpbmk7rt2sikx"]
+[gd_scene load_steps=62 format=3 uid="uid://bpbmk7rt2sikx"]
 
 [ext_resource type="Script" path="res://levels/level_1/Scripts/level_1_screen.gd" id="1_x41gi"]
 [ext_resource type="PackedScene" uid="uid://cd25yxxiep0a5" path="res://levels/level_0_5/level_0_5.tscn" id="2_jdjf6"]
@@ -55,6 +55,8 @@
 [ext_resource type="Texture2D" uid="uid://i5ce1gke211r" path="res://assets/screens/congratulations/assets/Congratulations_00046.png" id="52_vs3kw"]
 [ext_resource type="Texture2D" uid="uid://dtiq5xukrtc05" path="res://assets/screens/congratulations/assets/Congratulations_00047.png" id="53_n1vqd"]
 [ext_resource type="AudioStream" uid="uid://cvdl3pj5o5m41" path="res://levels/level_1/loop-level1theme.ogg" id="55_nu5nm"]
+[ext_resource type="Texture2D" uid="uid://drk1g0jpmu0u2" path="res://levels/level_1/assets/difficulty_down.png" id="56_5p4wo"]
+[ext_resource type="Shader" path="res://shaders/scan_effect.gdshader" id="56_b3xdy"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f7jsx"]
 blend_mode = 1
@@ -213,6 +215,15 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3at37"]
+shader = ExtResource("56_b3xdy")
+shader_parameter/glow_color = Color(1, 0.5, 0.2, 1)
+shader_parameter/glow_intensity = 1.371
+shader_parameter/pulse_speed = 2.62
+shader_parameter/pulse_amplitude = 0.5
+shader_parameter/glow_threshold = 0.1
+shader_parameter/softness = 0.3
 
 [node name="level_1_screen" type="CanvasLayer"]
 layer = 5
@@ -375,4 +386,19 @@ stream = ExtResource("55_nu5nm")
 autoplay = true
 parameters/looping = true
 
+[node name="level_adujsted_msg" type="TextureRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_3at37")
+offset_left = 581.0
+offset_top = 118.0
+offset_right = 1344.0
+offset_bottom = 335.0
+texture = ExtResource("56_5p4wo")
+expand_mode = 1
+
+[node name="display_level_change_timer" type="Timer" parent="level_adujsted_msg"]
+wait_time = 3.0
+one_shot = true
+
 [connection signal="timeout" from="GeminiTimer" to="." method="_on_gemini_timer_call_help"]
+[connection signal="timeout" from="level_adujsted_msg/display_level_change_timer" to="." method="_on_hide_level_changed"]
