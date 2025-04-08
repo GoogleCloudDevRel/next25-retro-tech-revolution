@@ -54,5 +54,5 @@ func get_next_weapon(current_weapon: String) -> Dictionary:
 		counter += 1
 	return {"weapon_name":weapon_name, "weapon_idx":next_index}
 
-func _on_weapon_activated(weapon_name, weapon_idx):
+func _on_weapon_activated(_weapon_name, _weapon_idx):
 	player.UpdateAnimation(player.current_weapon + "_idle")

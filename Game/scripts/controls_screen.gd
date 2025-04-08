@@ -29,7 +29,7 @@ func _ready() -> void:
 func _blinking_loading_block():
 	
 	var block1 = ColorRect.new()
-	block1.position = Vector2(1800, 920)
+	block1.position = Vector2(1655, 920)
 	block1.size = Vector2(15, 40)
 	block1.color =  color1
 	
@@ -37,7 +37,7 @@ func _blinking_loading_block():
 	blinking_block = block1
 	
 	var block2 = ColorRect.new()
-	block2.position = Vector2(1820, 920)
+	block2.position = Vector2(1675, 920)
 	block2.size = Vector2(15, 15)
 	block2.color =  color1
 	
@@ -45,7 +45,7 @@ func _blinking_loading_block():
 	fixed_block1 = block2
 	
 	var block3 = ColorRect.new()
-	block3.position = Vector2(1820, 945)
+	block3.position = Vector2(1675, 945)
 	block3.size = Vector2(15, 15)
 	block3.color =  color1
 	
@@ -60,6 +60,7 @@ func _process(_delta: float) -> void:
 	var current_opacity2 = min_opacity + opacity_factor2 * (max_opacity - min_opacity)
 	# Apply the opacity while keeping the original color
 	if _waiting:
+		
 		fixed_block1.color = Color(color1.r, color1.g, color1.b, current_opacity)
 		fixed_block2.color = Color(color1.r, color1.g, color1.b, current_opacity2)
 	
@@ -74,10 +75,12 @@ func _on_backstory_received():
 	fixed_block1.color = color2
 	fixed_block2.color = color2
 	$Timer.stop()
-
+	$loading_status.text = "[color=#34A853][wave]READY!...[/wave][/color]"
 
 func _on_timer_timeout() -> void:
 	_waiting = false
 	blinking_block.color = color4
 	fixed_block1.color = color4
 	fixed_block2.color = color4
+	$loading_status.text = "[color=#F4B400][wave]READY!...[/wave][/color]"
+	

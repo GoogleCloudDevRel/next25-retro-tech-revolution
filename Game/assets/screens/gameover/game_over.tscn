@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=3 uid="uid://txomv4j8okk2"]
+[gd_scene load_steps=81 format=3 uid="uid://txomv4j8okk2"]
 
 [ext_resource type="Script" path="res://scripts/game_over.gd" id="1_poa64"]
 [ext_resource type="Texture2D" uid="uid://bgi8mtfb5wsnm" path="res://assets/screens/gameover/icons.png" id="3_3prv5"]
@@ -362,6 +362,11 @@ Button/styles/normal = SubResource("StyleBoxFlat_xgofl")
 [sub_resource type="SystemFont" id="SystemFont_0pjr2"]
 font_names = PackedStringArray("Google Sans Display")
 font_weight = 900
+subpixel_positioning = 0
+
+[sub_resource type="SystemFont" id="SystemFont_gdgqx"]
+font_names = PackedStringArray("Google Sans")
+font_weight = 500
 subpixel_positioning = 0
 
 [node name="GameOver" type="CanvasLayer"]
@@ -730,6 +735,18 @@ parameters/looping = true
 wait_time = 10.0
 one_shot = true
 autostart = true
+
+[node name="loading_status" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(0, 24)
+offset_left = 1700.0
+offset_top = 928.0
+offset_right = 1872.0
+offset_bottom = 975.0
+theme_override_fonts/normal_font = SubResource("SystemFont_gdgqx")
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "[color=#EA4335][wave]LOADING...[/wave][/color]"
+fit_content = true
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/HUD/ReplayButton" to="." method="_on_replay_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/HUD/ResetButton" to="." method="_on_reset_pressed"]

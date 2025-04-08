@@ -83,20 +83,25 @@ func _on_rank_received(rank:String):
 
 func _on_gemini_summary_received(summary:String):
 	_waiting = false
+	blinking_block.color = color2
+	fixed_block1.color = color2
+	fixed_block2.color = color2
 	%Summary.text += summary.to_upper()
+	$loading_status.text = "[color=#34A853][wave]READY!...[/wave][/color]"
 
 
 func _on_button_pressed(button_index):
-	if button_index == 0:
-		_on_replay_pressed()
-	else:
-		_on_reset_pressed()
+	if !_waiting:
+		if button_index == 0:
+			_on_replay_pressed()
+		else:
+			_on_reset_pressed()
 
 
 func _blinking_loading_block():
 	
 	var block1 = ColorRect.new()
-	block1.position = Vector2(1800, 920)
+	block1.position = Vector2(1655, 920)
 	block1.size = Vector2(15, 40)
 	block1.color =  color1
 	
@@ -104,7 +109,7 @@ func _blinking_loading_block():
 	blinking_block = block1
 	
 	var block2 = ColorRect.new()
-	block2.position = Vector2(1820, 920)
+	block2.position = Vector2(1675, 920)
 	block2.size = Vector2(15, 15)
 	block2.color =  color1
 	
@@ -112,7 +117,7 @@ func _blinking_loading_block():
 	fixed_block1 = block2
 	
 	var block3 = ColorRect.new()
-	block3.position = Vector2(1820, 945)
+	block3.position = Vector2(1675, 945)
 	block3.size = Vector2(15, 15)
 	block3.color =  color1
 	
@@ -208,3 +213,4 @@ func _on_timer_timeout() -> void:
 	blinking_block.color = color4
 	fixed_block1.color = color4
 	fixed_block2.color = color4
+	$loading_status.text = "[color=#F4B400][wave]READY!...[/wave][/color]"

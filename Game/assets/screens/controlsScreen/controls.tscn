@@ -19,9 +19,9 @@ subpixel_positioning = 0
 [node name="Controls" type="CanvasLayer"]
 layer = -1
 script = ExtResource("1_dvn23")
+metadata/_edit_vertical_guides_ = [1696.0]
 
 [node name="outerboarder" type="Node2D" parent="."]
-visible = false
 
 [node name="top" type="ColorRect" parent="outerboarder"]
 offset_right = 1920.0
@@ -140,9 +140,9 @@ fit_content = true
 [node name="BackgroundVideo" type="VideoStreamPlayer" parent="."]
 z_index = -1
 clip_contents = true
-offset_left = -4.0
+offset_left = -5.0
 offset_top = -2.0
-offset_right = 3836.0
+offset_right = 3835.0
 offset_bottom = 2158.0
 scale = Vector2(0.5, 0.5)
 stream = ExtResource("14_dnrqm")
@@ -153,5 +153,17 @@ loop = true
 wait_time = 10.0
 one_shot = true
 autostart = true
+
+[node name="loading_status" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(0, 24)
+offset_left = 1700.0
+offset_top = 928.0
+offset_right = 1872.0
+offset_bottom = 975.0
+theme_override_fonts/normal_font = SubResource("SystemFont_40jaw")
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "[color=#EA4335][wave]LOADING...[/wave][/color]"
+fit_content = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
