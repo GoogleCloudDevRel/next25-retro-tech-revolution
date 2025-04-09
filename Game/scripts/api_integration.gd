@@ -403,8 +403,8 @@ func _on_request_completed(_result, response_code, _headers, body):
 				if parsedJSON.has("help"):
 					var  r = ""
 					if parsedJSON.has("reason"):
-						r = parsedJSON.has("reason")
-					SignalBus.gemini_help_received.emit(parsedJSON["help"]+" "+str(r))
+						r = parsedJSON['reason']
+					SignalBus.gemini_help_received.emit(parsedJSON["help"]+" \n Difficulty Level: "+str(r))
 					
 					if parsedJSON.has("difficulty_level"):
 						#set difficulty

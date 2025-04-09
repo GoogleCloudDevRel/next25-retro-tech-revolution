@@ -86,6 +86,7 @@ func SetDirection() -> bool:
 	
 	cardinal_direction = new_dir
 	sprite.scale.x = -1 if cardinal_direction == Vector2.LEFT else 1
+	%Gun.set_cardinal_direction(new_dir) # update the direction of the gun
 	return true
 
 #check if a weapon is active or not

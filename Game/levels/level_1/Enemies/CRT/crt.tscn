@@ -414,7 +414,7 @@ autoplay = true
 loop = true
 
 [node name="attackRecoveryTimer" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 1.5
 one_shot = true
 
 [connection signal="timeout" from="attackRecoveryTimer" to="." method="_on_attack_recovery_timer_timeout"]

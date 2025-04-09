@@ -130,7 +130,7 @@ func distance_to_player(entity: Node2D) -> float:
 
 
 func draw_on_mini_map(elt, type):
-			if type=="player" or (type=="item" and (SignalBus.game_difficulty == SignalBus.EASY or SignalBus.game_difficulty == SignalBus.MEDIUM)) or ((type == "boss" or type == "enemy") and distance_to_player(elt) <= visibility_radius):
+			if type=="player" or ((type=="item" and elt.visible) and (SignalBus.game_difficulty == SignalBus.EASY or SignalBus.game_difficulty == SignalBus.MEDIUM)) or ((type == "boss" or type == "enemy") and distance_to_player(elt) <= visibility_radius):
 				var new_marker = TextureRect.new()
 				new_marker.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 				var pointer_size = 15

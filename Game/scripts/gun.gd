@@ -7,17 +7,53 @@ var current_num_bullet = MAX_NUM_BULLET
 var radius: float = 35.0 
 var facing_direction #need to be initialised
 
-func _physics_process(delta: float) -> void:
+var current_position: String = "down"
+@export var offset: float = 50.0
+var cardinal_direction: Vector2 = Vector2.DOWN
+
+
+func _process(delta: float) -> void:
+	# Get analog stick input values
+	update_position(cardinal_direction)
+	
+	
+func set_cardinal_direction(new_dir):
+	cardinal_direction = new_dir
+
+
+func update_position(direction):
+	#current_position = direction
+	
+	# Get the center position of the reference sprite
+	var ref_position = get_parent().global_position
+	
+	# Calculate the new position based on the direction
+	match direction:
+		Vector2.UP:
+			$WeaponPivot/Pistol.global_position = Vector2(ref_position.x, ref_position.y - offset)
+		Vector2.DOWN:
+			$WeaponPivot/Pistol.global_position = Vector2(ref_position.x, ref_position.y + offset)
+		Vector2.LEFT:
+			$WeaponPivot/Pistol.global_position = Vector2(ref_position.x - offset, ref_position.y)
+		Vector2.RIGHT:
+			$WeaponPivot/Pistol.global_position = Vector2(ref_position.x + offset, ref_position.y)
+
+
+
+func _physics_process_old2(delta: float) -> void:
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_axis("left", "right")
 	input_vector.y = Input.get_axis("up", "down")
 	if input_vector != Vector2.ZERO:
-		facing_direction = input_vector.normalized()
+		#facing_direction = input_vector.normalized()
 		var angle_rad = input_vector.angle()
 		var angle_deg = rad_to_deg(angle_rad)
 		var offset = Vector2(cos(angle_rad), sin(angle_rad)) * radius
 		$WeaponPivot/Pistol.global_position = global_position + offset
 		#$WeaponPivot/Pistol/ShootingPoint.rotation_degrees = angle_rad
+
+
+
 
 func _physics_process_old(_delta):
 	var ennemies_in_range = get_overlapping_bodies()

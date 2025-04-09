@@ -412,5 +412,5 @@ autoplay = true
 loop = true
 
 [node name="attackRecoveryTimer" type="Timer" parent="."]
-wait_time = 4.0
+wait_time = 2.0
 one_shot = true
