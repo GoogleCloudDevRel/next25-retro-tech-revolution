@@ -32,11 +32,11 @@ func update_position(direction):
 		Vector2.UP:
 			$WeaponPivot/Pistol.global_position = Vector2(ref_position.x, ref_position.y - offset)
 		Vector2.DOWN:
-			$WeaponPivot/Pistol.global_position = Vector2(ref_position.x, ref_position.y + offset)
+			$WeaponPivot/Pistol.global_position = Vector2(ref_position.x, ref_position.y + offset - 30)
 		Vector2.LEFT:
-			$WeaponPivot/Pistol.global_position = Vector2(ref_position.x - offset, ref_position.y)
+			$WeaponPivot/Pistol.global_position = Vector2(ref_position.x - offset + 20, ref_position.y -20)
 		Vector2.RIGHT:
-			$WeaponPivot/Pistol.global_position = Vector2(ref_position.x + offset, ref_position.y)
+			$WeaponPivot/Pistol.global_position = Vector2(ref_position.x + offset-20, ref_position.y-20)
 
 
 
@@ -84,13 +84,13 @@ func shoot(current_weapon):
 	if current_weapon  == "blaster":
 		if current_num_bullet > 0:
 			var b = bullet_1.instantiate()
-			b.direction = facing_direction
+			b.direction = cardinal_direction #facing_direction
 			b.set_shooting_point($WeaponPivot/Pistol/ShootingPoint)
 			SignalBus.bullet_created.emit(b)
 			current_num_bullet -= 1
 	else: #gauntlet
 			var b = bullet_2.instantiate()
-			b.direction = facing_direction
+			b.direction = cardinal_direction#facing_direction
 			b.set_shooting_point($WeaponPivot/Pistol/ShootingPoint)
 			SignalBus.bullet_created.emit(b)
 			current_num_bullet -= 1

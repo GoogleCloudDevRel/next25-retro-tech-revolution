@@ -54,7 +54,7 @@
 [ext_resource type="Texture2D" uid="uid://bk8iwtawfnfjp" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00069.png" id="49_gx310"]
 [ext_resource type="Texture2D" uid="uid://ckf0tmb7ybloh" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00070.png" id="50_b5bxi"]
 [ext_resource type="Texture2D" uid="uid://lafva1js1spt" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00071.png" id="51_2hxhb"]
-[ext_resource type="Texture2D" uid="uid://b8pabu7qj5gfo" path="res://assets/screens/gameover/qr-code.png" id="56_mb560"]
+[ext_resource type="Texture2D" uid="uid://ck63qk87chj8o" path="res://assets/screens/gameover/qr-code_medium.png" id="55_v4nsc"]
 [ext_resource type="VideoStream" path="res://assets/Background.ogv" id="57_uqg6v"]
 [ext_resource type="AudioStream" uid="uid://bo38frg4jfmkx" path="res://assets/screens/gameover/loop-victory.ogg" id="58_ayr86"]
 
@@ -593,7 +593,7 @@ bbcode_enabled = true
 custom_minimum_size = Vector2(290, 290)
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("56_mb560")
+texture = ExtResource("55_v4nsc")
 expand_mode = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
