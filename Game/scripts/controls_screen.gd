@@ -7,6 +7,10 @@ extends CanvasLayer
 @export var max_opacity: float = 1.0  # Maximum opacity
 @export var radius : float = 10.0
 
+@onready var nextButton = $MarginContainer/VBoxContainer/PressXKeyLabel
+@onready var screenTitle = $MarginContainer/VBoxContainer/title
+@onready var controls = $MarginContainer/VBoxContainer/MarginContainer/Background
+@onready var loading_status = $loading_status
 
 var _waiting: bool = true
 var color1: Color = Color(0.91, 0.26, 0.20, 1)  # Red
@@ -19,10 +23,30 @@ var fixed_block2
 var timer = 0
 var is_visible = true
 
+var ready_label = "" 
 
 
 func _ready() -> void:
 	SignalBus.gemini_backstory_image_received.connect(_on_backstory_received)
+	
+	
+	#manage language
+	if SignalBus.language == "JP":
+		screenTitle.text = "[center]ゲームコントロール[/center]"
+		controls.texture = load("res://assets/screens/controlsScreen/controller-JP.png")
+		nextButton.text = "[center][color=\"#F4B400\"]A[/color] ボタンを押して続ける[/center]"
+		loading_status.text = "[color=#EA4335][wave]ロード中...[/wave][/color]"
+		ready_label = "[color=#F4B400][wave]準備OK!...[/wave][/color]"
+	else:
+		screenTitle.text = "[center]GAME CONTROLS[/center]"
+		controls.texture = load("res://assets/screens/controlsScreen/gamepad_45.png")
+		nextButton.text = "[center]PRESS [color=\"#F4B400\"]A[/color] TO CONTINUE[/center]"
+		loading_status.text = "[color=#EA4335][wave]LOADING...[/wave][/color]"
+		ready_label = "[color=#F4B400][wave]READY!...[/wave][/color]"
+
+	
+	
+	
 	_blinking_loading_block()
 	
 	
@@ -75,12 +99,12 @@ func _on_backstory_received():
 	fixed_block1.color = color2
 	fixed_block2.color = color2
 	$Timer.stop()
-	$loading_status.text = "[color=#34A853][wave]READY!...[/wave][/color]"
+	loading_status.text = ready_label
 
 func _on_timer_timeout() -> void:
 	_waiting = false
 	blinking_block.color = color4
 	fixed_block1.color = color4
 	fixed_block2.color = color4
-	$loading_status.text = "[color=#F4B400][wave]READY!...[/wave][/color]"
+	loading_status.text = ready_label
 	

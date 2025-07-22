@@ -43,11 +43,20 @@ var mutation_cooldown: Timer = Timer.new()
 
 ## The base balloon anchor
 @onready var balloon: Control = %Balloon
+@onready var clearText = $Balloon/Control/PressXKeyLabel
+
 
 ## The label showing the currently spoken dialogue
 @onready var dialogue_label: DialogueLabel = %DialogueLabel
 
 func _ready() -> void:
+	
+	if SignalBus.language == "JP":
+		clearText.text = "[right]PRESS [color=\"#F4B400\"]X[/color] ボタンを押して続けるE[/right]"
+	else:
+		clearText.text = "[right]PRESS [color=\"#F4B400\"]X[/color] TO CONTINUE[/right]"
+	
+	
 	balloon.hide()
 	Engine.get_singleton("DialogueManager").mutated.connect(_on_mutated)
 

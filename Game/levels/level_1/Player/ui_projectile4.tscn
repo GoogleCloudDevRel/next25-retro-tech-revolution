@@ -35,7 +35,7 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pjxmw"]
 _data = {
-"ui_p3_4": SubResource("Animation_khnt4")
+&"ui_p3_4": SubResource("Animation_khnt4")
 }
 
 [node name="UI_P4" type="Node2D"]

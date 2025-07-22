@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://q2bsklea4iyx"]
 
-[ext_resource type="Shader" path="res://shaders/grandient_border.gdshader" id="1_dks6v"]
+[ext_resource type="Shader" uid="uid://da1f8fqui3tsl" path="res://shaders/grandient_border.gdshader" id="1_dks6v"]
 [ext_resource type="Texture2D" uid="uid://fgfkmi1s2ekp" path="res://assets/screens/backstory/gemini-logo.png" id="2_204pe"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_s04dw"]

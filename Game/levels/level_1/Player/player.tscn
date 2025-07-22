@@ -1,23 +1,23 @@
 [gd_scene load_steps=60 format=3 uid="uid://dkddtwn5gkisp"]
 
-[ext_resource type="Script" path="res://levels/level_1/Player/Scripts/player.gd" id="1_dhwja"]
+[ext_resource type="Script" uid="uid://bft7gh2tvgpy" path="res://levels/level_1/Player/Scripts/player.gd" id="1_dhwja"]
 [ext_resource type="Texture2D" uid="uid://dojw02iv386ie" path="res://levels/level_1/Player/Sprites/RetroPlayerSprite.png" id="1_i1wrl"]
 [ext_resource type="Texture2D" uid="uid://bv0csemkndvxa" path="res://levels/level_1/Player/Assets/Shadow.png" id="2_d1u7b"]
-[ext_resource type="Shader" path="res://shaders/player_flash.gdshader" id="3_1ynf5"]
+[ext_resource type="Shader" uid="uid://x43r5dl4g4xi" path="res://shaders/player_flash.gdshader" id="3_1ynf5"]
 [ext_resource type="Texture2D" uid="uid://bojl7g2v4vc1d" path="res://levels/level_1/Player/Assets/light.png" id="3_l6ng5"]
-[ext_resource type="Script" path="res://levels/level_1/Player/Scripts/player_state_machine.gd" id="4_egucv"]
-[ext_resource type="Script" path="res://levels/level_1/Player/Scripts/state_idle.gd" id="5_04s8s"]
-[ext_resource type="Script" path="res://levels/level_1/Player/Scripts/state_walk.gd" id="6_ldc3a"]
-[ext_resource type="Script" path="res://levels/level_1/Player/Scripts/state_attack_unarmed.gd" id="8_hj8sk"]
-[ext_resource type="Script" path="res://levels/level_1/Player/Scripts/state_attack_blaster.gd" id="9_1753t"]
-[ext_resource type="Script" path="res://levels/level_1/Player/Scripts/state_attack_gauntlet.gd" id="10_f7hm8"]
+[ext_resource type="Script" uid="uid://7h3y614rs32q" path="res://levels/level_1/Player/Scripts/player_state_machine.gd" id="4_egucv"]
+[ext_resource type="Script" uid="uid://di8s01x4ylus5" path="res://levels/level_1/Player/Scripts/state_idle.gd" id="5_04s8s"]
+[ext_resource type="Script" uid="uid://diu42unl2v4h4" path="res://levels/level_1/Player/Scripts/state_walk.gd" id="6_ldc3a"]
+[ext_resource type="Script" uid="uid://c4dkn3iap38hm" path="res://levels/level_1/Player/Scripts/state_attack_unarmed.gd" id="8_hj8sk"]
+[ext_resource type="Script" uid="uid://cpi3q3tdjpwo3" path="res://levels/level_1/Player/Scripts/state_attack_blaster.gd" id="9_1753t"]
+[ext_resource type="Script" uid="uid://cbugqspi1dulb" path="res://levels/level_1/Player/Scripts/state_attack_gauntlet.gd" id="10_f7hm8"]
 [ext_resource type="PackedScene" uid="uid://ctiryxaafma1a" path="res://assets/tools/gun/gun.tscn" id="12_0eawm"]
-[ext_resource type="Shader" path="res://shaders/Bullet.gdshader" id="13_1eh3v"]
-[ext_resource type="Shader" path="res://shaders/torchlight.gdshader" id="14_br2u3"]
+[ext_resource type="Shader" uid="uid://b4b4rl14vf7x6" path="res://shaders/Bullet.gdshader" id="13_1eh3v"]
+[ext_resource type="Shader" uid="uid://dc55pnmsmscvp" path="res://shaders/torchlight.gdshader" id="14_br2u3"]
 [ext_resource type="Texture2D" uid="uid://d3xsaug1by40g" path="res://shaders/LightSprite.png" id="15_mt3th"]
 [ext_resource type="PackedScene" uid="uid://c1cr2wayj7p71" path="res://levels/level_1/Player/Scripts/bubble.tscn" id="16_jbhtv"]
-[ext_resource type="Shader" path="res://shaders/chromakey.gdshader" id="17_su58f"]
-[ext_resource type="VideoStream" path="res://levels/level_1/Player/Assets/swirl_v2.ogv" id="18_j1a6a"]
+[ext_resource type="Shader" uid="uid://bclg1ennh4oog" path="res://shaders/chromakey.gdshader" id="17_su58f"]
+[ext_resource type="VideoStream" uid="uid://n3hy87se4yae" path="res://levels/level_1/Player/Assets/swirl_v2.ogv" id="18_j1a6a"]
 [ext_resource type="Texture2D" uid="uid://61spli2ohccc" path="res://levels/level_1/Player/Assets/Gemini.png" id="19_al0dy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fbcb4"]
@@ -58,8 +58,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_j0ci4"]
 _data = {
-"RESET": SubResource("Animation_s1t47"),
-"depleting": SubResource("Animation_mi4v3")
+&"RESET": SubResource("Animation_s1t47"),
+&"depleting": SubResource("Animation_mi4v3")
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ianlx"]
@@ -531,34 +531,34 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nxqh2"]
 _data = {
-"RESET": SubResource("Animation_u138x"),
-"blaster_attack_down": SubResource("Animation_r7ydt"),
-"blaster_attack_side": SubResource("Animation_ffih3"),
-"blaster_attack_up": SubResource("Animation_ephsp"),
-"blaster_idle_down": SubResource("Animation_oe2mg"),
-"blaster_idle_side": SubResource("Animation_lliqd"),
-"blaster_idle_up": SubResource("Animation_uuho7"),
-"blaster_walk_down": SubResource("Animation_xt385"),
-"blaster_walk_side": SubResource("Animation_8ud0r"),
-"blaster_walk_up": SubResource("Animation_v7q6c"),
-"gauntlet_attack_down": SubResource("Animation_ou5sn"),
-"gauntlet_attack_side": SubResource("Animation_jvkwf"),
-"gauntlet_attack_up": SubResource("Animation_8k4h3"),
-"gauntlet_idle_down": SubResource("Animation_nmwtv"),
-"gauntlet_idle_side": SubResource("Animation_kxif0"),
-"gauntlet_idle_up": SubResource("Animation_a5kug"),
-"gauntlet_walk_down": SubResource("Animation_m406q"),
-"gauntlet_walk_side": SubResource("Animation_y210j"),
-"gauntlet_walk_up": SubResource("Animation_l6ekf"),
-"unarmed_attack_down": SubResource("Animation_fronf"),
-"unarmed_attack_side": SubResource("Animation_cs8kb"),
-"unarmed_attack_up": SubResource("Animation_mbvv5"),
-"unarmed_idle_down": SubResource("Animation_uburn"),
-"unarmed_idle_side": SubResource("Animation_uwboy"),
-"unarmed_idle_up": SubResource("Animation_88jgc"),
-"unarmed_walk_down": SubResource("Animation_fnp2s"),
-"unarmed_walk_side": SubResource("Animation_4i1a0"),
-"unarmed_walk_up": SubResource("Animation_wydma")
+&"RESET": SubResource("Animation_u138x"),
+&"blaster_attack_down": SubResource("Animation_r7ydt"),
+&"blaster_attack_side": SubResource("Animation_ffih3"),
+&"blaster_attack_up": SubResource("Animation_ephsp"),
+&"blaster_idle_down": SubResource("Animation_oe2mg"),
+&"blaster_idle_side": SubResource("Animation_lliqd"),
+&"blaster_idle_up": SubResource("Animation_uuho7"),
+&"blaster_walk_down": SubResource("Animation_xt385"),
+&"blaster_walk_side": SubResource("Animation_8ud0r"),
+&"blaster_walk_up": SubResource("Animation_v7q6c"),
+&"gauntlet_attack_down": SubResource("Animation_ou5sn"),
+&"gauntlet_attack_side": SubResource("Animation_jvkwf"),
+&"gauntlet_attack_up": SubResource("Animation_8k4h3"),
+&"gauntlet_idle_down": SubResource("Animation_nmwtv"),
+&"gauntlet_idle_side": SubResource("Animation_kxif0"),
+&"gauntlet_idle_up": SubResource("Animation_a5kug"),
+&"gauntlet_walk_down": SubResource("Animation_m406q"),
+&"gauntlet_walk_side": SubResource("Animation_y210j"),
+&"gauntlet_walk_up": SubResource("Animation_l6ekf"),
+&"unarmed_attack_down": SubResource("Animation_fronf"),
+&"unarmed_attack_side": SubResource("Animation_cs8kb"),
+&"unarmed_attack_up": SubResource("Animation_mbvv5"),
+&"unarmed_idle_down": SubResource("Animation_uburn"),
+&"unarmed_idle_side": SubResource("Animation_uwboy"),
+&"unarmed_idle_up": SubResource("Animation_88jgc"),
+&"unarmed_walk_down": SubResource("Animation_fnp2s"),
+&"unarmed_walk_side": SubResource("Animation_4i1a0"),
+&"unarmed_walk_up": SubResource("Animation_wydma")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qj0eg"]
@@ -615,7 +615,7 @@ vframes = 6
 [node name="healthDepletionAnimation" type="AnimationPlayer" parent="Sprite2D"]
 root_node = NodePath("../..")
 libraries = {
-"": SubResource("AnimationLibrary_j0ci4")
+&"": SubResource("AnimationLibrary_j0ci4")
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -623,7 +623,7 @@ shape = SubResource("CircleShape2D_ianlx")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_nxqh2")
+&"": SubResource("AnimationLibrary_nxqh2")
 }
 
 [node name="Camera2D" type="Camera2D" parent="."]

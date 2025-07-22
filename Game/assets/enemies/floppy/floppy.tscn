@@ -1,8 +1,8 @@
 [gd_scene load_steps=22 format=3 uid="uid://db8x6ltbsbls5"]
 
-[ext_resource type="Script" path="res://scripts/floppy.gd" id="1_6a204"]
+[ext_resource type="Script" uid="uid://cyyyoaotryuk2" path="res://scripts/floppy.gd" id="1_6a204"]
 [ext_resource type="Texture2D" uid="uid://dtq46sp34kb6d" path="res://assets/enemies/floppy/floppy-disk-bouncing.png" id="1_inpsm"]
-[ext_resource type="Shader" path="res://shaders/player_flash.gdshader" id="2_i2mlg"]
+[ext_resource type="Shader" uid="uid://x43r5dl4g4xi" path="res://shaders/player_flash.gdshader" id="2_i2mlg"]
 [ext_resource type="Texture2D" uid="uid://2bp2tvmjnuuh" path="res://levels/level_0_5/white_smoke.png" id="4_wsjpc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vpt3u"]
@@ -11,7 +11,7 @@
 resource_local_to_scene = true
 shader = ExtResource("2_i2mlg")
 shader_parameter/flash_color = Color(0.762484, 0.090139, 0.589687, 1)
-shader_parameter/flash_value = null
+shader_parameter/flash_value = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yq5ej"]
 atlas = ExtResource("1_inpsm")
@@ -101,8 +101,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gm04l"]
 _data = {
-"RESET": SubResource("Animation_iojw5"),
-"enemyHit": SubResource("Animation_10dai")
+&"RESET": SubResource("Animation_iojw5"),
+&"enemyHit": SubResource("Animation_10dai")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jmtoh"]

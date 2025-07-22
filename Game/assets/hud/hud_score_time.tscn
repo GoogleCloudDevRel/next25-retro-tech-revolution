@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://ckx27n28b73bp"]
 
-[ext_resource type="Script" path="res://scripts/hud_score_time_screen.gd" id="1_icu2d"]
-[ext_resource type="Shader" path="res://shaders/glow_effect_4_1.gdshader" id="2_4hoyq"]
+[ext_resource type="Script" uid="uid://bsagrq7qnxkkk" path="res://scripts/hud_score_time_screen.gd" id="1_icu2d"]
+[ext_resource type="Shader" uid="uid://d1cqpm4rwh13e" path="res://shaders/glow_effect_4_1.gdshader" id="2_4hoyq"]
 [ext_resource type="Texture2D" uid="uid://d27s3j08jab04" path="res://assets/hud/stopwatch.png" id="2_i0k4c"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nahch"]

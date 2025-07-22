@@ -1,10 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://c8crmjsg0br8d"]
+[gd_scene load_steps=11 format=3 uid="uid://c8crmjsg0br8d"]
 
-[ext_resource type="Shader" path="res://shaders/scanline_v2gdshader.gdshader" id="1_jh1b8"]
-[ext_resource type="Shader" path="res://levels/level_1/level_1.gdshader" id="2_hs8ac"]
-[ext_resource type="Script" path="res://scripts/game_manager.gd" id="2_sabek"]
+[ext_resource type="Shader" uid="uid://ck02kfm4frx0q" path="res://shaders/scanline_v2gdshader.gdshader" id="1_jh1b8"]
+[ext_resource type="Shader" uid="uid://bdn6yli7tmkd4" path="res://levels/level_1/level_1.gdshader" id="2_hs8ac"]
+[ext_resource type="Script" uid="uid://d1wouk43gmi0e" path="res://scripts/game_manager.gd" id="2_sabek"]
 [ext_resource type="AudioStream" uid="uid://bhuq3pb5g4pg6" path="res://assets/screens/questionsscreen/waiting-loop.ogg" id="4_4tb5p"]
-[ext_resource type="Script" path="res://scripts/server.gd" id="4_iwxs6"]
+[ext_resource type="Script" uid="uid://d284wodwsbrqf" path="res://scripts/server.gd" id="4_iwxs6"]
 
 [sub_resource type="Environment" id="Environment_b4s52"]
 background_mode = 3
@@ -32,12 +32,16 @@ shader = ExtResource("2_hs8ac")
 shader_parameter/lineIntensity = 0.3
 shader_parameter/lineThickness = 1.9
 shader_parameter/linePower = 2.0
-shader_parameter/warpAmount = null
+shader_parameter/warpAmount = 0.0
 shader_parameter/lineSpeed = 0.9
 
-[sub_resource type="SystemFont" id="SystemFont_04jrl"]
+[sub_resource type="SystemFont" id="SystemFont_22tnt"]
+font_names = PackedStringArray("Noto Sans JP")
+
+[sub_resource type="SystemFont" id="SystemFont_f17wq"]
+fallbacks = Array[Font]([SubResource("SystemFont_22tnt")])
 font_names = PackedStringArray("Google Sans")
-font_weight = 999
+font_weight = 500
 
 [node name="Game" type="Node2D"]
 top_level = true
@@ -92,24 +96,21 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.52549)
 
-[node name="Label" type="Label" parent="PauseCanvas/bg"]
+[node name="pauseLabel" type="RichTextLabel" parent="PauseCanvas/bg"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = SubResource("SystemFont_04jrl")
-theme_override_font_sizes/font_size = 50
-text = "Paused
-Pressed 3 lines to restart"
+theme_override_fonts/normal_font = SubResource("SystemFont_f17wq")
+theme_override_font_sizes/normal_font_size = 46
+bbcode_enabled = true
+text = " [color=\"#4285F4\"][wave]Paused[/wave][/color] 
+Press [color=\"#F4B400\"]≡[/color] to restart
+Press [color=\"#EA4335\"] A [/color] to quit"
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Server" type="Node" parent="."]
 process_mode = 3

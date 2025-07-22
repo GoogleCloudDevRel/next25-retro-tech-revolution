@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://c1cr2wayj7p71"]
 
-[ext_resource type="Script" path="res://levels/level_1/Player/Scripts/bubble.gd" id="1_46pnk"]
+[ext_resource type="Script" uid="uid://cuqkujuhfr52x" path="res://levels/level_1/Player/Scripts/bubble.gd" id="1_46pnk"]
 [ext_resource type="Texture2D" uid="uid://bsy2drm8f5lns" path="res://levels/level_1/Player/Assets/iddle_state.png" id="2_rg6io"]
 
 [sub_resource type="Animation" id="Animation_egy5a"]
@@ -38,8 +38,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hrts4"]
 _data = {
-"RESET": SubResource("Animation_egy5a"),
-"iddle_state": SubResource("Animation_i56b1")
+&"RESET": SubResource("Animation_egy5a"),
+&"iddle_state": SubResource("Animation_i56b1")
 }
 
 [node name="Bubble" type="Node2D"]

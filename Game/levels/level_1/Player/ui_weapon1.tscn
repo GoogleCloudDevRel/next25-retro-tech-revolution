@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://d0p6wso088i1o"]
 
 [ext_resource type="Texture2D" uid="uid://dc5vl232wj3lt" path="res://levels/level_1/Player/Sprites/ItemSprites.png" id="1_up1es"]
-[ext_resource type="Script" path="res://levels/level_1/Player/Scripts/ui_weapon_1.gd" id="1_whyre"]
+[ext_resource type="Script" uid="uid://cq3hjav32nd4e" path="res://levels/level_1/Player/Scripts/ui_weapon_1.gd" id="1_whyre"]
 [ext_resource type="Texture2D" uid="uid://bv0csemkndvxa" path="res://levels/level_1/Player/Assets/Shadow.png" id="2_p1x5s"]
 [ext_resource type="Texture2D" uid="uid://bojl7g2v4vc1d" path="res://levels/level_1/Player/Assets/light.png" id="3_1deij"]
 
@@ -64,8 +64,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pjxmw"]
 _data = {
-"RESET": SubResource("Animation_cdm6f"),
-"ui_w1_rotate": SubResource("Animation_wp8a3")
+&"RESET": SubResource("Animation_cdm6f"),
+&"ui_w1_rotate": SubResource("Animation_wp8a3")
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_07q05"]

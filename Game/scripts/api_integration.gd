@@ -1,56 +1,39 @@
 extends Node
 
-
-var GEMINI_API_KEY
-var GEMINI_PRO_URL: Array[String] = []
-var GEMINI_URL
-var gcp_token = ""
-
-#const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-pro-exp-02-05:generateContent?key=" + GEMINI_API_KEY
-#const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:generateContent?key=" + GEMINI_API_KEY
-
-#const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key" + GEMINI_API_KEY
-
-#const GEMINI_PRO_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro-exp-03-25:generateContent?key=" + GEMINI_API_KEY
-
-
-const IMAGEN3_URL ="https://us-central1-aiplatform.googleapis.com/v1/projects/data-cloud-interactive-demo/locations/us-central1/publishers/google/models/imagen-3.0-generate-002:predict"
-
-
-
-var counter_before_gemini_help = 20 #wait 20 bullets before calling gemini for help 
-
-var endpoint = "localhost"
-var port = "5055"
+#####used if using a direct call and an api key
+var GEMINI_API_KEY #used if using a direct call and an api key
+var GEMINI_PRO_URL: Array[String] = [] #used if using a direct call and an api key
+var GEMINI_URL #used if using a direct call and an api key
+var gcp_token = "" #used if using a direct call and an api key
 var is_gemini_error = false
 var current_gemini_model = 0
-#separate thread used by the screenshot system
-var thread: Thread
+#####
+
+#### Configuration of the bridge API
+var endpoint = "localhost"
+var port = "5055"
+
+var lang = "English" 
+
 
 ###connect on all the messages
 func _ready():
-	##connect with bus
-	_on_api_key(SignalBus.gemini_api_key)
+	
+	if SignalBus.language == "JP": lang = "Japanese"
+	
+	
+	##connect with the SignalBus
+	#_on_api_key(SignalBus.gemini_api_key) #used if using a direct call and an api key
+	#SignalBus.gemini_api_key_received.connect(_on_api_key) #used if using a direct call and an api key
 	
 	SignalBus.gemini_help_requested.connect(_on_need_gemini_help)
 	SignalBus.gemini_backstory_requested.connect(_on_get_gemini_backstory)
 	SignalBus.gemini_backstory_image_requested.connect(call_api_bridge_generate_backstory_image)
 	SignalBus.send_screenshot_to_gcs.connect(_on_send_screenshots_to_gcs)
 	SignalBus.screen_state.connect(_on_game_over)
-	SignalBus.gemini_api_key_received.connect(_on_api_key)
 	
-	#print("---api integration ready---")
 
-func _on_api_key(key):
-	GEMINI_API_KEY = key
-	#backstory
-	GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + GEMINI_API_KEY
-	
-	#Help
-	GEMINI_PRO_URL.append("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-pro-exp-02-05:generateContent?key=" + GEMINI_API_KEY)
-	GEMINI_PRO_URL.append("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + GEMINI_API_KEY)
-
-#get rank on game over
+####get rank on game over
 func _on_game_over(state):
 	if state == SignalBus.GAMEOVER: #kick in only if we have finished
 		#retrieve rank
@@ -71,7 +54,6 @@ func _on_game_over(state):
 		http_request2.request_completed.connect(_on_gemini_summary_received.bind(http_request2))
 		var connection2 ="http://"+endpoint+":"+port+"/get_gemini_summary"
 		http_request2.request(connection2, headers, HTTPClient.METHOD_POST, body) 
-
 	
 func _on_rank_received(result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray, _req_node : HTTPRequest = null):
 	if result != OK:
@@ -86,16 +68,9 @@ func _on_gemini_summary_received(result: int, _response_code: int, _headers: Pac
 	else:
 		var summary = body.get_string_from_utf8()
 		SignalBus.gemini_summary_received.emit(summary)
-
-
+###
 
 ###send regularly send screenshots of the game to GCS
-#func _on_send_screenshots_to_gcs():
-#	var i = get_screenshot()
-#	thread.start(_on_send_screenshots_to_gcs_thread.bind(i))
-
-
-
 func get_screenshot() -> Image:
 	return get_viewport().get_texture().get_image()
 
@@ -143,12 +118,11 @@ func _on_send_screenshots_to_gcs():
 		var filename = "user://"+directory_name+"/"+str(SignalBus.session_id)+"screenshot-{0}.png".format({"0":SignalBus.last_screenshot_timestamp})
 		capture.save_png(filename)
 		SignalBus.last_screenshot = filename
-		
-	
+
 #receive result result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray, _req_node : HTTPRequest = null
 func _on_send_screenshots_to_gcs_request_completed(result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray, _req_node : HTTPRequest = null):
 	if result != HTTPRequest.RESULT_SUCCESS:
-		printerr("HTTP Request failed with error: ", result)
+		printerr("Screenshot failure - HTTP Request failed with error: ", result)
 		return
 	
 	if _response_code == 200:
@@ -157,18 +131,219 @@ func _on_send_screenshots_to_gcs_request_completed(result: int, _response_code: 
 	else:
 		printerr("Upload failed with response code: ", _response_code)
 		printerr("Response body: ", body.get_string_from_utf8())
-		
-	
-		
-#############################################
+####		
 
 ###request support from Gemini sending a screenshot + prompt
 func _on_need_gemini_help():
-	#var capture = get_viewport().get_texture().get_image()
-	#var _time = Time.get_datetime_string_from_system()
-	#var filename = "res://screenshots/"+str(SignalBus.session_id)+"screenshot-{0}.png".format({"0":_time})
-	#capture.save_png(filename)
 	
+	var base64_image = ""
+	if FileAccess.file_exists(SignalBus.last_screenshot):
+		var image = Image.load_from_file(SignalBus.last_screenshot)
+	# 1. Encode the image to base64.
+		var image_bytes = image.save_png_to_buffer() # Use PNG for best results with Gemini
+		base64_image = Marshalls.raw_to_base64(image_bytes)	
+	call_adk_agent_with_prompt_and_image(base64_image)
+
+##########################################Signals handling & call preparation	
+
+#using answers from the user ask gemini to generate a story about the datacenter
+#using the backstory ask imagen3 gemini for a background image 
+func _on_get_gemini_backstory():
+	
+	#Ask for an image
+	var prompt_img = "Illustrate the following story using a 16 bits retro style design with neon glows using google color palette:\n"
+	prompt_img += " You have been tasked to clean a datacenter that have been overtaken by old technologies from the 80s and 90s like matrix printers & CRTs and fyling floppy disks.\n"
+	prompt_img += "Make sure to incorporate in your image elements that remind of a: "+SignalBus.trivia_result[0]['a']+"\n"
+	prompt_img += " and an overall vibe: "+SignalBus.trivia_result[1]['a']+"\n"	
+	call_api_bridge_generate_backstory_image(prompt_img)
+	
+	#ask for a compelling story
+	var prompt = "You are a video game story writer and you are tasked to write a very short backstory of the game to make the player want to play.\n" 
+	prompt += "The game takes place in an old datacenter from the 80s or 90s swarming with old technologies like CRTs, old matrix dot printers or floppy disks." 
+	prompt += "The hero of the story is tasked to clean the datacenter from thos antiquities and find the boss, an old angry ATX Server that controls the old tech and hide in the datacenter.\n" 
+	prompt += "To tailor the story to the player, he gave you the following indications on his personality through a Q&A session." 
+	
+	for i in SignalBus.trivia_result.size():
+		prompt +="Question:" + SignalBus.trivia_result[i]['q'] +", Answer:"+ SignalBus.trivia_result[i]['a'] + ".\n"	
+	prompt += "Color your story with element from his answers and keep the story short, Write the story in the following language: "+lang
+	call_api_bridge_generate_backstory_story(prompt)
+	
+##########################################API Integration	
+
+####Connect to a local API Bridge
+
+####connect to the api bridge to get the backstory image
+func call_api_bridge_generate_backstory_image(prompt):
+	var http_request  = HTTPRequest.new()
+	add_child(http_request)
+	http_request.request_completed.connect(_on_call_api_bridge_backstory_image_request_completed.bind(http_request))
+	var connection ="http://"+endpoint+":"+port+"/get_backstory_image"
+	var headers = ["Content-Type: application/json"]
+	
+	var body = JSON.stringify({
+			"session_id": SignalBus.session_id,
+			"prompt": prompt
+		})
+	
+	http_request.request(connection, headers, HTTPClient.METHOD_POST, body) 
+
+#Got the image that we need to display
+func _on_call_api_bridge_backstory_image_request_completed(result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray, _req_node : HTTPRequest = null):
+	if result != OK:
+			printerr("Imagen3: failed to generate image")
+	else:
+		var base64_image = body.get_string_from_utf8()
+		#print(base64_image)
+		SignalBus.gemini_backstory_image = base64_image
+		SignalBus.gemini_backstory_image_received.emit()
+####
+
+####connect locally to send analytic sensors data
+func call_api_bridge_analytics(json_string):
+	var http_request  = HTTPRequest.new()
+	add_child(http_request)
+	http_request.request_completed.connect(_on_call_api_bridge_request_completed.bind(http_request))
+	var connection ="http://"+endpoint+":"+port+"/backendcomm"
+	var headers = ["Content-type: application/json"]
+	http_request.request(connection, headers, HTTPClient.METHOD_POST, json_string) 
+####Receiving analytics registration answer from the API Bridge
+func _on_call_api_bridge_request_completed(result: int, _response_code: int, _headers: PackedStringArray, _body: PackedByteArray, _req_node : HTTPRequest = null):
+	if result != OK:
+			printerr("Pub/Sub: failed to send analytic data")
+####
+
+#### go through the API bridge to call Gemini and get a backstory
+func call_api_bridge_generate_backstory_story(prompt:String):
+	var body =  JSON.stringify({
+			"prompt":prompt
+		})
+	# Make the HTTP request
+	var http_request  = HTTPRequest.new()
+	add_child(http_request)
+	http_request.request_completed.connect(_on_call_api_bridge_generate_backstory_story_request_completed.bind(http_request))
+	http_request.request(
+			"http://"+endpoint+":"+port+"/get_backstory_story",
+			["Content-Type: application/json"],
+			HTTPClient.METHOD_POST,
+			body
+		)
+	SignalBus.gemini_backstory_requested_details.emit(prompt)	
+###Result received from the API bridge with a backstory
+func _on_call_api_bridge_generate_backstory_story_request_completed(result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray, _req_node : HTTPRequest = null):
+	if result != OK:
+		printerr("Error receiving gemini backstory story generation")
+	else:
+		var content = body.get_string_from_utf8()
+		print(content)
+		SignalBus.gemini_backstory_received.emit()
+		SignalBus.gemini_backstory_text = content
+####
+				
+####Call ADK agent with prompt & an image
+func call_adk_agent_with_prompt_and_image(base64_image:String):
+	var body = JSON.stringify({
+			"image": "data:image/png;base64," + base64_image,
+			"session_id": SignalBus.session_id,
+			"stopwatch": SignalBus.last_screenshot_timestamp,
+			"has_weapon1":!SignalBus.players[0].weapons[1]['disabled'],
+			"has_weapon2":!SignalBus.players[0].weapons[2]['disabled'],
+			"hit_count": SignalBus.players[0].hit_count,
+			"health": SignalBus.players[0].health,
+			"score": SignalBus.score,
+			"game_difficulty":SignalBus.game_difficulty,
+			"language": lang
+		})
+		
+	# Make the HTTP request
+	var http_request  = HTTPRequest.new()
+	add_child(http_request)
+	http_request.request_completed.connect(_on_call_adk_agent_with_prompt_and_image_request_completed.bind(http_request))
+	http_request.request(
+			"http://"+endpoint+":"+port+"/get_agent_help",
+			["Content-Type: application/json"],
+			HTTPClient.METHOD_POST,
+			body
+		)
+
+func _on_call_adk_agent_with_prompt_and_image_request_completed(result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray, _req_node : HTTPRequest = null):
+	if result != OK:
+			printerr("ADK: failed to receive help from agent")
+	else:
+		var parsedJSON = JSON.parse_string(body.get_string_from_utf8())
+		
+		SignalBus.gemini_help_received.emit(parsedJSON["help"]+" \n Difficulty Level: "+str(parsedJSON["difficulty_level"]))
+					
+		if parsedJSON.has("difficulty_level"):
+			#set difficulty
+			SignalBus.prev_game_difficulty = SignalBus.game_difficulty	
+			if parsedJSON["difficulty_level"] == 2:
+				#print("hard")
+				SignalBus.game_difficulty = SignalBus.HARD
+			elif parsedJSON["difficulty_level"] == 1:
+				#print("med")
+				SignalBus.game_difficulty = SignalBus.MEDIUM
+			else:		
+				#print("easy")
+				SignalBus.game_difficulty = SignalBus.EASY
+			SignalBus.gemini_difficulty_adjusted.emit(parsedJSON["difficulty_level"], parsedJSON['reason'])		
+####
+
+####################Calling directly Gemini / Imagen from the game itself####################
+
+const IMAGEN3_URL ="https://{region}-aiplatform.googleapis.com/v1/projects/{project_id}/locations/{region}/publishers/google/models/imagen-3.0-generate-002:predict"
+
+# we expect getting a key that could be loaded from the parameter files of the game (signal exists but has been commented)
+func _on_api_key(key):
+	GEMINI_API_KEY = key
+	#backstory
+	GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + GEMINI_API_KEY
+	
+	#Help
+	GEMINI_PRO_URL.append("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro-preview-03-25:generateContent?key=" + GEMINI_API_KEY)
+	GEMINI_PRO_URL.append("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + GEMINI_API_KEY)
+
+
+####Call gemini directly from our game to get a backstory
+func call_gemini_backstory(prompt:String) -> String:
+	var http_request  = HTTPRequest.new()
+	add_child(http_request)
+	http_request.request_completed.connect(_on_call_gemini_backstory_request_completed.bind(http_request))
+	var connection = GEMINI_URL
+	var post_data = '{
+  "contents": [{
+	"parts":[{"text":"'+prompt+'"}]
+	}]
+   }'
+	#var json_data = JSON.print(post_data) #convert dictionary to json string
+	
+	SignalBus.gemini_backstory_requested_details.emit(prompt)
+	
+	var headers = ["Content-Type: application/json"] #set header
+	http_request.request(connection, headers, HTTPClient.METHOD_POST, post_data)
+	return ""
+func _on_call_gemini_backstory_request_completed(result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray, _req_node : HTTPRequest = null):
+	if result != OK:
+		printerr("Error receiving gemini backstory")
+	else:
+		var dict_body = JSON.parse_string(body.get_string_from_utf8())
+		if dict_body.has("candidates") and \
+			dict_body.candidates is Array and \
+			dict_body.candidates.size() > 0 and \
+			dict_body.candidates[0].has("content") and \
+			dict_body.candidates[0].content.has("parts") and \
+			dict_body.candidates[0].content.parts.size() > 0:
+			#print(dict_body.candidates[0].content.parts[0].text)
+			
+			SignalBus.gemini_backstory_received.emit()
+			SignalBus.gemini_backstory_text = dict_body.candidates[0].content.parts[0].text
+			
+		else:
+			printerr("Error accessing gemini for the backstory")
+#######
+
+###request support from Gemini sending a screenshot + prompt, direct call
+func _on_need_gemini_help_direct():
+		
 	var prompt_text = "You are assisting a user who is playing a video game that takes place in an old datacenter where old technologies like CRTs and Printers have taken over and he is task to go and clean it \n."
 	
 	##############Context
@@ -225,124 +400,13 @@ func _on_need_gemini_help():
 		base64_image = Marshalls.raw_to_base64(image_bytes)
 	
 	#signal for analytics
-	SignalBus.gemini_help_requested_details.emit(prompt_text, str(SignalBus.session_id)+ "_screenshot_"+str(SignalBus.last_screenshot_timestamp)+".png")
+	#TODO: rework the signal
+	#SignalBus.gemini_help_requested_details.emit(prompt_text, str(SignalBus.session_id)+ "_screenshot_"+str(SignalBus.last_screenshot_timestamp)+".png")
 	
 	#call gemini
-	call_gemini_with_prompt_and_image(base64_image, prompt_text) 
+	call_gemini_with_prompt_and_image(base64_image, prompt_text)
 
-##########################################Signals handling & call preparation	
-
-#using answers from the user ask gemini to generate a story about the datacenter
-#using the backstory ask imagen3 gemini for a background image 
-func _on_get_gemini_backstory():
-	
-	#Ask for an image
-	var prompt_img = "Illustrate the following story using a 16 bits retro style design with neon glows using google color palette:\n"
-	prompt_img += " You have been tasked to clean a datacenter that have been overtaken by old technologies from the 80s and 90s like matrix printers & CRTs and fyling floppy disks.\n"
-	prompt_img += "Make sure to incorporate in your image elements that remind of a: "+SignalBus.trivia_result[0]['a']+"\n"
-	prompt_img += " and an overall vibe: "+SignalBus.trivia_result[1]['a']+"\n"	
-	call_api_bridge_generate_backstory_image(prompt_img)
-	
-	#ask for a compelling story
-	var prompt = "You are a video game story writer and you are tasked to write a very short backstory of the game to make the player want to play.\n" 
-	prompt += "The game takes place in an old datacenter from the 80s or 90s swarming with old technologies like CRTs, old matrix dot printers or floppy disks." 
-	prompt += "The hero of the story is tasked to clean the datacenter from thos antiquities and find the boss, an old angry ATX Server that controls the old tech and hide in the datacenter.\n" 
-	prompt += "To tailor the story to the player, he gave you the following indications on his personality through a Q&A session." 
-	prompt += "Color your story with element from his answers and keep the story short\n"
-	for i in SignalBus.trivia_result.size():
-		prompt +="Question:" + SignalBus.trivia_result[i]['q'] +", Answer:"+ SignalBus.trivia_result[i]['a'] + ".\n"	
-	call_gemini_backstory(prompt)
-	
-	
-
-##########################################API Integration	
-
-####Connect to a local API Bridge
-
-#connect to the api bridge to get the backstory image
-func call_api_bridge_generate_backstory_image(prompt):
-	var http_request  = HTTPRequest.new()
-	add_child(http_request)
-	http_request.request_completed.connect(_on_call_api_bridge_backstory_image_request_completed.bind(http_request))
-	var connection ="http://"+endpoint+":"+port+"/get_backstory_image"
-	var headers = ["Content-Type: application/json"]
-	
-	var body = JSON.stringify({
-			"session_id": SignalBus.session_id,
-			"prompt": prompt
-		})
-	
-	http_request.request(connection, headers, HTTPClient.METHOD_POST, body) 
-
-#Got the image that we need to display
-func _on_call_api_bridge_backstory_image_request_completed(result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray, _req_node : HTTPRequest = null):
-	if result != OK:
-			printerr("Imagen3: failed to generate image")
-	else:
-		var base64_image = body.get_string_from_utf8()
-		#print(base64_image)
-		SignalBus.gemini_backstory_image = base64_image
-		SignalBus.gemini_backstory_image_received.emit()
-
-
-#connect locally to send analytic sensors data
-func call_api_bridge_analytics(json_string):
-	var http_request  = HTTPRequest.new()
-	add_child(http_request)
-	http_request.request_completed.connect(_on_call_api_bridge_request_completed.bind(http_request))
-	var connection ="http://"+endpoint+":"+port+"/backendcomm"
-	var headers = ["Content-type: application/json"]
-	http_request.request(connection, headers, HTTPClient.METHOD_POST, json_string) 
-
-####Receiving answer from the API Bridge
-func _on_call_api_bridge_request_completed(result: int, _response_code: int, _headers: PackedStringArray, _body: PackedByteArray, _req_node : HTTPRequest = null):
-	if result != OK:
-			printerr("Pub/Sub: failed to send analytic data")
-
-####Call gemini to get a backstory
-#Call
-func call_gemini_backstory(prompt:String) -> String:
-	var http_request  = HTTPRequest.new()
-	add_child(http_request)
-	http_request.request_completed.connect(_on_call_gemini_backstory_request_completed.bind(http_request))
-	var connection = GEMINI_URL
-	var post_data = '{
-  "contents": [{
-	"parts":[{"text":"'+prompt+'"}]
-	}]
-   }'
-	#var json_data = JSON.print(post_data) #convert dictionary to json string
-	
-	SignalBus.gemini_backstory_requested_details.emit(prompt)
-	
-	var headers = ["Content-Type: application/json"] #set header
-	http_request.request(connection, headers, HTTPClient.METHOD_POST, post_data)
-	return ""
-
-#Backstory generated now let s get an image to illustrate
-func _on_call_gemini_backstory_request_completed(result: int, _response_code: int, _headers: PackedStringArray, body: PackedByteArray, _req_node : HTTPRequest = null):
-	if result != OK:
-		printerr("Error receiving gemini backstory")
-	else:
-		var dict_body = JSON.parse_string(body.get_string_from_utf8())
-		if dict_body.has("candidates") and \
-			dict_body.candidates is Array and \
-			dict_body.candidates.size() > 0 and \
-			dict_body.candidates[0].has("content") and \
-			dict_body.candidates[0].content.has("parts") and \
-			dict_body.candidates[0].content.parts.size() > 0:
-			#print(dict_body.candidates[0].content.parts[0].text)
-			
-			SignalBus.gemini_backstory_received.emit()
-			SignalBus.gemini_backstory_text = dict_body.candidates[0].content.parts[0].text
-			
-		else:
-			printerr("Error accessing gemini for the backstory")
-		
-		
-		
-####call gemini with prompt & an image
-#Call
+###call gemini with prompt & an image
 func call_gemini_with_prompt_and_image(base64_image:String, prompt_text: String):
 	var http_request  = HTTPRequest.new()
 	add_child(http_request)
@@ -368,7 +432,7 @@ func call_gemini_with_prompt_and_image(base64_image:String, prompt_text: String)
 
 	# 3. Create an HTTPRequest node.
 
-	http_request.request_completed.connect(_on_request_completed)
+	http_request.request_completed.connect(_on_call_gemini_with_prompt_and_image_completed)
 
 	# 4. Set headers.
 	var headers = [
@@ -387,9 +451,8 @@ func call_gemini_with_prompt_and_image(base64_image:String, prompt_text: String)
 		return
 
 	#print("Sending request to Gemini...")
-
-#received 
-func _on_request_completed(_result, response_code, _headers, body):
+### help from gemini
+func _on_call_gemini_with_prompt_and_image_completed(_result, response_code, _headers, body):
 	# Remove the HTTPRequest node now that we're done with it.
 	if response_code == 200:
 		# Success! Parse the JSON response.
@@ -437,8 +500,9 @@ func _on_request_completed(_result, response_code, _headers, body):
 	else:
 		printerr("Gemini help: HTTP request failed with code ", response_code)
 		printerr("Response body:\n", body.get_string_from_utf8())  # Print the raw response for debugging.
+#######
 
-####### generate story background image with imagen3
+####### generate directly story background image with imagen3
 func call_imagen3_generate_image(prompt_text: String):
 	# 1. Construct the request body.
 	var request_data = {
@@ -513,3 +577,4 @@ func _on_background_story_image_completed(_result, response_code, _headers, body
 	else:
 		printerr("HTTP request failed with code ", response_code)
 		printerr("Response body:\n", body.get_string_from_utf8())
+#######

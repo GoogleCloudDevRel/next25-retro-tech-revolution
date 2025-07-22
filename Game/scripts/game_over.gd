@@ -9,9 +9,11 @@ extends CanvasLayer
 @onready var stopwatch_label = %StopWatchLabel
 @onready var score_label = %ScoreLabel
 @onready var game_over = %GameOver
+@onready var reset_label = %ResetLabel
 
 @onready var button1 = $MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/HUD/ReplayButton
 @onready var button2 = $MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/HUD/ResetButton
+@onready var loading_status = $loading_status
 
 var buttons = []
 var current_button_index = 0
@@ -29,12 +31,17 @@ var fixed_block2
 var is_summary_received = false
 var is_scrolling = false
 
+var ready_label = "" 
+
+
+
 func _ready():
 	var balloon_node = get_node_or_null("/root/Game/ExampleBalloon")
 	if balloon_node:
 		balloon_node.queue_free()
 	
 	_blinking_loading_block()
+	
 	
 	
 	buttons = [button1, button2]
@@ -49,7 +56,21 @@ func _ready():
 	game_over.play("default")
 	score_label.text = "[right]%03d[/right]" % SignalBus.score
 	%RankLabel.text = "[right]%03d[/right]" % int(0)
-	%Summary.text = "Congratulations, Your id is : [font_size=30][b][color=#34A853]" + str(SignalBus.client_id) + "[/color][/b], and session id : [font_size=30][b][color=#EA4335]" + str(SignalBus.session_id) + "[/color][/b], [p]"
+	#%Summary.text = "Congratulations, Your id is : [font_size=30][b][color=#34A853]" + str(SignalBus.client_id) + "[/color][/b], and session id : [font_size=30][b][color=#EA4335]" + str(SignalBus.session_id) + "[/color][/b][p]"
+	
+	
+	if(SignalBus.language == "JP"):
+		%Summary.text = "おめでとう御座います, 今回のゲームIDは: [font_size=30][b][color=#EA4335]" + str(SignalBus.session_id) + "[/color][/b][p]"
+		reset_label.text = "[center][pulse freq=1.0 color=#ffffff40 ease=-2.0]ゲームリセット[/pulse][/center]"
+		loading_status.text = "[color=#EA4335][wave]ロード中...[/wave][/color]"
+		ready_label = "[color=#F4B400][wave]準備OK!...[/wave][/color]"
+
+	else:
+		%Summary.text = "Congratulations, your session id : [font_size=30][b][color=#EA4335]" + str(SignalBus.session_id) + "[/color][/b][p]"
+		loading_status.text = "[color=#EA4335][wave]LOADING...[/wave][/color]"
+		ready_label = "[color=#F4B400][wave]READY!...[/wave][/color]"
+	
+	
 	
 	update_stopwatch()
 	SignalBus.session_rank_received.connect(_on_rank_received)
@@ -87,7 +108,7 @@ func _on_gemini_summary_received(summary:String):
 	fixed_block1.color = color2
 	fixed_block2.color = color2
 	%Summary.text += summary.to_upper()
-	$loading_status.text = "[color=#34A853][wave]READY!...[/wave][/color]"
+	$loading_status.text = ready_label
 
 
 func _on_button_pressed(button_index):
@@ -213,4 +234,4 @@ func _on_timer_timeout() -> void:
 	blinking_block.color = color4
 	fixed_block1.color = color4
 	fixed_block2.color = color4
-	$loading_status.text = "[color=#F4B400][wave]READY!...[/wave][/color]"
+	$loading_status.text = ready_label

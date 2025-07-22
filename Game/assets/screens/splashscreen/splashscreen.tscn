@@ -1,10 +1,10 @@
 [gd_scene load_steps=16 format=3 uid="uid://f0n0vydjafpc"]
 
-[ext_resource type="Script" path="res://assets/screens/splashscreen/splashscreen.gd" id="1_0ojax"]
+[ext_resource type="Script" uid="uid://blr3t1c12sjmd" path="res://assets/screens/splashscreen/splashscreen.gd" id="1_0ojax"]
 [ext_resource type="Texture2D" uid="uid://blqd6tvosa684" path="res://assets/screens/splashscreen/Screenshot 2025-03-08 at 2.58.51 PM.png" id="1_r8qcn"]
-[ext_resource type="Script" path="res://assets/screens/splashscreen/SplashScreenButton.gd" id="2_1fptx"]
-[ext_resource type="VideoStream" path="res://assets/screens/splashscreen/Intro_part2_327.ogv" id="2_x4kks"]
-[ext_resource type="VideoStream" path="res://assets/screens/splashscreen/Intro_part1_327.ogv" id="5_fsrwk"]
+[ext_resource type="Script" uid="uid://dg7oebofwpugk" path="res://assets/screens/splashscreen/SplashScreenButton.gd" id="2_1fptx"]
+[ext_resource type="VideoStream" uid="uid://draar7xl03xgt" path="res://assets/screens/splashscreen/Intro_part2_327.ogv" id="2_x4kks"]
+[ext_resource type="VideoStream" uid="uid://b12u570xusem6" path="res://assets/screens/splashscreen/Intro_part1_327.ogv" id="5_fsrwk"]
 [ext_resource type="AudioStream" uid="uid://8fcypfx8uttj" path="res://assets/screens/splashscreen/intro - Neon Echoes.ogg" id="6_jahie"]
 
 [sub_resource type="SystemFont" id="SystemFont_73tva"]

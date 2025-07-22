@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://cevjvc1sqg57g"]
 
-[ext_resource type="Script" path="res://scripts/rtr_test_dialogue.gd" id="1_rrp70"]
+[ext_resource type="Script" uid="uid://s72lxed2ifq7" path="res://scripts/rtr_test_dialogue.gd" id="1_rrp70"]
 [ext_resource type="Texture2D" uid="uid://rf2nkntwiltm" path="res://backstory-images/debug_image.png" id="2_llwxx"]
-[ext_resource type="Shader" path="res://shaders/grandient_border.gdshader" id="3_wx6rx"]
+[ext_resource type="Shader" uid="uid://da1f8fqui3tsl" path="res://shaders/grandient_border.gdshader" id="3_wx6rx"]
 [ext_resource type="PackedScene" uid="uid://daatymj755m4a" path="res://assets/random_squares.tscn" id="4_re77n"]
 [ext_resource type="PackedScene" uid="uid://cfpw5m78e7xeu" path="res://levels/level_1/level_1.tscn" id="5_lif5r"]
 

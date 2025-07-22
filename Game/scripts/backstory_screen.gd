@@ -3,6 +3,9 @@ extends CanvasLayer
 #@onready var backgroundStoryText = $VBoxContainer/BackstoryHBox/BackStoryBackStory
 #@onready var backgroundStoryImage= $VBoxContainer/BackstoryHBox/BackStoryImage
 
+@onready var nextButton= $VBoxContainer/BackstoryHBox/VBoxContainer/HUD/PressXKeyLabel2
+
+
 var is_story_received = false
 var is_scrolling = false
 
@@ -11,15 +14,21 @@ func _ready():
 	_on_image_received(SignalBus.gemini_backstory_image)
 	
 	SignalBus.gemini_backstory_received.connect(_on_story_received)
-	#SignalBus.gemini_backstory_image_received.connect(_on_image_received)
-
 	
+	
+	#manage language
+	if SignalBus.language == "JP":
+		nextButton.text = "[right][color=\"#F4B400\"]A[/color] ボタンを押して続ける[/right]"
+	else:
+		nextButton.text = "[right]PRESS [color=\"#F4B400\"]A[/color] TO CONTINUE[/right]"		
 
 
 func _process(_delta: float) -> void:
 	var scroll_direction = 0
 	var scroll_speed = 20
 	var rich_text_label = %BackStoryText
+
+	
 # For gamepad D-pad input
 	if Input.is_action_pressed("ui_down"):
 		#print("down")

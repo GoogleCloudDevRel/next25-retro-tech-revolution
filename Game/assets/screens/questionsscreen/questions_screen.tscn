@@ -1,19 +1,28 @@
-[gd_scene load_steps=20 format=3 uid="uid://ccua3m5urvcrm"]
+[gd_scene load_steps=24 format=3 uid="uid://ccua3m5urvcrm"]
 
 [ext_resource type="Texture2D" uid="uid://dx3im452arqlw" path="res://assets/screens/questionsscreen/background.png" id="1_g3e5r"]
-[ext_resource type="Script" path="res://scripts/questions_screen.gd" id="1_r2mss"]
-[ext_resource type="VideoStream" path="res://assets/Background.ogv" id="2_ci4l8"]
+[ext_resource type="Script" uid="uid://c5fy7a2c4ba20" path="res://scripts/questions_screen.gd" id="1_r2mss"]
+[ext_resource type="VideoStream" uid="uid://d4go1pjiu1yf0" path="res://assets/Background.ogv" id="2_ci4l8"]
 [ext_resource type="PackedScene" uid="uid://ykfi24r6o3m3" path="res://assets/gcp_overlay/gcp_overlay.tscn" id="2_mtuyq"]
 [ext_resource type="Texture2D" uid="uid://dgpqtls5hdacq" path="res://dialogues/portraits/gemini.png" id="2_wptdb"]
 [ext_resource type="PackedScene" uid="uid://daatymj755m4a" path="res://assets/random_squares.tscn" id="3_rjtc6"]
 [ext_resource type="Texture2D" uid="uid://c0dtg1s7ceeg5" path="res://assets/screens/questionsscreen/colored_borders_v3.png" id="6_pijee"]
 [ext_resource type="Texture2D" uid="uid://csct1pwmb6ei7" path="res://assets/screens/questionsscreen/blue_borders_v3.png" id="7_j7i7g"]
 
+[sub_resource type="SystemFont" id="SystemFont_v7t7g"]
+font_names = PackedStringArray("Noto Sans JP")
+
 [sub_resource type="SystemFont" id="SystemFont_ketkh"]
+fallbacks = Array[Font]([SubResource("SystemFont_v7t7g")])
 font_names = PackedStringArray("Google Sans")
 subpixel_positioning = 0
 
+[sub_resource type="SystemFont" id="SystemFont_usxi1"]
+font_names = PackedStringArray("Noto Sans JP")
+font_weight = 900
+
 [sub_resource type="SystemFont" id="SystemFont_3oxa5"]
+fallbacks = Array[Font]([SubResource("SystemFont_usxi1")])
 font_names = PackedStringArray("Google Sans")
 font_weight = 900
 subpixel_positioning = 0
@@ -114,6 +123,13 @@ Button/fonts/font = SubResource("SystemFont_xtt10")
 Button/styles/disabled = SubResource("StyleBoxFlat_fkey6")
 Button/styles/normal = SubResource("StyleBoxFlat_xond7")
 Button/styles/pressed = SubResource("StyleBoxFlat_8x2s4")
+
+[sub_resource type="SystemFont" id="SystemFont_k4456"]
+font_names = PackedStringArray("Noto Sans JP")
+
+[sub_resource type="SystemFont" id="SystemFont_csoud"]
+fallbacks = Array[Font]([SubResource("SystemFont_k4456")])
+font_names = PackedStringArray("Google Sans")
 
 [node name="QuestionsScreen" type="CanvasLayer"]
 layer = -1
@@ -229,6 +245,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(300, 32)
 layout_mode = 2
 theme = SubResource("Theme_j05d4")
+theme_override_fonts/font = SubResource("SystemFont_csoud")
 text = "JUST SURPRISE ME"
 
 [node name="BackgroundVideo" type="VideoStreamPlayer" parent="."]

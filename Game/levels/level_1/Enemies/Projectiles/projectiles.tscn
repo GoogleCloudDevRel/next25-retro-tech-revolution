@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://c0dce40ex6wsf"]
 
-[ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/projectiles.gd" id="1_qrvh1"]
+[ext_resource type="Script" uid="uid://ddf7m4wm03oby" path="res://levels/level_1/Enemies/Scripts/projectiles.gd" id="1_qrvh1"]
 [ext_resource type="PackedScene" uid="uid://bsev0gq74h7wt" path="res://levels/level_1/Player/ui_projectile2.tscn" id="2_0j52r"]
 [ext_resource type="PackedScene" uid="uid://csqidgubdv7ck" path="res://levels/level_1/Player/ui_projectile1.tscn" id="2_8nsd6"]
 [ext_resource type="Texture2D" uid="uid://dwetiyvkvhqtm" path="res://assets/tools/bullet/google_bigquery_logo.png" id="2_21uwg"]
@@ -26,7 +26,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_optpc"]
 _data = {
-"projectile1": SubResource("Animation_dwbrs")
+&"projectile1": SubResource("Animation_dwbrs")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cp4y1"]

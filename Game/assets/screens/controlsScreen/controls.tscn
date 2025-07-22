@@ -1,17 +1,25 @@
-[gd_scene load_steps=8 format=3 uid="uid://dn63sblg3fy3m"]
+[gd_scene load_steps=10 format=3 uid="uid://dn63sblg3fy3m"]
 
-[ext_resource type="Script" path="res://scripts/controls_screen.gd" id="1_dvn23"]
+[ext_resource type="Script" uid="uid://bdycn7vyjtys1" path="res://scripts/controls_screen.gd" id="1_dvn23"]
 [ext_resource type="PackedScene" uid="uid://daatymj755m4a" path="res://assets/random_squares.tscn" id="2_b1q8q"]
 [ext_resource type="Texture2D" uid="uid://dkdaja6cupffc" path="res://assets/screens/controlsScreen/gamepad_45.png" id="3_3rptk"]
 [ext_resource type="PackedScene" uid="uid://ykfi24r6o3m3" path="res://assets/gcp_overlay/gcp_overlay.tscn" id="13_s3htl"]
-[ext_resource type="VideoStream" path="res://assets/Background.ogv" id="14_dnrqm"]
+[ext_resource type="VideoStream" uid="uid://d4go1pjiu1yf0" path="res://assets/Background.ogv" id="14_dnrqm"]
+
+[sub_resource type="SystemFont" id="SystemFont_qetw2"]
+font_names = PackedStringArray("Noto Sans JP")
 
 [sub_resource type="SystemFont" id="SystemFont_nqgue"]
+fallbacks = Array[Font]([SubResource("SystemFont_qetw2")])
 font_names = PackedStringArray("Google Sans")
 font_weight = 800
 subpixel_positioning = 0
 
+[sub_resource type="SystemFont" id="SystemFont_gn2bp"]
+font_names = PackedStringArray("Noto Sans JP")
+
 [sub_resource type="SystemFont" id="SystemFont_40jaw"]
+fallbacks = Array[Font]([SubResource("SystemFont_gn2bp")])
 font_names = PackedStringArray("Google Sans")
 font_weight = 500
 subpixel_positioning = 0
@@ -22,6 +30,7 @@ script = ExtResource("1_dvn23")
 metadata/_edit_vertical_guides_ = [1696.0]
 
 [node name="outerboarder" type="Node2D" parent="."]
+visible = false
 
 [node name="top" type="ColorRect" parent="outerboarder"]
 offset_right = 1920.0
@@ -150,7 +159,7 @@ autoplay = true
 loop = true
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 15.0
 one_shot = true
 autostart = true
 

@@ -1,21 +1,21 @@
 [gd_scene load_steps=34 format=3 uid="uid://bmsxnlm6nj6io"]
 
-[ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/boss.gd" id="1_1crnf"]
+[ext_resource type="Script" uid="uid://baxiwgupax5ia" path="res://levels/level_1/Enemies/Scripts/boss.gd" id="1_1crnf"]
 [ext_resource type="Texture2D" uid="uid://c2ni6ok3a3iqp" path="res://levels/level_1/Enemies/Boss/BossSprites.png" id="1_lcj2n"]
 [ext_resource type="Texture2D" uid="uid://bv0csemkndvxa" path="res://levels/level_1/Player/Assets/Shadow.png" id="1_tbnuk"]
 [ext_resource type="Texture2D" uid="uid://bojl7g2v4vc1d" path="res://levels/level_1/Player/Assets/light.png" id="2_hfews"]
-[ext_resource type="Shader" path="res://shaders/player_flash.gdshader" id="3_lesnw"]
-[ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/enemy_state_machine.gd" id="4_v4q2m"]
-[ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_idle.gd" id="5_vhbdc"]
-[ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_wander.gd" id="6_l431d"]
-[ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_attack.gd" id="7_4vhy7"]
-[ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_death.gd" id="8_187ld"]
-[ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_inactive.gd" id="11_2hs4b"]
+[ext_resource type="Shader" uid="uid://x43r5dl4g4xi" path="res://shaders/player_flash.gdshader" id="3_lesnw"]
+[ext_resource type="Script" uid="uid://co5dkh2dre8pe" path="res://levels/level_1/Enemies/Scripts/enemy_state_machine.gd" id="4_v4q2m"]
+[ext_resource type="Script" uid="uid://dvfntevioqwfc" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_idle.gd" id="5_vhbdc"]
+[ext_resource type="Script" uid="uid://nh8nwluevqxi" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_wander.gd" id="6_l431d"]
+[ext_resource type="Script" uid="uid://dub4v2m2qr0or" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_attack.gd" id="7_4vhy7"]
+[ext_resource type="Script" uid="uid://mblo0xrxwl17" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_death.gd" id="8_187ld"]
+[ext_resource type="Script" uid="uid://ccj8v8fm25407" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_inactive.gd" id="11_2hs4b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uebxg"]
 shader = ExtResource("3_lesnw")
 shader_parameter/flash_color = Color(0.258824, 0.521569, 0.956863, 0.662745)
-shader_parameter/flash_value = null
+shader_parameter/flash_value = 0.0
 
 [sub_resource type="Animation" id="Animation_iojw5"]
 length = 0.001
@@ -50,8 +50,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gm04l"]
 _data = {
-"RESET": SubResource("Animation_iojw5"),
-"enemyHit": SubResource("Animation_10dai")
+&"RESET": SubResource("Animation_iojw5"),
+&"enemyHit": SubResource("Animation_10dai")
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1xyqe"]
@@ -309,20 +309,20 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xbcxf"]
 _data = {
-"RESET": SubResource("Animation_6ogyx"),
-"attack_down": SubResource("Animation_i2yel"),
-"attack_side": SubResource("Animation_ooiot"),
-"attack_up": SubResource("Animation_51cw8"),
-"death_down": SubResource("Animation_531ak"),
-"death_side": SubResource("Animation_2p6us"),
-"death_up": SubResource("Animation_j4mre"),
-"idle_down": SubResource("Animation_kcx7p"),
-"idle_head": SubResource("Animation_lf3bp"),
-"idle_side": SubResource("Animation_o1kcd"),
-"idle_up": SubResource("Animation_fyhyy"),
-"walk_down": SubResource("Animation_xjtlx"),
-"walk_side": SubResource("Animation_cxd2j"),
-"walk_up": SubResource("Animation_2o0fc")
+&"RESET": SubResource("Animation_6ogyx"),
+&"attack_down": SubResource("Animation_i2yel"),
+&"attack_side": SubResource("Animation_ooiot"),
+&"attack_up": SubResource("Animation_51cw8"),
+&"death_down": SubResource("Animation_531ak"),
+&"death_side": SubResource("Animation_2p6us"),
+&"death_up": SubResource("Animation_j4mre"),
+&"idle_down": SubResource("Animation_kcx7p"),
+&"idle_head": SubResource("Animation_lf3bp"),
+&"idle_side": SubResource("Animation_o1kcd"),
+&"idle_up": SubResource("Animation_fyhyy"),
+&"walk_down": SubResource("Animation_xjtlx"),
+&"walk_side": SubResource("Animation_cxd2j"),
+&"walk_up": SubResource("Animation_2o0fc")
 }
 
 [sub_resource type="SystemFont" id="SystemFont_4es2e"]
@@ -365,7 +365,7 @@ frame = 1
 
 [node name="healthDepletion" type="AnimationPlayer" parent="Sprite2D"]
 libraries = {
-"": SubResource("AnimationLibrary_gm04l")
+&"": SubResource("AnimationLibrary_gm04l")
 }
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
@@ -387,7 +387,7 @@ texture_scale = 0.8
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 libraries = {
-"": SubResource("AnimationLibrary_xbcxf")
+&"": SubResource("AnimationLibrary_xbcxf")
 }
 
 [node name="EnemyStateMachine" type="Node" parent="."]

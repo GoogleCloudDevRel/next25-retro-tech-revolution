@@ -2,6 +2,19 @@ extends Node
 
 var wait_time = 20.0
 
+@onready var startButton= $StartScreenCanvas/HUD/Panel/VBoxContainer/Start
+
+
+func _ready():
+	#manage language
+	if SignalBus.language == "JP":
+		startButton.text = "スタート"
+	else:
+		startButton.text = "START"		
+
+
+
+
 func _physics_process(_delta):
 		if Input.is_action_just_pressed("attack"):
 			#StartScreenCanvas.visible = false

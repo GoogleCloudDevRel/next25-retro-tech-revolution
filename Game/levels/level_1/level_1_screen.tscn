@@ -1,10 +1,10 @@
 [gd_scene load_steps=62 format=3 uid="uid://bpbmk7rt2sikx"]
 
-[ext_resource type="Script" path="res://levels/level_1/Scripts/level_1_screen.gd" id="1_x41gi"]
+[ext_resource type="Script" uid="uid://b2w8qulnapi47" path="res://levels/level_1/Scripts/level_1_screen.gd" id="1_x41gi"]
 [ext_resource type="PackedScene" uid="uid://cd25yxxiep0a5" path="res://levels/level_0_5/level_0_5.tscn" id="2_jdjf6"]
 [ext_resource type="PackedScene" uid="uid://c3i2ddpnr2yju" path="res://assets/hud/hud_weapons.tscn" id="3_0yc1k"]
-[ext_resource type="Script" path="res://levels/level_1/minimap_circle.gd" id="4_jdl0b"]
-[ext_resource type="Script" path="res://levels/level_1/Scripts/level_1_minimap.gd" id="4_miiqm"]
+[ext_resource type="Script" uid="uid://db4mdxxwf6jks" path="res://levels/level_1/minimap_circle.gd" id="4_jdl0b"]
+[ext_resource type="Script" uid="uid://ckmecsm6160xp" path="res://levels/level_1/Scripts/level_1_minimap.gd" id="4_miiqm"]
 [ext_resource type="Texture2D" uid="uid://cgwo84ayjbsch" path="res://levels/level_1/minimap/mini_map.png" id="5_12itk"]
 [ext_resource type="Texture2D" uid="uid://ck4o01mugi2ug" path="res://assets/screens/congratulations/assets/Congratulations_00000.png" id="6_ug6es"]
 [ext_resource type="Texture2D" uid="uid://b6ll4sell6b16" path="res://assets/screens/congratulations/assets/Congratulations_00001.png" id="7_jq56a"]
@@ -56,7 +56,7 @@
 [ext_resource type="Texture2D" uid="uid://dtiq5xukrtc05" path="res://assets/screens/congratulations/assets/Congratulations_00047.png" id="53_n1vqd"]
 [ext_resource type="AudioStream" uid="uid://cvdl3pj5o5m41" path="res://levels/level_1/loop-level1theme.ogg" id="55_nu5nm"]
 [ext_resource type="Texture2D" uid="uid://drk1g0jpmu0u2" path="res://levels/level_1/assets/difficulty_down.png" id="56_5p4wo"]
-[ext_resource type="Shader" path="res://shaders/scan_effect.gdshader" id="56_b3xdy"]
+[ext_resource type="Shader" uid="uid://hhra6mt2g807" path="res://shaders/scan_effect.gdshader" id="56_b3xdy"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f7jsx"]
 blend_mode = 1

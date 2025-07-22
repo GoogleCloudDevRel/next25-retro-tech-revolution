@@ -1,24 +1,24 @@
 [gd_scene load_steps=37 format=3 uid="uid://ds04xmoxhl0uo"]
 
-[ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/enemy.gd" id="1_yj7cm"]
+[ext_resource type="Script" uid="uid://ccilefa1iaei5" path="res://levels/level_1/Enemies/Scripts/enemy.gd" id="1_yj7cm"]
 [ext_resource type="Texture2D" uid="uid://bv0csemkndvxa" path="res://levels/level_1/Player/Assets/Shadow.png" id="2_u2mwq"]
-[ext_resource type="Shader" path="res://shaders/player_flash.gdshader" id="3_i27o2"]
+[ext_resource type="Shader" uid="uid://x43r5dl4g4xi" path="res://shaders/player_flash.gdshader" id="3_i27o2"]
 [ext_resource type="Texture2D" uid="uid://d2umr73e2heyf" path="res://levels/level_1/Enemies/Printer/PrinterSprites.png" id="3_kktst"]
-[ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/enemy_state_machine.gd" id="4_ks4hd"]
-[ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_idle.gd" id="5_q6j1u"]
-[ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_wander.gd" id="6_xnnxd"]
+[ext_resource type="Script" uid="uid://co5dkh2dre8pe" path="res://levels/level_1/Enemies/Scripts/enemy_state_machine.gd" id="4_ks4hd"]
+[ext_resource type="Script" uid="uid://dvfntevioqwfc" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_idle.gd" id="5_q6j1u"]
+[ext_resource type="Script" uid="uid://nh8nwluevqxi" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_wander.gd" id="6_xnnxd"]
 [ext_resource type="Texture2D" uid="uid://bojl7g2v4vc1d" path="res://levels/level_1/Player/Assets/light.png" id="7_b7fxl"]
-[ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_attack.gd" id="7_o7e2c"]
-[ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_death.gd" id="8_u5eqk"]
-[ext_resource type="Script" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_inactive.gd" id="10_63o3x"]
+[ext_resource type="Script" uid="uid://dub4v2m2qr0or" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_attack.gd" id="7_o7e2c"]
+[ext_resource type="Script" uid="uid://mblo0xrxwl17" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_death.gd" id="8_u5eqk"]
+[ext_resource type="Script" uid="uid://ccj8v8fm25407" path="res://levels/level_1/Enemies/Scripts/States/enemy_state_inactive.gd" id="10_63o3x"]
 [ext_resource type="PackedScene" uid="uid://c1cr2wayj7p71" path="res://levels/level_1/Player/Scripts/bubble.tscn" id="12_b1tud"]
-[ext_resource type="Shader" path="res://shaders/chromakey.gdshader" id="13_vkrc6"]
-[ext_resource type="VideoStream" path="res://levels/level_1/Enemies/sparks.ogv" id="14_7p6ii"]
+[ext_resource type="Shader" uid="uid://bclg1ennh4oog" path="res://shaders/chromakey.gdshader" id="13_vkrc6"]
+[ext_resource type="VideoStream" uid="uid://bh3f2l6pohyd3" path="res://levels/level_1/Enemies/sparks.ogv" id="14_7p6ii"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tc0e6"]
 shader = ExtResource("3_i27o2")
 shader_parameter/flash_color = Color(0.258824, 0.521569, 0.956863, 0.780392)
-shader_parameter/flash_value = null
+shader_parameter/flash_value = 0.0
 
 [sub_resource type="Animation" id="Animation_iojw5"]
 length = 0.001
@@ -53,12 +53,13 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gm04l"]
 _data = {
-"RESET": SubResource("Animation_iojw5"),
-"enemyHit": SubResource("Animation_10dai")
+&"RESET": SubResource("Animation_iojw5"),
+&"enemyHit": SubResource("Animation_10dai")
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_atrow"]
-height = 28.0
+radius = 12.0
+height = 24.0
 
 [sub_resource type="Animation" id="Animation_x5r8h"]
 length = 0.001
@@ -278,19 +279,19 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ml5bt"]
 _data = {
-"RESET": SubResource("Animation_x5r8h"),
-"attack_down": SubResource("Animation_68gew"),
-"attack_side": SubResource("Animation_y1450"),
-"attack_up": SubResource("Animation_8hb4c"),
-"death_down": SubResource("Animation_xy2nj"),
-"death_side": SubResource("Animation_pvpkn"),
-"death_up": SubResource("Animation_58so2"),
-"idle_down": SubResource("Animation_6rlaj"),
-"idle_side": SubResource("Animation_qxs07"),
-"idle_up": SubResource("Animation_ayut7"),
-"walk_down": SubResource("Animation_2b6c3"),
-"walk_side": SubResource("Animation_nw51t"),
-"walk_up": SubResource("Animation_d5m5f")
+&"RESET": SubResource("Animation_x5r8h"),
+&"attack_down": SubResource("Animation_68gew"),
+&"attack_side": SubResource("Animation_y1450"),
+&"attack_up": SubResource("Animation_8hb4c"),
+&"death_down": SubResource("Animation_xy2nj"),
+&"death_side": SubResource("Animation_pvpkn"),
+&"death_up": SubResource("Animation_58so2"),
+&"idle_down": SubResource("Animation_6rlaj"),
+&"idle_side": SubResource("Animation_qxs07"),
+&"idle_up": SubResource("Animation_ayut7"),
+&"walk_down": SubResource("Animation_2b6c3"),
+&"walk_side": SubResource("Animation_nw51t"),
+&"walk_up": SubResource("Animation_d5m5f")
 }
 
 [sub_resource type="SystemFont" id="SystemFont_57y0o"]
@@ -332,19 +333,20 @@ frame = 1
 
 [node name="healthDepletion" type="AnimationPlayer" parent="Sprite2D"]
 libraries = {
-"": SubResource("AnimationLibrary_gm04l")
+&"": SubResource("AnimationLibrary_gm04l")
 }
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, 13)
+position = Vector2(0, 8)
 rotation = 1.5708
+scale = Vector2(1.64, 1)
 shape = SubResource("CapsuleShape2D_atrow")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 libraries = {
-"": SubResource("AnimationLibrary_ml5bt")
+&"": SubResource("AnimationLibrary_ml5bt")
 }
 autoplay = "idle_down"
 

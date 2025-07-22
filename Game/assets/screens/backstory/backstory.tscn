@@ -1,14 +1,18 @@
-[gd_scene load_steps=19 format=3 uid="uid://vg8psh0mfjau"]
+[gd_scene load_steps=21 format=3 uid="uid://vg8psh0mfjau"]
 
-[ext_resource type="Script" path="res://scripts/backstory_screen.gd" id="1_lsmfe"]
+[ext_resource type="Script" uid="uid://caw5dcv0k7u4c" path="res://scripts/backstory_screen.gd" id="1_lsmfe"]
 [ext_resource type="PackedScene" uid="uid://ykfi24r6o3m3" path="res://assets/gcp_overlay/gcp_overlay.tscn" id="2_0qxag"]
 [ext_resource type="PackedScene" uid="uid://daatymj755m4a" path="res://assets/random_squares.tscn" id="2_t8yqe"]
-[ext_resource type="Shader" path="res://shaders/border_rect_alpha.gdshader" id="4_alh06"]
+[ext_resource type="Shader" uid="uid://c2jlsnje8xpx4" path="res://shaders/border_rect_alpha.gdshader" id="4_alh06"]
 [ext_resource type="PackedScene" uid="uid://q2bsklea4iyx" path="res://dialogues/gemini.tscn" id="4_syfc4"]
 [ext_resource type="Texture2D" uid="uid://rf2nkntwiltm" path="res://backstory-images/debug_image.png" id="5_6ct5w"]
-[ext_resource type="VideoStream" path="res://assets/Background.ogv" id="7_0lnyk"]
+[ext_resource type="VideoStream" uid="uid://d4go1pjiu1yf0" path="res://assets/Background.ogv" id="7_0lnyk"]
+
+[sub_resource type="SystemFont" id="SystemFont_qvmtm"]
+font_names = PackedStringArray("Noto Sans JP")
 
 [sub_resource type="SystemFont" id="SystemFont_qj4hr"]
+fallbacks = Array[Font]([SubResource("SystemFont_qvmtm")])
 font_names = PackedStringArray("Google Sans Display")
 subpixel_positioning = 0
 
@@ -97,7 +101,11 @@ font_names = PackedStringArray("Google Sans Display")
 font_weight = 900
 subpixel_positioning = 0
 
+[sub_resource type="SystemFont" id="SystemFont_n1crl"]
+font_names = PackedStringArray("Noto Sans JP")
+
 [sub_resource type="SystemFont" id="SystemFont_g2ilv"]
+fallbacks = Array[Font]([SubResource("SystemFont_n1crl")])
 font_names = PackedStringArray("Google Sans")
 font_weight = 500
 subpixel_positioning = 0

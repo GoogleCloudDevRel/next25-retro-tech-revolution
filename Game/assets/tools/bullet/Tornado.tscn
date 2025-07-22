@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ddpsokxuhc11a"]
 
-[ext_resource type="Script" path="res://scripts/tornado.gd" id="1_v1qy1"]
+[ext_resource type="Script" uid="uid://cj3rorqwfa7xv" path="res://scripts/tornado.gd" id="1_v1qy1"]
 [ext_resource type="PackedScene" uid="uid://bsev0gq74h7wt" path="res://levels/level_1/Player/ui_projectile2.tscn" id="5_rr04i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cp4y1"]

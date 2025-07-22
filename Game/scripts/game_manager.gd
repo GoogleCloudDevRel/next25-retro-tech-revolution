@@ -10,6 +10,7 @@ var time_paused = true
 var is_paused : bool = false
 var is_able_to_pause : bool = true
 @export var pause_game_action: StringName = &"pause_game"
+@export var attack_game_action: StringName = &"attack"
 
 #level
 var current_level = 1
@@ -27,7 +28,7 @@ const MAX_LEVEL = 3
 @export var score_label: Label
 
 @onready var pauseScreen = $/root/Game/PauseCanvas
-
+@onready var pauseLabel = $/root/Game/PauseCanvas/bg/pauseLabel
 
 var display_width = ProjectSettings.get("display/window/size/viewport_width")
 var display_height = ProjectSettings.get("display/window/size/viewport_height")
@@ -56,6 +57,16 @@ func _ready():
 		client_peer.create_client("192.168.4.85", 7777)
 		multiplayer.multiplayer_peer = client_peer
 	SignalBus.screen_state.emit(SignalBus.SPLASHSCREEN)
+	
+	#manage language
+	if SignalBus.language == "JP":
+		pauseLabel.text = "[color=\"#4285F4\"][wave]一助停止中[/wave][/color] \n
+		[color=\"#F4B400\"]≡[/color]ボタンを押して続ける\n 
+		[color=\"#EA4335\"] A [/color]ボタンを押してリセットする"
+	else:
+		pauseLabel.text = "[color=\"#4285F4\"][wave]Paused[/wave][/color] \n
+		Press [color=\"#F4B400\"]≡[/color] to continue \n 
+		Press [color=\"#EA4335\"] A [/color] to restart"
 
 
 #transition back to the splashscreen after performing a reset
@@ -77,7 +88,7 @@ func load_level1():
 
 #### load level
 func _process(_delta: float) -> void:
-	#pause / unpaused was pressed
+	#pause game
 	if Input.is_action_pressed(pause_game_action) and !is_paused and is_able_to_pause:
 		SignalBus.pause_game.emit()
 		is_paused = true
@@ -85,6 +96,19 @@ func _process(_delta: float) -> void:
 		is_able_to_pause = false
 		$pauseTimer.start()
 		get_tree().paused = true #pause
+	#reset game
+	elif Input.is_action_pressed(attack_game_action) and is_paused and is_able_to_pause:
+		
+		get_tree().paused = false #unpause
+		_on_restart_game()
+		SignalBus.unpause_game.emit()
+		is_paused = false
+		pauseScreen.visible = false
+		is_able_to_pause = false
+		$pauseTimer.start()
+		
+		
+	#unpause the game
 	elif Input.is_action_pressed(pause_game_action) and is_paused and is_able_to_pause:
 		get_tree().paused = false #unpause
 		SignalBus.unpause_game.emit()
@@ -137,6 +161,7 @@ func _on_change_screen_state(new_state) -> void:
 		current_scene_instance.queue_free()
 	match new_state:
 		SignalBus.SPLASHSCREEN:
+			$bgmusic.stop()
 			current_scene_instance = splashScreen.instantiate()
 			add_child(current_scene_instance)
 		SignalBus.QUESTIONS:

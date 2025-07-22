@@ -1,6 +1,6 @@
-[gd_scene load_steps=81 format=3 uid="uid://txomv4j8okk2"]
+[gd_scene load_steps=83 format=3 uid="uid://txomv4j8okk2"]
 
-[ext_resource type="Script" path="res://scripts/game_over.gd" id="1_poa64"]
+[ext_resource type="Script" uid="uid://ncmbf3c1pb1l" path="res://scripts/game_over.gd" id="1_poa64"]
 [ext_resource type="Texture2D" uid="uid://bgi8mtfb5wsnm" path="res://assets/screens/gameover/icons.png" id="3_3prv5"]
 [ext_resource type="PackedScene" uid="uid://ykfi24r6o3m3" path="res://assets/gcp_overlay/gcp_overlay.tscn" id="3_iuf8g"]
 [ext_resource type="Texture2D" uid="uid://be0plh84aolqi" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00024.png" id="4_pr0mq"]
@@ -55,7 +55,7 @@
 [ext_resource type="Texture2D" uid="uid://ckf0tmb7ybloh" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00070.png" id="50_b5bxi"]
 [ext_resource type="Texture2D" uid="uid://lafva1js1spt" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00071.png" id="51_2hxhb"]
 [ext_resource type="Texture2D" uid="uid://ck63qk87chj8o" path="res://assets/screens/gameover/qr-code_medium.png" id="55_v4nsc"]
-[ext_resource type="VideoStream" path="res://assets/Background.ogv" id="57_uqg6v"]
+[ext_resource type="VideoStream" uid="uid://d4go1pjiu1yf0" path="res://assets/Background.ogv" id="57_uqg6v"]
 [ext_resource type="AudioStream" uid="uid://bo38frg4jfmkx" path="res://assets/screens/gameover/loop-victory.ogg" id="58_ayr86"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_setkf"]
@@ -298,7 +298,11 @@ base_font = SubResource("SystemFont_dkuhu")
 spacing_glyph = -4
 spacing_space = -6
 
+[sub_resource type="SystemFont" id="SystemFont_4gvep"]
+font_names = PackedStringArray("Noto Sans JP")
+
 [sub_resource type="SystemFont" id="SystemFont_mb474"]
+fallbacks = Array[Font]([SubResource("SystemFont_4gvep")])
 font_names = PackedStringArray("Google Sans Display")
 font_weight = 900
 subpixel_positioning = 0
@@ -364,7 +368,11 @@ font_names = PackedStringArray("Google Sans Display")
 font_weight = 900
 subpixel_positioning = 0
 
+[sub_resource type="SystemFont" id="SystemFont_q61p7"]
+font_names = PackedStringArray("Noto Sans JP")
+
 [sub_resource type="SystemFont" id="SystemFont_gdgqx"]
+fallbacks = Array[Font]([SubResource("SystemFont_q61p7")])
 font_names = PackedStringArray("Google Sans")
 font_weight = 500
 subpixel_positioning = 0
@@ -607,11 +615,13 @@ theme_override_constants/separation = 220
 alignment = 1
 
 [node name="ReplayButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/HUD"]
+visible = false
 custom_minimum_size = Vector2(200, 30)
 layout_mode = 2
 theme = SubResource("Theme_0xfcv")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/HUD/ReplayButton"]
+[node name="ReplayLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/HUD/ReplayButton"]
+visible = false
 custom_minimum_size = Vector2(400, 70)
 layout_mode = 2
 offset_left = -96.0
@@ -633,7 +643,8 @@ layout_mode = 2
 size_flags_vertical = 4
 theme = SubResource("Theme_0xfcv")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/HUD/ResetButton"]
+[node name="ResetLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/HUD/ResetButton"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(400, 70)
 layout_mode = 2
 offset_left = -95.0

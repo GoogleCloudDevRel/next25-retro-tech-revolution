@@ -63,8 +63,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pjxmw"]
 _data = {
-"RESET": SubResource("Animation_cdm6f"),
-"ui_p1": SubResource("Animation_wp8a3")
+&"RESET": SubResource("Animation_cdm6f"),
+&"ui_p1": SubResource("Animation_wp8a3")
 }
 
 [node name="UI_P1" type="Node2D"]

@@ -2,6 +2,8 @@ extends CanvasLayer
 
 #questions
 var trivia = []
+var trivia_JP = []
+var trivia_labels = []
 var current_trivia_selection = 0
 
 #focus management
@@ -44,7 +46,33 @@ func _ready() -> void:
 	"a" : ["BRING IT ON, I LOVE SUPER HARD GAMES!", "I'M MODERATELY INTO GAMES", "I ENJOY MORE WATCHING", "NOT A PLAYER, I'M HERE FOR THE INSIGHTS"]
 	})
 	
-	set_button_texts(trivia[current_trivia_selection])
+	## -- JP support
+	trivia_JP.append({
+	"q" : "✦ 好きな果物は何ですか？",
+	"a" : ["🍊\nオレンジ", "🍓\nイチゴ", "🍌\nバナナ", "🍉\nスイカ"]
+	})
+	#Q2
+	trivia_JP.append({
+	"q" : "✦ どちらかと言えば",
+	"a" : ["アクティブな方ですか", "お家でゆっくり過ごすのか", "SFの世界を妄想するのが", "特にハマっていることはありません"]
+	})
+	#Q3
+	trivia_JP.append({
+	"q" : "✦ ゲームはどの程度やりますか？",
+	"a" : ["かかってこい！激ムズのゲームが大好きだ！", "ゲームはそこそこやります。", "自分でやるより、見る方が好きです。", "ゲームはしないのですが、データ分析の方が興味あります。"]
+	})
+	
+	#--default: EN
+	
+	##--- JP
+	if SignalBus.language == "JP":
+		trivia_labels = trivia_JP
+		%Answer5.text = "驚かせて下さい！"
+	else:
+		trivia_labels = trivia
+		%Answer5.text = "JUST SURPRISE ME"
+	set_button_texts(trivia_labels[current_trivia_selection])	
+			
 	buttons[0].grab_focus()
 	
 	# Connect signals for all buttons
@@ -84,7 +112,7 @@ func _on_button_pressed(button_index):
 		current_trivia_selection += 1
 		if current_trivia_selection < trivia.size():
 			#print("next question")
-			set_button_texts(trivia[current_trivia_selection])
+			set_button_texts(trivia_labels[current_trivia_selection])
 		else: #go back to the game
 			#print("finsihed")
 			SignalBus.screen_state.emit(SignalBus.CONTROLS)	

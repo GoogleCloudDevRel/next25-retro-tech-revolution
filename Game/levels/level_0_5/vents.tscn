@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://d1kwhqsve0a4x"]
 
-[ext_resource type="Texture2D" uid="uid://drop2v4x2xw8i" path="res://levels/level_1/floor/floor_vent.png" id="1_v7lvn"]
-[ext_resource type="Texture2D" uid="uid://2bp2tvmjnuuh" path="res://levels/level_1/white_smoke.png" id="2_sfdmm"]
+[ext_resource type="Texture2D" uid="uid://drop2v4x2xw8i" path="res://levels/level_0_5/floor/floor_vent.png" id="1_v7lvn"]
+[ext_resource type="Texture2D" uid="uid://2bp2tvmjnuuh" path="res://levels/level_0_5/white_smoke.png" id="2_sfdmm"]
 
 [sub_resource type="Gradient" id="Gradient_wvrqb"]
 offsets = PackedFloat32Array(0, 0.169617, 1)

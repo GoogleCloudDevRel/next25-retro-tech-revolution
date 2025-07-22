@@ -1,9 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://baqqa4e6axanu"]
+[gd_scene load_steps=15 format=3 uid="uid://baqqa4e6axanu"]
 
-[ext_resource type="Script" path="res://dialogues/rtr_balloon/balloon.gd" id="1_36de5"]
+[ext_resource type="Script" uid="uid://cksi4mjoohpjm" path="res://dialogues/rtr_balloon/balloon.gd" id="1_36de5"]
 [ext_resource type="PackedScene" uid="uid://ckvgyvclnwggo" path="res://addons/dialogue_manager/dialogue_label.tscn" id="2_a8ve6"]
 [ext_resource type="PackedScene" uid="uid://q2bsklea4iyx" path="res://dialogues/gemini.tscn" id="3_mox8t"]
-[ext_resource type="Shader" path="res://shaders/font-glow.gdshader" id="4_n7val"]
+[ext_resource type="Shader" uid="uid://m30omr2a2kww" path="res://shaders/font-glow.gdshader" id="4_n7val"]
 
 [sub_resource type="SystemFont" id="SystemFont_va37m"]
 font_names = PackedStringArray("Google Sans")
@@ -67,11 +67,21 @@ shader_parameter/glow_threshold = 0.837
 shader_parameter/outer_glow_strength = 0.128
 shader_parameter/inner_glow_strength = 0.417
 
+[sub_resource type="SystemFont" id="SystemFont_72f76"]
+font_names = PackedStringArray("Noto Sans JP")
+font_weight = 800
+
 [sub_resource type="SystemFont" id="SystemFont_kvr26"]
+fallbacks = Array[Font]([SubResource("SystemFont_72f76")])
 font_names = PackedStringArray("Google Sans")
 font_weight = 800
 
+[sub_resource type="SystemFont" id="SystemFont_8rxwv"]
+font_names = PackedStringArray("Noto Sans JP")
+font_weight = 500
+
 [sub_resource type="SystemFont" id="SystemFont_8bnls"]
+fallbacks = Array[Font]([SubResource("SystemFont_8rxwv")])
 font_names = PackedStringArray("Google Sans")
 font_weight = 500
 
