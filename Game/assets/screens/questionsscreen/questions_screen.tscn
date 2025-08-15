@@ -11,6 +11,7 @@
 
 [sub_resource type="SystemFont" id="SystemFont_v7t7g"]
 font_names = PackedStringArray("Noto Sans JP")
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_ketkh"]
 fallbacks = Array[Font]([SubResource("SystemFont_v7t7g")])
@@ -20,6 +21,7 @@ subpixel_positioning = 0
 [sub_resource type="SystemFont" id="SystemFont_usxi1"]
 font_names = PackedStringArray("Noto Sans JP")
 font_weight = 900
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_3oxa5"]
 fallbacks = Array[Font]([SubResource("SystemFont_usxi1")])
@@ -126,10 +128,12 @@ Button/styles/pressed = SubResource("StyleBoxFlat_8x2s4")
 
 [sub_resource type="SystemFont" id="SystemFont_k4456"]
 font_names = PackedStringArray("Noto Sans JP")
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_csoud"]
 fallbacks = Array[Font]([SubResource("SystemFont_k4456")])
 font_names = PackedStringArray("Google Sans")
+subpixel_positioning = 0
 
 [node name="QuestionsScreen" type="CanvasLayer"]
 layer = -1

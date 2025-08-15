@@ -260,7 +260,7 @@ def get_rank(session_id):
 	return "0"
 
 
-###########################Gemini & Imagen3 to generate the Backstory ###################
+###########################Gemini & Imagen4 to generate the Backstory ###################
 
 
 #keep the aspect ratio but reduce image to 
@@ -298,7 +298,7 @@ def generate_backstory_image(prompt, session_id):
 	#prompt = """
 	#16 bits version with tron like neon of a datacenter in the 80s
 	#"""
-	print("---Calling Imagen3---")
+	print("---Calling Imagen4---")
 
 	vertexai.init(project=PROJECT_ID, location="us-central1")
 	model = ImageGenerationModel.from_pretrained(IMAGE_GENERATION_MODEL) 
@@ -384,7 +384,7 @@ class rtr_agent:
         final_response_text = "Agent did not produce a final response." # Default
 
         async for event in self.runner.run_async(user_id=self.session.user_id, session_id=self.session.id, new_message=content):
-            # print(f"  [Event] Author: {event.author}, Type: {type(event).__name__}, Final: {event.is_final_response()}, Content: {event.content}")
+            print(f"  [Event] Author: {event.author}, Type: {type(event).__name__}, Final: {event.is_final_response()}, Content: {event.content}")
 
             # Key Concept: is_final_response() marks the concluding message for the turn.
             if event.is_final_response():
@@ -400,10 +400,6 @@ class rtr_agent:
     def __del__(self):
         print("destroying object")
        # await exit_stack.aclose()
-
-
-
-
 
 ## setup
     async def async_agent_main(self):
@@ -489,21 +485,23 @@ def get_agent_help():
 		print("Calling ADK")
 
 		data = request.get_json()
+		
+
 		#prompt =  data.get('prompt')
 		session_id  = data.get('session_id')
-		img_base64 = request.form.get('img_base64')
+		img_base64 = data.get('img_base64')
 
 		
-		stopwatch = request.form.get('stopwatch')
-		health = request.form.get('health')
-		hit_count = request.form.get('hit_count')
-		score = request.form.get('score')
-		game_difficulty = request.form.get('game_difficulty')
+		stopwatch = data.get('stopwatch')
+		health = data.get('health')
+		hit_count = data.get('hit_count')
+		score = data.get('score')
+		game_difficulty = data.get('game_difficulty')
 
-		has_blaster = request.form.get('has_weapon1')
-		has_gauntlet = request.form.get('has_weapon2')
+		has_blaster = data.get('has_weapon1')
+		has_gauntlet = data.get('has_weapon2')
 
-		language = str(request.form.get('language'))
+		language = str(data.get('language'))
 
 		prompt_text = ""
 		#user has 2 weapons
@@ -529,7 +527,7 @@ def get_agent_help():
 
 		#build prompt from stats of the game
 		prompt_text += "Player has been playing for "+str(stopwatch)+"\n" 
-		prompt_text += "Player health level is "+str(health)+" out of 200 \n"
+		prompt_text += "Player health level is "+str(health)+" out of 100 \n"
 		prompt_text += "Player has been hit "+str(hit_count)+" times.\n" 
 		prompt_text += "Player score is "+str(score)+".\n"
 		prompt_text += "Player current difficulty level is "+str(game_difficulty)+" from 0 to 2 with 0 being easy and 2 being hard \n"
@@ -537,6 +535,7 @@ def get_agent_help():
 
 		print("Calling ADK Agent")
 		result = get_adk_agent_help(prompt_text, img_base64, "rtr", session_id)
+		print(prompt_text)
 		result = result.replace("```json", "").replace("```", "")
 		return result
 

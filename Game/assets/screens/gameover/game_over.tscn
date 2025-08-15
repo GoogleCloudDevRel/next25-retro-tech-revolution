@@ -300,6 +300,7 @@ spacing_space = -6
 
 [sub_resource type="SystemFont" id="SystemFont_4gvep"]
 font_names = PackedStringArray("Noto Sans JP")
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_mb474"]
 fallbacks = Array[Font]([SubResource("SystemFont_4gvep")])
@@ -370,6 +371,7 @@ subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_q61p7"]
 font_names = PackedStringArray("Noto Sans JP")
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_gdgqx"]
 fallbacks = Array[Font]([SubResource("SystemFont_q61p7")])
