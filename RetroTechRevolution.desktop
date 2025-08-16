@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Terminal=true
+Name=Retro Tech Revolution
+Icon=/home/rtr-admin/Pictures/rtr-icon.svg
+Exec=/home/rtr-admin/RTR/next25-retro-tech-revolution/Game/Retro_Tech_Revolution-linux.x86_64_v5.sh

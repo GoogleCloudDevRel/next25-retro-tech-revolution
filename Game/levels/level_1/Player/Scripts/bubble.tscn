@@ -1,0 +1,67 @@
+[gd_scene load_steps=6 format=3 uid="uid://c1cr2wayj7p71"]
+
+[ext_resource type="Script" uid="uid://cuqkujuhfr52x" path="res://levels/level_1/Player/Scripts/bubble.gd" id="1_46pnk"]
+[ext_resource type="Texture2D" uid="uid://bsy2drm8f5lns" path="res://levels/level_1/Player/Assets/iddle_state.png" id="2_rg6io"]
+
+[sub_resource type="Animation" id="Animation_egy5a"]
+length = 0.7
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("iddle_state:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.233333, 0.3, 0.4, 0.466667, 0.533333, 0.6, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 2, 3, 4, 5, 6, 7, 8, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_i56b1"]
+resource_name = "iddle_state"
+length = 0.7
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("iddle_state:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.233333, 0.3, 0.4, 0.466667, 0.533333, 0.6, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 2, 3, 4, 5, 6, 7, 8, 10, 11]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hrts4"]
+_data = {
+&"RESET": SubResource("Animation_egy5a"),
+&"iddle_state": SubResource("Animation_i56b1")
+}
+
+[node name="Bubble" type="Node2D"]
+script = ExtResource("1_46pnk")
+
+[node name="iddle_state" type="Sprite2D" parent="."]
+position = Vector2(-1.43051e-06, 0)
+scale = Vector2(0.0490849, 0.0556016)
+texture = ExtResource("2_rg6io")
+centered = false
+offset = Vector2(-142.61, -125.896)
+hframes = 3
+vframes = 4
+
+[node name="AnimationBubble" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hrts4")
+}
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.7
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

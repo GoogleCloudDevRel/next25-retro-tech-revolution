@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://ddpsokxuhc11a"]
+
+[ext_resource type="Script" uid="uid://cj3rorqwfa7xv" path="res://scripts/tornado.gd" id="1_v1qy1"]
+[ext_resource type="PackedScene" uid="uid://bsev0gq74h7wt" path="res://levels/level_1/Player/ui_projectile2.tscn" id="5_rr04i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cp4y1"]
+size = Vector2(26.5, 24)
+
+[node name="Tornado" type="Area2D"]
+top_level = true
+rotation = -0.0012157
+collision_layer = 8
+collision_mask = 3
+script = ExtResource("1_v1qy1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_cp4y1")
+
+[node name="UI_P2" parent="." instance=ExtResource("5_rr04i")]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

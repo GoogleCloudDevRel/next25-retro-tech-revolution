@@ -1,0 +1,57 @@
+~ start
+Gemini: [[你好|Hi|बॉंगश़ुर|Howdy|Bonjour|こんにちは]], Hello, it's me, Gemini,
+Gemini: Before we start, let me ask you some questions:
+~ question1
+Gemini: What's your favorite fruit ?
+- 🍊 Orange
+	% Gemini: I love it
+	% Gemini: Same for me
+	set GlobalSingleton.question1 = "orange"
+- 🍓 Strawberry
+	set GlobalSingleton.question1 = "strawberry"
+- 🍌 Banana
+	set GlobalSingleton.question1 = "banana"
+- 🫐 Blueberries
+	set GlobalSingleton.question1 = "blueberries"
+- 🍉 Watermelon
+	set GlobalSingleton.question1 = "watermelon"
+- 🎁 Surprise me, I d rather not answer  => question2
+	set GlobalSingleton.question1 = "surprise me"
+~ question2
+Gemini: Are you more?
+- ✈️ Adventurous
+	set GlobalSingleton.question2 = "adventurous"
+- 🫖 Cozy behind a desk
+	set GlobalSingleton.question2 = "cozy behind a desk"
+- 👾 SciFi nerd
+	% Gemini: Just like me
+	% Gemini: What a coincidence
+	set GlobalSingleton.question2 = "scifi nerd"
+- 🎁 Surprise me, I d rather not answer => question3
+	set GlobalSingleton.question2 = "suprise me" 
+~ question3
+Gemini: How much of a gamer are you ?
+- 🎮 Bring it on, I love super hard games
+	set GlobalSingleton.question3 = "Bring it on, I love super hard games"
+- 🕹️ I'm moderately into games
+	set GlobalSingleton.question3 = "I'm moderately into games"
+- 🌇 I like to enjoy the ride but not a heavy gamer
+	set GlobalSingleton.question3 = "I like to enjoy the ride but not a heavy gamer"
+- 🎁 Surprise me, I d rather not answer => question4
+	set GlobalSingleton.question3 = "suprise me"
+~ question4
+Gemini: Which Data product are you ?
+- ⚙️ Dataflow for its data processing power
+	set GlobalSingleton.question4 = "Dataflow for its data processing power"
+- 🗄️ BigQuery for my all in one datawarehouse
+	set GlobalSingleton.question4 = "BigQuery for my all in one datawarehouse"
+- 📈 Looker for its beautiful dashboards
+	set GlobalSingleton.question4 = "Looker for its beautiful dashboards"
+- 🎁 Surprise me, I d rather not answer => END
+	set GlobalSingleton.question4 = "suprise me"
+
+#- Start again => start
+#- End the conversation => END
+#Nathan: For more information see the online documentation.
+Gemini:  Here we gooo, enjoy the ride !!!
+=> END

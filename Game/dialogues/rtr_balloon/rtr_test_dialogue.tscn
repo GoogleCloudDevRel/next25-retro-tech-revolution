@@ -1,0 +1,169 @@
+[gd_scene load_steps=9 format=3 uid="uid://cevjvc1sqg57g"]
+
+[ext_resource type="Script" uid="uid://s72lxed2ifq7" path="res://scripts/rtr_test_dialogue.gd" id="1_rrp70"]
+[ext_resource type="Texture2D" uid="uid://rf2nkntwiltm" path="res://backstory-images/debug_image.png" id="2_llwxx"]
+[ext_resource type="Shader" uid="uid://da1f8fqui3tsl" path="res://shaders/grandient_border.gdshader" id="3_wx6rx"]
+[ext_resource type="PackedScene" uid="uid://daatymj755m4a" path="res://assets/random_squares.tscn" id="4_re77n"]
+[ext_resource type="PackedScene" uid="uid://cfpw5m78e7xeu" path="res://levels/level_1/level_1.tscn" id="5_lif5r"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t27of"]
+shader = ExtResource("3_wx6rx")
+shader_parameter/border_width_pixels = 12.5
+shader_parameter/corner_radius = 0.044
+shader_parameter/border_softness = 0.0
+shader_parameter/gradient_direction = 0
+shader_parameter/gradient_color1 = Color(0.262745, 0.615686, 0.87451, 1)
+shader_parameter/gradient_color2 = Color(0.309804, 0.529412, 0.929412, 1)
+shader_parameter/gradient_color3 = Color(0.580392, 0.462745, 0.772549, 1)
+shader_parameter/gradient_color4 = Color(0.737255, 0.407843, 0.556863, 1)
+shader_parameter/gradient_color5 = Color(0.839216, 0.392157, 0.364706, 1)
+shader_parameter/color_pos1 = 0.0
+shader_parameter/color_pos2 = 0.52
+shader_parameter/color_pos3 = 0.78
+shader_parameter/color_pos4 = 0.89
+shader_parameter/color_pos5 = 1.0
+shader_parameter/color_count = 5
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fyhc1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ilg3t"]
+bg_color = Color(0, 0, 0, 1)
+border_color = Color(0.00184107, 0.00184107, 0.00184107, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="RTR_TestDialogue" type="Node2D"]
+script = ExtResource("1_rrp70")
+
+[node name="GameView" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="ViewportDisplay" type="TextureRect" parent="GameView"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(1920, 1080)
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0, 0, 0, 1)
+
+[node name="BackStoryImage" type="TextureRect" parent="."]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(600, 90)
+texture = ExtResource("2_llwxx")
+expand_mode = 2
+stretch_mode = 2
+flip_h = true
+
+[node name="Panel" type="Panel" parent="."]
+visible = false
+modulate = Color(0.977988, 0.983491, 0.98614, 1)
+z_index = 1
+material = SubResource("ShaderMaterial_t27of")
+offset_top = 1.0
+offset_right = 186.66
+offset_bottom = 60.51
+scale = Vector2(1.133, 1)
+size_flags_horizontal = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+offset_right = 160.0
+offset_bottom = 60.0
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="Panel" type="Panel" parent="Panel/MarginContainer"]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 1)
+z_index = 2
+material = SubResource("CanvasItemMaterial_fyhc1")
+custom_minimum_size = Vector2(178.66, 51.51)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ilg3t")
+
+[node name="RandomSquares" parent="." instance=ExtResource("4_re77n")]
+visible = false
+
+[node name="outerboarder" type="Node2D" parent="."]
+visible = false
+
+[node name="top" type="ColorRect" parent="outerboarder"]
+offset_right = 1920.0
+offset_bottom = 48.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="32px-spacer" type="ColorRect" parent="outerboarder"]
+offset_left = -10.0
+offset_top = 665.0
+offset_right = 1910.0
+offset_bottom = 713.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="32px-spacer2" type="ColorRect" parent="outerboarder"]
+offset_left = 961.0
+offset_top = 966.0
+offset_right = 1446.0
+offset_bottom = 1014.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="bottom" type="ColorRect" parent="outerboarder"]
+offset_top = 1032.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="left" type="ColorRect" parent="outerboarder"]
+offset_right = 48.0
+offset_bottom = 1080.0
+color = Color(0.956863, 0.705882, 0, 1)
+
+[node name="right" type="ColorRect" parent="outerboarder"]
+offset_left = 1872.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="center-topbottom" type="ColorRect" parent="outerboarder"]
+offset_left = 960.0
+offset_right = 961.0
+offset_bottom = 1080.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="center-topbottom2" type="ColorRect" parent="outerboarder"]
+offset_left = 475.0
+offset_top = 1.0
+offset_right = 476.0
+offset_bottom = 1081.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="center-topbottom3" type="ColorRect" parent="outerboarder"]
+offset_left = 1446.0
+offset_top = 1.0
+offset_right = 1447.0
+offset_bottom = 1081.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="center-leftright" type="ColorRect" parent="outerboarder"]
+offset_top = 540.0
+offset_right = 1920.0
+offset_bottom = 541.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="GameViewport" type="SubViewport" parent="."]
+size = Vector2i(640, 360)
+size_2d_override = Vector2i(640, 360)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="level_1" parent="GameViewport" instance=ExtResource("5_lif5r")]

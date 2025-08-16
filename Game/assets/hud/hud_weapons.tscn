@@ -1,0 +1,92 @@
+[gd_scene load_steps=4 format=3 uid="uid://c3i2ddpnr2yju"]
+
+[ext_resource type="Script" uid="uid://t48r7ps71jkg" path="res://assets/hud/hud_weapons.gd" id="1_4epun"]
+[ext_resource type="Texture2D" uid="uid://c06qflnp6u78q" path="res://assets/hud/assets/greyed_blaster.png" id="2_5yjnn"]
+[ext_resource type="Texture2D" uid="uid://c4ofp5qsp4bi7" path="res://assets/hud/assets/selected_gauntlet.png" id="3_gep25"]
+
+[node name="hud_weapons" type="CanvasLayer"]
+layer = 2
+script = ExtResource("1_4epun")
+
+[node name="WeaponContainer" type="HBoxContainer" parent="."]
+offset_left = 1632.0
+offset_top = 901.0
+offset_right = 1876.0
+offset_bottom = 1021.0
+
+[node name="TextureRect" type="TextureRect" parent="WeaponContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("2_5yjnn")
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="WeaponContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("3_gep25")
+stretch_mode = 5
+
+[node name="outerboarder" type="Node2D" parent="."]
+visible = false
+
+[node name="top" type="ColorRect" parent="outerboarder"]
+offset_right = 1920.0
+offset_bottom = 48.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="32px-spacer" type="ColorRect" parent="outerboarder"]
+offset_left = -10.0
+offset_top = 665.0
+offset_right = 1910.0
+offset_bottom = 713.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="32px-spacer2" type="ColorRect" parent="outerboarder"]
+offset_left = 961.0
+offset_top = 966.0
+offset_right = 1446.0
+offset_bottom = 1014.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="bottom" type="ColorRect" parent="outerboarder"]
+offset_top = 1032.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="left" type="ColorRect" parent="outerboarder"]
+offset_right = 48.0
+offset_bottom = 1080.0
+color = Color(0.956863, 0.705882, 0, 1)
+
+[node name="right" type="ColorRect" parent="outerboarder"]
+offset_left = 1872.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="center-topbottom" type="ColorRect" parent="outerboarder"]
+offset_left = 960.0
+offset_right = 961.0
+offset_bottom = 1080.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="center-topbottom2" type="ColorRect" parent="outerboarder"]
+offset_left = 475.0
+offset_top = 1.0
+offset_right = 476.0
+offset_bottom = 1081.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="center-topbottom3" type="ColorRect" parent="outerboarder"]
+offset_left = 1446.0
+offset_top = 1.0
+offset_right = 1447.0
+offset_bottom = 1081.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="center-leftright" type="ColorRect" parent="outerboarder"]
+offset_top = 540.0
+offset_right = 1920.0
+offset_bottom = 541.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)

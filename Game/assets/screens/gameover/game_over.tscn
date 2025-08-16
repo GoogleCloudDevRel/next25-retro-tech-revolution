@@ -1,0 +1,766 @@
+[gd_scene load_steps=83 format=3 uid="uid://txomv4j8okk2"]
+
+[ext_resource type="Script" uid="uid://ncmbf3c1pb1l" path="res://scripts/game_over.gd" id="1_poa64"]
+[ext_resource type="Texture2D" uid="uid://bgi8mtfb5wsnm" path="res://assets/screens/gameover/icons.png" id="3_3prv5"]
+[ext_resource type="PackedScene" uid="uid://ykfi24r6o3m3" path="res://assets/gcp_overlay/gcp_overlay.tscn" id="3_iuf8g"]
+[ext_resource type="Texture2D" uid="uid://be0plh84aolqi" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00024.png" id="4_pr0mq"]
+[ext_resource type="PackedScene" uid="uid://daatymj755m4a" path="res://assets/random_squares.tscn" id="4_sm61w"]
+[ext_resource type="Texture2D" uid="uid://di6ly3elabp5w" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00025.png" id="5_cm87s"]
+[ext_resource type="Texture2D" uid="uid://c5n2xi3sgnbub" path="res://assets/screens/gameover/leaderboard.png" id="5_k3wen"]
+[ext_resource type="Texture2D" uid="uid://dgngyta4lkq6w" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00026.png" id="6_5oowm"]
+[ext_resource type="Texture2D" uid="uid://c7updjwg6oe6f" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00027.png" id="7_u70vp"]
+[ext_resource type="Texture2D" uid="uid://dprroydq73l7n" path="res://assets/screens/gameover/gemini-summary.png" id="7_x2e0t"]
+[ext_resource type="Texture2D" uid="uid://blcfa6c54f48j" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00028.png" id="8_w3cvw"]
+[ext_resource type="Texture2D" uid="uid://brpuodebt7i85" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00029.png" id="9_hint1"]
+[ext_resource type="Texture2D" uid="uid://bfn5h1p4tms2b" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00030.png" id="10_thndc"]
+[ext_resource type="Texture2D" uid="uid://7bfwx3pyts2n" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00031.png" id="11_nyyg1"]
+[ext_resource type="Texture2D" uid="uid://d272gd7kqw10i" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00032.png" id="12_ldwdx"]
+[ext_resource type="Texture2D" uid="uid://du4d8xqhrq23a" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00033.png" id="13_vqlar"]
+[ext_resource type="Texture2D" uid="uid://bafnbi5bd3ywl" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00034.png" id="14_kt08v"]
+[ext_resource type="Texture2D" uid="uid://2kh7xsimfexa" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00035.png" id="15_t5d7u"]
+[ext_resource type="Texture2D" uid="uid://7vrbgo8j7jb1" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00036.png" id="16_twl1u"]
+[ext_resource type="Texture2D" uid="uid://befmigj20e154" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00037.png" id="17_pc02h"]
+[ext_resource type="Texture2D" uid="uid://5flcx5chv4cm" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00038.png" id="18_a7dl7"]
+[ext_resource type="Texture2D" uid="uid://4cyyqquos68g" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00039.png" id="19_t5q34"]
+[ext_resource type="Texture2D" uid="uid://bd8s54l8bv41u" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00040.png" id="20_ffns2"]
+[ext_resource type="Texture2D" uid="uid://dmmh8as5op44i" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00041.png" id="21_h47va"]
+[ext_resource type="Texture2D" uid="uid://q0al1che20lv" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00042.png" id="22_acuh2"]
+[ext_resource type="Texture2D" uid="uid://df4tww84ofaoj" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00043.png" id="23_xiphd"]
+[ext_resource type="Texture2D" uid="uid://cisu0pjb36x3l" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00044.png" id="24_wbv8p"]
+[ext_resource type="Texture2D" uid="uid://c6s5rx1k7fwde" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00045.png" id="25_0c8ow"]
+[ext_resource type="Texture2D" uid="uid://brg8r0ab87fkg" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00046.png" id="26_j33lm"]
+[ext_resource type="Texture2D" uid="uid://4eqyjtka01jb" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00047.png" id="27_vvc62"]
+[ext_resource type="Texture2D" uid="uid://c4ov7c2p1q85u" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00048.png" id="28_digi6"]
+[ext_resource type="Texture2D" uid="uid://db5bma4y3nl6k" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00049.png" id="29_gngdr"]
+[ext_resource type="Texture2D" uid="uid://cbobk4hqvy13e" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00050.png" id="30_ikws6"]
+[ext_resource type="Texture2D" uid="uid://deaq2u5kif77y" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00051.png" id="31_52uqu"]
+[ext_resource type="Texture2D" uid="uid://cjlshrurnga7u" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00052.png" id="32_fx0ny"]
+[ext_resource type="Texture2D" uid="uid://k5ld2x0v7rpk" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00053.png" id="33_8v06e"]
+[ext_resource type="Texture2D" uid="uid://dwm7nwuqufuav" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00054.png" id="34_qjrfe"]
+[ext_resource type="Texture2D" uid="uid://vig8s4hr6qdx" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00055.png" id="35_v8dib"]
+[ext_resource type="Texture2D" uid="uid://bb8uhva2iytkr" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00056.png" id="36_2py4d"]
+[ext_resource type="Texture2D" uid="uid://bon0r5o302s7p" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00057.png" id="37_tjqh1"]
+[ext_resource type="Texture2D" uid="uid://3ilapp51seit" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00058.png" id="38_eoqtw"]
+[ext_resource type="Texture2D" uid="uid://d17j2v7odumur" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00059.png" id="39_ej0iw"]
+[ext_resource type="Texture2D" uid="uid://b66y3yixekmr6" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00060.png" id="40_cxut6"]
+[ext_resource type="Texture2D" uid="uid://cx37al3ny8g6x" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00061.png" id="41_ds2cj"]
+[ext_resource type="Texture2D" uid="uid://bk122r0bg0vdp" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00062.png" id="42_5ecxp"]
+[ext_resource type="Texture2D" uid="uid://oxtdx1b7usyl" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00063.png" id="43_se2og"]
+[ext_resource type="Texture2D" uid="uid://bagpo18xhjkbp" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00064.png" id="44_rjuai"]
+[ext_resource type="Texture2D" uid="uid://bhhpyvswbxj02" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00065.png" id="45_gdc4u"]
+[ext_resource type="Texture2D" uid="uid://dpvbtq0i7k2k0" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00066.png" id="46_tbchn"]
+[ext_resource type="Texture2D" uid="uid://c3cismps6stsu" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00067.png" id="47_gpa7d"]
+[ext_resource type="Texture2D" uid="uid://dxewqblk0shed" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00068.png" id="48_qi72c"]
+[ext_resource type="Texture2D" uid="uid://bk8iwtawfnfjp" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00069.png" id="49_gx310"]
+[ext_resource type="Texture2D" uid="uid://ckf0tmb7ybloh" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00070.png" id="50_b5bxi"]
+[ext_resource type="Texture2D" uid="uid://lafva1js1spt" path="res://assets/screens/gameover/GameOver_frames/Game_Over_00071.png" id="51_2hxhb"]
+[ext_resource type="Texture2D" uid="uid://ck63qk87chj8o" path="res://assets/screens/gameover/qr-code_medium.png" id="55_v4nsc"]
+[ext_resource type="VideoStream" uid="uid://d4go1pjiu1yf0" path="res://assets/Background.ogv" id="57_uqg6v"]
+[ext_resource type="AudioStream" uid="uid://bo38frg4jfmkx" path="res://assets/screens/gameover/loop-victory.ogg" id="58_ayr86"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_setkf"]
+animations = [{
+"frames": [{
+"duration": 0.2,
+"texture": ExtResource("4_pr0mq")
+}, {
+"duration": 0.2,
+"texture": ExtResource("5_cm87s")
+}, {
+"duration": 0.2,
+"texture": ExtResource("6_5oowm")
+}, {
+"duration": 0.2,
+"texture": ExtResource("7_u70vp")
+}, {
+"duration": 0.2,
+"texture": ExtResource("8_w3cvw")
+}, {
+"duration": 0.2,
+"texture": ExtResource("9_hint1")
+}, {
+"duration": 0.2,
+"texture": ExtResource("10_thndc")
+}, {
+"duration": 0.2,
+"texture": ExtResource("11_nyyg1")
+}, {
+"duration": 0.2,
+"texture": ExtResource("12_ldwdx")
+}, {
+"duration": 0.2,
+"texture": ExtResource("13_vqlar")
+}, {
+"duration": 0.2,
+"texture": ExtResource("14_kt08v")
+}, {
+"duration": 0.2,
+"texture": ExtResource("15_t5d7u")
+}, {
+"duration": 0.2,
+"texture": ExtResource("16_twl1u")
+}, {
+"duration": 0.2,
+"texture": ExtResource("17_pc02h")
+}, {
+"duration": 0.2,
+"texture": ExtResource("18_a7dl7")
+}, {
+"duration": 0.2,
+"texture": ExtResource("19_t5q34")
+}, {
+"duration": 0.2,
+"texture": ExtResource("20_ffns2")
+}, {
+"duration": 0.2,
+"texture": ExtResource("21_h47va")
+}, {
+"duration": 0.2,
+"texture": ExtResource("22_acuh2")
+}, {
+"duration": 0.2,
+"texture": ExtResource("23_xiphd")
+}, {
+"duration": 0.2,
+"texture": ExtResource("24_wbv8p")
+}, {
+"duration": 0.2,
+"texture": ExtResource("25_0c8ow")
+}, {
+"duration": 0.2,
+"texture": ExtResource("26_j33lm")
+}, {
+"duration": 0.2,
+"texture": ExtResource("27_vvc62")
+}, {
+"duration": 0.2,
+"texture": ExtResource("28_digi6")
+}, {
+"duration": 0.2,
+"texture": ExtResource("29_gngdr")
+}, {
+"duration": 0.2,
+"texture": ExtResource("30_ikws6")
+}, {
+"duration": 0.2,
+"texture": ExtResource("31_52uqu")
+}, {
+"duration": 0.2,
+"texture": ExtResource("32_fx0ny")
+}, {
+"duration": 0.2,
+"texture": ExtResource("33_8v06e")
+}, {
+"duration": 0.2,
+"texture": ExtResource("34_qjrfe")
+}, {
+"duration": 0.2,
+"texture": ExtResource("35_v8dib")
+}, {
+"duration": 0.2,
+"texture": ExtResource("36_2py4d")
+}, {
+"duration": 0.2,
+"texture": ExtResource("37_tjqh1")
+}, {
+"duration": 0.2,
+"texture": ExtResource("38_eoqtw")
+}, {
+"duration": 0.2,
+"texture": ExtResource("39_ej0iw")
+}, {
+"duration": 0.2,
+"texture": ExtResource("40_cxut6")
+}, {
+"duration": 0.2,
+"texture": ExtResource("41_ds2cj")
+}, {
+"duration": 0.2,
+"texture": ExtResource("42_5ecxp")
+}, {
+"duration": 0.2,
+"texture": ExtResource("43_se2og")
+}, {
+"duration": 0.2,
+"texture": ExtResource("44_rjuai")
+}, {
+"duration": 0.2,
+"texture": ExtResource("45_gdc4u")
+}, {
+"duration": 0.2,
+"texture": ExtResource("46_tbchn")
+}, {
+"duration": 0.2,
+"texture": ExtResource("47_gpa7d")
+}, {
+"duration": 0.2,
+"texture": ExtResource("48_qi72c")
+}, {
+"duration": 0.2,
+"texture": ExtResource("49_gx310")
+}, {
+"duration": 0.2,
+"texture": ExtResource("50_b5bxi")
+}, {
+"duration": 0.2,
+"texture": ExtResource("51_2hxhb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bc2cj"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.882353, 0.258824, 0.231373, 1)
+corner_radius_top_left = 13
+corner_radius_top_right = 13
+corner_radius_bottom_right = 13
+corner_radius_bottom_left = 13
+
+[sub_resource type="Theme" id="Theme_qvtvk"]
+Panel/styles/panel = SubResource("StyleBoxFlat_bc2cj")
+
+[sub_resource type="SystemFont" id="SystemFont_d2gv7"]
+font_names = PackedStringArray("Google Sans")
+font_weight = 800
+subpixel_positioning = 0
+
+[sub_resource type="SystemFont" id="SystemFont_oogqg"]
+font_names = PackedStringArray("Google Sans")
+font_weight = 800
+subpixel_positioning = 0
+
+[sub_resource type="FontVariation" id="FontVariation_gts8u"]
+fallbacks = Array[Font]([SubResource("SystemFont_oogqg")])
+base_font = SubResource("SystemFont_d2gv7")
+spacing_glyph = -2
+spacing_space = -6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wpp5w"]
+bg_color = Color(0.1938, 0.57, 0.28785, 0)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.192157, 0.568627, 0.294118, 1)
+corner_radius_top_left = 13
+corner_radius_top_right = 13
+corner_radius_bottom_right = 13
+corner_radius_bottom_left = 13
+
+[sub_resource type="Theme" id="Theme_5stl8"]
+Panel/styles/panel = SubResource("StyleBoxFlat_wpp5w")
+
+[sub_resource type="SystemFont" id="SystemFont_hukpm"]
+font_names = PackedStringArray("Google Sans")
+font_weight = 900
+subpixel_positioning = 0
+
+[sub_resource type="SystemFont" id="SystemFont_xw3uw"]
+font_names = PackedStringArray("Google Sans")
+font_weight = 800
+subpixel_positioning = 0
+
+[sub_resource type="FontVariation" id="FontVariation_rg7ng"]
+base_font = SubResource("SystemFont_xw3uw")
+spacing_glyph = -2
+spacing_space = -6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_03xhm"]
+bg_color = Color(0.503709, 0.677025, 0.938365, 0)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.854902, 0.635294, 0.0196078, 1)
+corner_radius_top_left = 13
+corner_radius_top_right = 13
+corner_radius_bottom_right = 13
+corner_radius_bottom_left = 13
+shadow_color = Color(0.854902, 0.635294, 0.0196078, 0.486275)
+
+[sub_resource type="Theme" id="Theme_wn1yw"]
+Panel/styles/panel = SubResource("StyleBoxFlat_03xhm")
+
+[sub_resource type="SystemFont" id="SystemFont_dkuhu"]
+font_names = PackedStringArray("Google Sans")
+font_weight = 800
+font_stretch = 50
+subpixel_positioning = 0
+
+[sub_resource type="FontVariation" id="FontVariation_wcfw1"]
+base_font = SubResource("SystemFont_dkuhu")
+spacing_glyph = -4
+spacing_space = -6
+
+[sub_resource type="SystemFont" id="SystemFont_4gvep"]
+font_names = PackedStringArray("Noto Sans JP")
+subpixel_positioning = 0
+
+[sub_resource type="SystemFont" id="SystemFont_mb474"]
+fallbacks = Array[Font]([SubResource("SystemFont_4gvep")])
+font_names = PackedStringArray("Google Sans Display")
+font_weight = 900
+subpixel_positioning = 0
+
+[sub_resource type="SystemFont" id="SystemFont_npr4y"]
+font_names = PackedStringArray("Google Sans Display")
+font_weight = 900
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k2smk"]
+bg_color = Color(0, 0, 0, 0.764)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(1, 1, 1, 0.629)
+shadow_size = 11
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jh82u"]
+bg_color = Color(0, 0, 0, 0.764)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.921569, 0.682353, 0.0196078, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0.925, 0.686, 0.008, 0.565)
+shadow_size = 11
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xgofl"]
+bg_color = Color(0, 0, 0, 0.764)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+corner_radius_top_left = 13
+corner_radius_top_right = 13
+corner_radius_bottom_right = 13
+corner_radius_bottom_left = 13
+expand_margin_left = 100.0
+expand_margin_top = 25.0
+expand_margin_right = 100.0
+expand_margin_bottom = 25.0
+shadow_color = Color(1, 1, 1, 0.629)
+shadow_size = 6
+
+[sub_resource type="Theme" id="Theme_0xfcv"]
+Button/font_sizes/font_size = 32
+Button/fonts/font = SubResource("SystemFont_npr4y")
+Button/styles/disabled = SubResource("StyleBoxFlat_k2smk")
+Button/styles/hover = SubResource("StyleBoxFlat_jh82u")
+Button/styles/normal = SubResource("StyleBoxFlat_xgofl")
+
+[sub_resource type="SystemFont" id="SystemFont_0pjr2"]
+font_names = PackedStringArray("Google Sans Display")
+font_weight = 900
+subpixel_positioning = 0
+
+[sub_resource type="SystemFont" id="SystemFont_q61p7"]
+font_names = PackedStringArray("Noto Sans JP")
+subpixel_positioning = 0
+
+[sub_resource type="SystemFont" id="SystemFont_gdgqx"]
+fallbacks = Array[Font]([SubResource("SystemFont_q61p7")])
+font_names = PackedStringArray("Google Sans")
+font_weight = 500
+subpixel_positioning = 0
+
+[node name="GameOver" type="CanvasLayer"]
+layer = -1
+script = ExtResource("1_poa64")
+
+[node name="icons" type="TextureRect" parent="."]
+offset_left = 520.0
+offset_top = 341.0
+offset_right = 1127.0
+offset_bottom = 393.0
+texture = ExtResource("3_3prv5")
+stretch_mode = 2
+
+[node name="RandomSquares" parent="." instance=ExtResource("4_sm61w")]
+visible = false
+
+[node name="gcp_overlay" parent="." instance=ExtResource("3_iuf8g")]
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(1920, 1080)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(1920, 984)
+layout_mode = 2
+theme_override_constants/separation = 42
+
+[node name="Separator" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="GameOver" type="AnimatedSprite2D" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+position = Vector2(957.29, 137.314)
+scale = Vector2(0.319354, 0.317604)
+sprite_frames = SubResource("SpriteFrames_setkf")
+frame_progress = 0.305945
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = -939
+theme_override_constants/margin_top = 187
+
+[node name="Metrics" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 17
+alignment = 1
+
+[node name="Rank" type="Panel" parent="MarginContainer/VBoxContainer/Metrics"]
+custom_minimum_size = Vector2(242, 90)
+layout_mode = 2
+theme = SubResource("Theme_qvtvk")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Metrics/Rank"]
+layout_mode = 0
+offset_right = 276.0
+offset_bottom = 88.0
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 21
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Metrics/Rank/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/Metrics/Rank/MarginContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_k3wen")
+stretch_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Metrics/Rank/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 25
+
+[node name="RankLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/Metrics/Rank/MarginContainer/HBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/default_color = Color(0.882353, 0.235294, 0.207843, 1)
+theme_override_fonts/normal_font = SubResource("FontVariation_gts8u")
+theme_override_font_sizes/normal_font_size = 54
+bbcode_enabled = true
+text = "[right]034[/right]"
+fit_content = true
+
+[node name="Score" type="Panel" parent="MarginContainer/VBoxContainer/Metrics"]
+custom_minimum_size = Vector2(236, 100)
+layout_mode = 2
+theme = SubResource("Theme_5stl8")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Metrics/Score"]
+layout_mode = 0
+offset_right = 264.0
+offset_bottom = 86.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 11
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Metrics/Score/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="starLabel" type="Label" parent="MarginContainer/VBoxContainer/Metrics/Score/MarginContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.196078, 0.568627, 0.294118, 1)
+theme_override_fonts/font = SubResource("SystemFont_hukpm")
+theme_override_font_sizes/font_size = 44
+text = "★"
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Metrics/Score/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 54)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 51
+
+[node name="ScoreLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/Metrics/Score/MarginContainer/HBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+theme_override_colors/default_color = Color(0.219608, 0.584314, 0.317647, 1)
+theme_override_fonts/normal_font = SubResource("FontVariation_rg7ng")
+theme_override_font_sizes/normal_font_size = 54
+bbcode_enabled = true
+text = "[right]000[/right]"
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Time" type="Panel" parent="MarginContainer/VBoxContainer/Metrics"]
+custom_minimum_size = Vector2(406, 90)
+layout_mode = 2
+theme = SubResource("Theme_wn1yw")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Metrics/Time"]
+layout_mode = 2
+offset_right = 469.0
+offset_bottom = 86.0
+theme_override_constants/margin_left = 59
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Metrics/Time/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Metrics/Time/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = -3
+
+[node name="StopWatchLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/Metrics/Time/MarginContainer/HBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 30)
+layout_mode = 2
+theme_override_colors/default_color = Color(0.854902, 0.635294, 0.0196078, 1)
+theme_override_fonts/normal_font = SubResource("FontVariation_wcfw1")
+theme_override_font_sizes/normal_font_size = 54
+bbcode_enabled = true
+text = "[right]00:00.000[/right]"
+fit_content = true
+scroll_active = false
+tab_size = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 47
+
+[node name="QuestionHBox" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 10
+
+[node name="GeminiLogo" type="TextureRect" parent="MarginContainer/VBoxContainer/VBoxContainer/QuestionHBox"]
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+texture = ExtResource("7_x2e0t")
+stretch_mode = 3
+
+[node name="Info" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 80
+alignment = 1
+
+[node name="GameSummary" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/Info"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 31
+
+[node name="Summary" type="RichTextLabel" parent="MarginContainer/VBoxContainer/VBoxContainer/Info/GameSummary"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(600, 150)
+layout_mode = 2
+theme_override_fonts/normal_font = SubResource("SystemFont_mb474")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+
+[node name="QRCode" type="TextureRect" parent="MarginContainer/VBoxContainer/VBoxContainer/Info/GameSummary"]
+custom_minimum_size = Vector2(290, 290)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("55_v4nsc")
+expand_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_constants/margin_top = 48
+
+[node name="HUD" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 220
+alignment = 1
+
+[node name="ReplayButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/HUD"]
+visible = false
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme = SubResource("Theme_0xfcv")
+
+[node name="ReplayLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/HUD/ReplayButton"]
+visible = false
+custom_minimum_size = Vector2(400, 70)
+layout_mode = 2
+offset_left = -96.0
+offset_top = -10.0
+offset_right = 304.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 0.999187)
+theme_override_fonts/normal_font = SubResource("SystemFont_0pjr2")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[center][pulse freq=1.0 color=#ffffff40 ease=-2.0]REPLAY[/pulse][/center]"
+fit_content = true
+
+[node name="ResetButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/HUD"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+size_flags_vertical = 4
+theme = SubResource("Theme_0xfcv")
+
+[node name="ResetLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/HUD/ResetButton"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 70)
+layout_mode = 2
+offset_left = -95.0
+offset_top = -9.0
+offset_right = 305.0
+offset_bottom = 61.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 0.999187)
+theme_override_fonts/normal_font = SubResource("SystemFont_0pjr2")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[center][pulse freq=1.0 color=#ffffff40 ease=-2.0]RESET GAME[/pulse][/center]"
+fit_content = true
+
+[node name="outerboarder2" type="Node2D" parent="."]
+visible = false
+
+[node name="top" type="ColorRect" parent="outerboarder2"]
+offset_right = 1920.0
+offset_bottom = 48.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="32px-spacer" type="ColorRect" parent="outerboarder2"]
+offset_left = -10.0
+offset_top = 665.0
+offset_right = 1910.0
+offset_bottom = 713.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="32px-spacer2" type="ColorRect" parent="outerboarder2"]
+offset_left = 266.0
+offset_top = 498.0
+offset_right = 284.0
+offset_bottom = 546.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="bottom" type="ColorRect" parent="outerboarder2"]
+offset_top = 1032.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="left" type="ColorRect" parent="outerboarder2"]
+offset_right = 48.0
+offset_bottom = 1080.0
+color = Color(0.956863, 0.705882, 0, 1)
+
+[node name="right" type="ColorRect" parent="outerboarder2"]
+offset_left = 1872.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.0784314, 0.2, 0.12549, 1)
+
+[node name="center-topbottom" type="ColorRect" parent="outerboarder2"]
+offset_left = 960.0
+offset_right = 961.0
+offset_bottom = 1080.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="center-topbottom2" type="ColorRect" parent="outerboarder2"]
+offset_left = 475.0
+offset_top = 1.0
+offset_right = 476.0
+offset_bottom = 1081.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="center-topbottom3" type="ColorRect" parent="outerboarder2"]
+offset_left = 1446.0
+offset_top = 1.0
+offset_right = 1447.0
+offset_bottom = 1081.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="center-leftright" type="ColorRect" parent="outerboarder2"]
+offset_top = 540.0
+offset_right = 1920.0
+offset_bottom = 541.0
+color = Color(0.330424, 0.0282391, 0.108228, 1)
+
+[node name="BackgroundVideo" type="VideoStreamPlayer" parent="."]
+z_index = -1
+clip_contents = true
+offset_left = -4.0
+offset_top = -3.0
+offset_right = 3836.0
+offset_bottom = 2157.0
+scale = Vector2(0.5, 0.5)
+stream = ExtResource("57_uqg6v")
+autoplay = true
+loop = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("58_ayr86")
+autoplay = true
+parameters/looping = true
+
+[node name="TimeOut" type="Timer" parent="."]
+wait_time = 30.0
+one_shot = true
+autostart = true
+
+[node name="loading_status" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(0, 24)
+offset_left = 1700.0
+offset_top = 928.0
+offset_right = 1872.0
+offset_bottom = 975.0
+theme_override_fonts/normal_font = SubResource("SystemFont_gdgqx")
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "[color=#EA4335][wave]LOADING...[/wave][/color]"
+fit_content = true
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/HUD/ReplayButton" to="." method="_on_replay_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/HUD/ResetButton" to="." method="_on_reset_pressed"]
+[connection signal="timeout" from="TimeOut" to="." method="_on_timer_timeout"]

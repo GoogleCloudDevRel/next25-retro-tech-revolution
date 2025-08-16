@@ -1,0 +1,123 @@
+[gd_scene load_steps=11 format=3 uid="uid://c8crmjsg0br8d"]
+
+[ext_resource type="Shader" uid="uid://ck02kfm4frx0q" path="res://shaders/scanline_v2gdshader.gdshader" id="1_jh1b8"]
+[ext_resource type="Shader" uid="uid://bdn6yli7tmkd4" path="res://levels/level_1/level_1.gdshader" id="2_hs8ac"]
+[ext_resource type="Script" uid="uid://d1wouk43gmi0e" path="res://scripts/game_manager.gd" id="2_sabek"]
+[ext_resource type="AudioStream" uid="uid://bhuq3pb5g4pg6" path="res://assets/screens/questionsscreen/waiting-loop.ogg" id="4_4tb5p"]
+[ext_resource type="Script" uid="uid://d284wodwsbrqf" path="res://scripts/server.gd" id="4_iwxs6"]
+
+[sub_resource type="Environment" id="Environment_b4s52"]
+background_mode = 3
+background_canvas_max_layer = -1
+glow_enabled = true
+glow_intensity = 1.38
+glow_strength = 0.93
+glow_bloom = 0.16
+glow_blend_mode = 1
+glow_hdr_threshold = 0.14
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_evipi"]
+shader = ExtResource("1_jh1b8")
+shader_parameter/scan_line_count = 289.641
+shader_parameter/scan_line_intensity = 0.527
+shader_parameter/noise_intensity = 0.032
+shader_parameter/curvature = 0.0
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/brightness = 1.616
+shader_parameter/flicker_intensity = 0.285
+shader_parameter/rgb_shift = 0.68
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_14611"]
+shader = ExtResource("2_hs8ac")
+shader_parameter/lineIntensity = 0.3
+shader_parameter/lineThickness = 1.9
+shader_parameter/linePower = 2.0
+shader_parameter/warpAmount = 0.0
+shader_parameter/lineSpeed = 0.9
+
+[sub_resource type="SystemFont" id="SystemFont_22tnt"]
+font_names = PackedStringArray("Noto Sans JP")
+
+[sub_resource type="SystemFont" id="SystemFont_f17wq"]
+fallbacks = Array[Font]([SubResource("SystemFont_22tnt")])
+font_names = PackedStringArray("Google Sans")
+font_weight = 500
+
+[node name="Game" type="Node2D"]
+top_level = true
+y_sort_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_b4s52")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 20
+
+[node name="Scanlines" type="ColorRect" parent="CanvasLayer"]
+process_mode = 4
+visible = false
+z_index = 120
+z_as_relative = false
+material = SubResource("ShaderMaterial_evipi")
+custom_minimum_size = Vector2(1920, 1080)
+offset_right = 1920.0
+offset_bottom = 1080.0
+size_flags_horizontal = 4
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Scanlines_v2" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_14611")
+custom_minimum_size = Vector2(1920, 1080)
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.981968, 0.963255, 0.997733, 1)
+
+[node name="GameManager" type="Node" parent="." groups=["Enemies", "Players"]]
+unique_name_in_owner = true
+process_mode = 3
+script = ExtResource("2_sabek")
+
+[node name="pauseTimer" type="Timer" parent="GameManager"]
+wait_time = 3.0
+
+[node name="bgmusic" type="AudioStreamPlayer2D" parent="GameManager"]
+stream = ExtResource("4_4tb5p")
+parameters/looping = true
+
+[node name="PauseCanvas" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="bg" type="ColorRect" parent="PauseCanvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.52549)
+
+[node name="pauseLabel" type="RichTextLabel" parent="PauseCanvas/bg"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = SubResource("SystemFont_f17wq")
+theme_override_font_sizes/normal_font_size = 46
+bbcode_enabled = true
+text = " [color=\"#4285F4\"][wave]Paused[/wave][/color] 
+Press [color=\"#F4B400\"]≡[/color] to restart
+Press [color=\"#EA4335\"] A [/color] to quit"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Server" type="Node" parent="."]
+process_mode = 3
+script = ExtResource("4_iwxs6")
+
+[node name="Players" type="Node2D" parent="."]
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[connection signal="timeout" from="GameManager/pauseTimer" to="GameManager" method="_on_timer_timeout"]

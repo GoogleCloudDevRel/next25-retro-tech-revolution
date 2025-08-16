@@ -1,0 +1,33 @@
+[gd_scene load_steps=7 format=3 uid="uid://dc6do4076s5ex"]
+
+[ext_resource type="Script" uid="uid://bgga5a3x7isik" path="res://scripts/bullet.gd" id="1_xpah6"]
+[ext_resource type="PackedScene" uid="uid://bsev0gq74h7wt" path="res://levels/level_1/Player/ui_projectile2.tscn" id="2_0j52r"]
+[ext_resource type="PackedScene" uid="uid://csqidgubdv7ck" path="res://levels/level_1/Player/ui_projectile1.tscn" id="2_8nsd6"]
+[ext_resource type="PackedScene" uid="uid://4kjbkyos8vei" path="res://levels/level_1/Player/ui_projectile4.tscn" id="2_yfcos"]
+[ext_resource type="PackedScene" uid="uid://coid1vhdj0njr" path="res://levels/level_1/Player/ui_projectile3.tscn" id="2_yg8fw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cp4y1"]
+size = Vector2(26.5, 24)
+
+[node name="Bullet" type="Area2D"]
+top_level = true
+rotation = -0.0012157
+collision_layer = 8
+collision_mask = 3
+script = ExtResource("1_xpah6")
+
+[node name="UI_P4" parent="." instance=ExtResource("2_yfcos")]
+visible = false
+
+[node name="UI_P3" parent="." instance=ExtResource("2_yg8fw")]
+visible = false
+
+[node name="UI_P2" parent="." instance=ExtResource("2_0j52r")]
+visible = false
+
+[node name="UI_P1" parent="." instance=ExtResource("2_8nsd6")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_cp4y1")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
