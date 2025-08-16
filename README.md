@@ -30,7 +30,8 @@ here](https://console.cloud.google.com/tos?id=cloud).
  Google Next 25 - Retro Tech Revolution
 
  Author: Damien Contreras cdamien@google.com
- Contributors:
+ 
+ ### Contributors:
   - Luka Fontanilla / Mike DeAngelo / Minhaz Kazi : looker
   - Rachael Deacon-Smith BigQuery & Cloud function
   - Prashanth Subrahmanyam PM
