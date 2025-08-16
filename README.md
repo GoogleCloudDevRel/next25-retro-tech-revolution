@@ -29,7 +29,7 @@ here](https://console.cloud.google.com/tos?id=cloud).
 -------------------------------------------------------------------------------
  Google Next 25 - Retro Tech Revolution
 
- Author: Damien Contreras cdamien@google.com
+ Author: Damien Contreras
  
  ### Contributors:
   - Luka Fontanilla / Mike DeAngelo / Minhaz Kazi : looker

@@ -17,7 +17,7 @@
 
 # Google Next 25 - Retro Tech Revolution  - WSIG server (API Bridge Server)
 #
-# Author: Damien Contreras cdamien@google.com
+# Author: Damien Contreras
 -------------------------------------------------------------------------------
 
 
