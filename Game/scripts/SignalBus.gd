@@ -16,7 +16,7 @@ var last_screenshot = "res://assets/map/mini_map.png" #last screenshot taken in 
 var last_screenshot_timestamp = ""
 const SEND_SCREENSHOTS = true 
 const GCS_BUCKET_BACKSTORIES = "gs://rtr_backstories"
-var language = "JP" #EN or JP
+var language = "EN" #select display language EN or JP
 ### message bus that dispatch events between classes of the game
 ######All game states - our Finite state machine	
 enum {SPLASHSCREEN, QUESTIONS, CONTROLS, BACKSTORY, LEVEL1, BOSS1, GAMEOVER}
